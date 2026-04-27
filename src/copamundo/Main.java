@@ -1,10 +1,21 @@
 package copamundo;
 
-import copamundo.selecoes.visao.TelaMenuSelecoesJogadores;
-import javax.swing.*;
+import javafx.application.Application;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
+import javafx.stage.Stage;
 
-public class Main {
+public class Main extends Application {
+    @Override
+    public void start(Stage primaryStage) throws Exception {
+        Parent root = FXMLLoader.load(getClass().getResource("/copamundo/selecoes/visao/TelaMenuSelecoesJogadores.fxml"));
+        primaryStage.setTitle("Módulo Seleções e Jogadores");
+        primaryStage.setScene(new Scene(root, 500, 300));
+        primaryStage.show();
+    }
+
     public static void main(String[] args) {
-        SwingUtilities.invokeLater(() -> new TelaMenuSelecoesJogadores().setVisible(true));
+        launch(args);
     }
 }

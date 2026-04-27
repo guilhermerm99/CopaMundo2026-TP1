@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<BorderPane stylesheets="@estilo.css" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="copamundo.selecoes.visao.TelaCadastroSelecaoController">
+    <top>
+        <VBox spacing="10" style="-fx-background-color: white; -fx-border-color: #BDBDBD; -fx-border-radius: 5;">
+            <padding><Insets bottom="15" left="15" right="15" top="15"/></padding>
+            <GridPane hgap="10" vgap="10">
+                <Label text="País:" GridPane.rowIndex="0" GridPane.columnIndex="0"/>
+                <TextField fx:id="campoPais" promptText="Digite o nome do país" GridPane.rowIndex="0" GridPane.columnIndex="1"/>
+
+                <Label text="Grupo:" GridPane.rowIndex="1" GridPane.columnIndex="0"/>
+                <ComboBox fx:id="comboGrupo" promptText="Selecione" GridPane.rowIndex="1" GridPane.columnIndex="1"/>
+
+                <Label text="Técnico:" GridPane.rowIndex="2" GridPane.columnIndex="0"/>
+                <TextField fx:id="campoTecnico" promptText="Nome do técnico" GridPane.rowIndex="2" GridPane.columnIndex="1"/>
+                <columnConstraints>
+                    <ColumnConstraints/><ColumnConstraints hgrow="ALWAYS"/>
+                </columnConstraints>
+            </GridPane>
+            <HBox alignment="CENTER" spacing="10">
+                <Button fx:id="btnNovo" onAction="#novo" text="➕  Novo"/>
+                <Button fx:id="btnEditar" onAction="#editar" text="✏️  Editar"/>
+                <Button fx:id="btnExcluir" onAction="#excluir" text="🗑️  Excluir"/>
+                <Button fx:id="btnSalvar" onAction="#salvar" text="💾  Salvar"/>
+            </HBox>
+        </VBox>
+    </top>
+    <center>
+        <TableView fx:id="tabelaSelecoes">
+            <columns>
+                <TableColumn fx:id="colunaPais" text="País"/>
+                <TableColumn fx:id="colunaGrupo" text="Grupo"/>
+                <TableColumn fx:id="colunaTecnico" text="Técnico"/>
+            </columns>
+        </TableView>
+    </center>
+</BorderPane>
