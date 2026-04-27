@@ -11,47 +11,77 @@ public class TelaCadastroSelecao extends JFrame {
     private DefaultTableModel model;
 
     public TelaCadastroSelecao() {
-        setTitle("Cadastro de Seleções");
-        setSize(600, 400);
-        setLocationRelativeTo(null);
+        EstiloUI.configurarJanela(this, "Cadastro de Seleções", 650, 500);
 
-        JPanel painelCampos = new JPanel(new GridLayout(3, 2, 5, 5));
-        painelCampos.add(new JLabel("País:"));
-        campoPais = new JTextField(15);
-        painelCampos.add(campoPais);
+        // Painel principal
+        JPanel painelPrincipal = new JPanel(new BorderLayout(10, 10));
+        painelPrincipal.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
+        painelPrincipal.setBackground(EstiloUI.COR_FUNDO);
 
-        painelCampos.add(new JLabel("Grupo:"));
-        comboGrupo = new JComboBox<>(new String[]{"A", "B", "C", "D", "E", "F", "G", "H"});
-        painelCampos.add(comboGrupo);
+        // Formulário (topo)
+        JPanel painelForm = new JPanel(new GridBagLayout());
+        painelForm.setBackground(Color.WHITE);
+        painelForm.setBorder(BorderFactory.createCompoundBorder(
+                BorderFactory.createLineBorder(EstiloUI.COR_BORDA, 1, true),
+                BorderFactory.createEmptyBorder(15, 15, 15, 15)
+        ));
+        GridBagConstraints gbc = new GridBagConstraints();
+        gbc.insets = new Insets(5, 5, 5, 5);
+        gbc.fill = GridBagConstraints.HORIZONTAL;
 
-        painelCampos.add(new JLabel("Técnico:"));
-        campoTecnico = new JTextField(15);
-        painelCampos.add(campoTecnico);
+        // País
+        gbc.gridx = 0; gbc.gridy = 0;
+        painelForm.add(new JLabel("País:"), gbc);
+        gbc.gridx = 1;
+        campoPais = EstiloUI.criarCampoTexto("Digite o nome do país");
+        painelForm.add(campoPais, gbc);
 
-        String[] colunas = {"País", "Grupo", "Técnico"};
-        model = new DefaultTableModel(colunas, 0);
-        tabela = new JTable(model);
-        JScrollPane scroll = new JScrollPane(tabela);
+        // Grupo
+        gbc.gridx = 0; gbc.gridy = 1;
+        painelForm.add(new JLabel("Grupo:"), gbc);
+        gbc.gridx = 1;
+        comboGrupo = EstiloUI.criarComboBox(new String[]{"A", "B", "C", "D", "E", "F", "G", "H"});
+        painelForm.add(comboGrupo, gbc);
 
-        JPanel painelBotoes = new JPanel();
-        JButton btnNovo = new JButton("Novo");
-        JButton btnEditar = new JButton("Editar");
-        JButton btnExcluir = new JButton("Excluir");
-        JButton btnSalvar = new JButton("Salvar");
+        // Técnico
+        gbc.gridx = 0; gbc.gridy = 2;
+        painelForm.add(new JLabel("Técnico:"), gbc);
+        gbc.gridx = 1;
+        campoTecnico = EstiloUI.criarCampoTexto("Nome do técnico");
+        painelForm.add(campoTecnico, gbc);
 
+        // Botões do formulário
+        JPanel painelBotoes = new JPanel(new FlowLayout(FlowLayout.CENTER, 10, 5));
+        painelBotoes.setBackground(Color.WHITE);
+        JButton btnNovo = EstiloUI.criarBotao("Novo", "➕");
+        JButton btnEditar = EstiloUI.criarBotao("Editar", "✏️");
+        JButton btnExcluir = EstiloUI.criarBotao("Excluir", "🗑️");
+        JButton btnSalvar = EstiloUI.criarBotao("Salvar", "💾");
         painelBotoes.add(btnNovo);
         painelBotoes.add(btnEditar);
         painelBotoes.add(btnExcluir);
         painelBotoes.add(btnSalvar);
 
+        // Tabela
+        String[] colunas = {"País", "Grupo", "Técnico"};
+        model = new DefaultTableModel(colunas, 0);
+        tabela = new JTable(model);
+        JScrollPane scroll = new JScrollPane(tabela);
+        EstiloUI.configurarTabela(tabela, scroll);
+
+        // Montagem
+        JPanel painelTopo = new JPanel(new BorderLayout());
+        painelTopo.add(painelForm, BorderLayout.CENTER);
+        painelTopo.add(painelBotoes, BorderLayout.SOUTH);
+        painelPrincipal.add(painelTopo, BorderLayout.NORTH);
+        painelPrincipal.add(scroll, BorderLayout.CENTER);
+
+        add(painelPrincipal);
+
+        // Listeners vazios (Etapa 1)
         btnNovo.addActionListener(e -> {});
         btnEditar.addActionListener(e -> {});
         btnExcluir.addActionListener(e -> {});
         btnSalvar.addActionListener(e -> {});
-
-        setLayout(new BorderLayout());
-        add(painelCampos, BorderLayout.NORTH);
-        add(scroll, BorderLayout.CENTER);
-        add(painelBotoes, BorderLayout.SOUTH);
     }
 }

@@ -1,24 +1,47 @@
 package copamundo.selecoes.visao;
 
 import javax.swing.*;
+import java.awt.*;
 
 public class TelaMenuSelecoesJogadores extends JFrame {
     public TelaMenuSelecoesJogadores() {
-        setTitle("Módulo Seleções e Jogadores");
-        setSize(400, 200);
-        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        setLocationRelativeTo(null);
+        EstiloUI.configurarJanela(this, "⚽ Módulo Seleções e Jogadores", 500, 300);
 
-        JPanel panel = new JPanel();
-        JButton btnSelecoes = new JButton("Cadastro de Seleções");
-        JButton btnJogadores = new JButton("Cadastro de Jogadores");
-        JButton btnConsulta = new JButton("Consultas");
+        // Painel central com GridBagLayout
+        JPanel painel = new JPanel(new GridBagLayout());
+        painel.setBackground(EstiloUI.COR_FUNDO);
 
-        panel.add(btnSelecoes);
-        panel.add(btnJogadores);
-        panel.add(btnConsulta);
-        add(panel);
+        // Título
+        JLabel lblTitulo = new JLabel("Gestão de Seleções e Jogadores");
+        lblTitulo.setFont(EstiloUI.FONTE_TITULO);
+        lblTitulo.setForeground(EstiloUI.COR_PRIMARIA);
 
+        // Botões
+        JButton btnSelecoes = EstiloUI.criarBotao("Seleções", "🏆");
+        JButton btnJogadores = EstiloUI.criarBotao("Jogadores", "👤");
+        JButton btnConsulta = EstiloUI.criarBotao("Consultas", "🔍");
+
+        // Adiciona ao painel
+        GridBagConstraints gbc = new GridBagConstraints();
+        gbc.gridx = 0;
+        gbc.gridy = 0;
+        gbc.insets = new Insets(10, 0, 15, 0);
+        gbc.anchor = GridBagConstraints.CENTER;
+        painel.add(lblTitulo, gbc);
+
+        gbc.gridy = 1;
+        gbc.insets = new Insets(8, 0, 8, 0);
+        painel.add(btnSelecoes, gbc);
+
+        gbc.gridy = 2;
+        painel.add(btnJogadores, gbc);
+
+        gbc.gridy = 3;
+        painel.add(btnConsulta, gbc);
+
+        add(painel);
+
+        // Ações
         btnSelecoes.addActionListener(e -> new TelaCadastroSelecao().setVisible(true));
         btnJogadores.addActionListener(e -> new TelaCadastroJogador().setVisible(true));
         btnConsulta.addActionListener(e -> new TelaConsultaSelecoesJogadores().setVisible(true));
