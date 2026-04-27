@@ -32,13 +32,17 @@ public class TelaConsultaSelecoesJogadoresController {
 
     @FXML
     public void initialize() {
-        comboGrupoFiltro.setItems(FXCollections.observableArrayList("Todos", "A", "B", "C", "D", "E", "F", "G", "H"));
+        // Atualizado para contemplar todos os 12 grupos da Copa de 2026
+        comboGrupoFiltro.setItems(FXCollections.observableArrayList(
+                "Todos", "A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L"));
         comboGrupoFiltro.setValue("Todos");
 
-        comboPosicaoFiltro.setItems(FXCollections.observableArrayList("Todas", "Goleiro", "Zagueiro", "Lateral", "Meio-campo", "Atacante"));
+        comboPosicaoFiltro.setItems(FXCollections.observableArrayList(
+                "Todas", "Goleiro", "Zagueiro", "Lateral", "Meio-campo", "Atacante"));
         comboPosicaoFiltro.setValue("Todas");
 
-        comboStatusFiltro.setItems(FXCollections.observableArrayList("Todos", "Ativo", "Lesionado", "Suspenso"));
+        comboStatusFiltro.setItems(FXCollections.observableArrayList(
+                "Todos", "Ativo", "Lesionado", "Suspenso"));
         comboStatusFiltro.setValue("Todos");
 
         // Configurar colunas da tabela de seleções
@@ -57,6 +61,22 @@ public class TelaConsultaSelecoesJogadoresController {
         tabelaJogadores.setItems(listaJogadores);
     }
 
-    @FXML private void filtrarSelecoes() { /* Aplicar filtro baseado no comboGrupoFiltro */ }
-    @FXML private void filtrarJogadores() { /* Aplicar filtro baseado nos combos */ }
+    @FXML
+    private void filtrarSelecoes() {
+        mostrarAlerta(Alert.AlertType.INFORMATION, "Filtro de Seleções", "A busca por grupo será implementada na Etapa 3, conectando com a camada de persistência.");
+    }
+
+    @FXML
+    private void filtrarJogadores() {
+        mostrarAlerta(Alert.AlertType.INFORMATION, "Filtro de Jogadores", "A busca por posição e status será implementada na Etapa 3, conectando com a camada de persistência.");
+    }
+
+    // Método auxiliar para exibir os alertas de protótipo exigidos
+    private void mostrarAlerta(Alert.AlertType tipo, String titulo, String mensagem) {
+        Alert alert = new Alert(tipo);
+        alert.setTitle(titulo);
+        alert.setHeaderText(null);
+        alert.setContentText(mensagem);
+        alert.showAndWait();
+    }
 }

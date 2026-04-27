@@ -36,10 +36,39 @@ public class TelaCadastroJogadorController {
         tabelaJogadores.setItems(listaJogadores);
     }
 
-    @FXML private void novo() { /* limpar campos */ }
-    @FXML private void editar() { /* preencher campos a partir da seleção na tabela */ }
-    @FXML private void excluir() { /* remover da lista */ }
-    @FXML private void salvar() { /* validar e adicionar/atualizar */ }
+    @FXML
+    private void novo() {
+        campoNome.clear();
+        campoNumero.clear();
+        campoIdade.clear();
+        comboPosicao.getSelectionModel().clearSelection();
+        comboStatus.getSelectionModel().clearSelection();
+        comboSelecao.getSelectionModel().clearSelection();
+    }
+
+    @FXML
+    private void editar() {
+        mostrarAlerta(Alert.AlertType.INFORMATION, "Protótipo", "A funcionalidade de edição será implementada na Etapa 3.");
+    }
+
+    @FXML
+    private void salvar() {
+        mostrarAlerta(Alert.AlertType.INFORMATION, "Protótipo", "A validação de regras de negócio e a persistência em arquivo serão implementadas na Etapa 3.");
+    }
+
+    @FXML
+    private void excluir() {
+        mostrarAlerta(Alert.AlertType.WARNING, "Atenção", "O alerta de confirmação antes da exclusão definitiva será implementado na Etapa 3.");
+    }
+
+    // Método auxiliar para exibir os alertas
+    private void mostrarAlerta(Alert.AlertType tipo, String titulo, String mensagem) {
+        Alert alert = new Alert(tipo);
+        alert.setTitle(titulo);
+        alert.setHeaderText(null);
+        alert.setContentText(mensagem);
+        alert.showAndWait();
+    }
 
     // Classe interna temporária para a tabela (será substituída pela classe do domínio)
     public static class Jogador {

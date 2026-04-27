@@ -10,7 +10,7 @@ public class TelaCadastroSelecaoController {
 
     @FXML private TextField campoPais, campoTecnico;
     @FXML private ComboBox<String> comboGrupo;
-    @FXML private TableView<Selecao> tabelaSelecoes; // precisaremos de uma classe modelo
+    @FXML private TableView<Selecao> tabelaSelecoes;
     @FXML private TableColumn<Selecao, String> colunaPais, colunaGrupo, colunaTecnico;
     @FXML private Button btnNovo, btnEditar, btnExcluir, btnSalvar;
 
@@ -18,21 +18,53 @@ public class TelaCadastroSelecaoController {
 
     @FXML
     public void initialize() {
-        comboGrupo.setItems(FXCollections.observableArrayList("A", "B", "C", "D", "E", "F", "G", "H"));
+        // Atualizado para os 12 grupos da Copa 2026 (A até L)
+        comboGrupo.setItems(FXCollections.observableArrayList(
+                "A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L"
+        ));
+
         colunaPais.setCellValueFactory(new PropertyValueFactory<>("pais"));
         colunaGrupo.setCellValueFactory(new PropertyValueFactory<>("grupo"));
         colunaTecnico.setCellValueFactory(new PropertyValueFactory<>("tecnico"));
+
         tabelaSelecoes.setItems(listaSelecoes);
     }
 
-    @FXML private void novo() { /* limpar campos */ }
-    @FXML private void editar() { /* preencher campos a partir da seleção */ }
-    @FXML private void excluir() { /* remover da lista */ }
-    @FXML private void salvar() { /* validar e adicionar/atualizar */ }
+    @FXML
+    private void novo() {
+        campoPais.clear();
+        campoTecnico.clear();
+        comboGrupo.getSelectionModel().clearSelection();
+    }
+
+    @FXML
+    private void editar() {
+        mostrarAlerta(Alert.AlertType.INFORMATION, "Protótipo", "A funcionalidade de edição (preencher os campos a partir da tabela) será implementada na Etapa 3.");
+    }
+
+    @FXML
+    private void excluir() {
+        mostrarAlerta(Alert.AlertType.WARNING, "Atenção", "O alerta de confirmação antes da exclusão definitiva será implementado na Etapa 3.");
+    }
+
+    @FXML
+    private void salvar() {
+        mostrarAlerta(Alert.AlertType.INFORMATION, "Protótipo", "A validação de regras de negócio e a persistência em arquivo serão implementadas na Etapa 3.");
+    }
+
+    // Método auxiliar do Mentor para não repetir código de alerta
+    private void mostrarAlerta(Alert.AlertType tipo, String titulo, String mensagem) {
+        Alert alert = new Alert(tipo);
+        alert.setTitle(titulo);
+        alert.setHeaderText(null);
+        alert.setContentText(mensagem);
+        alert.showAndWait();
+    }
 
     // Classe interna para representação na tabela (ou usar a do domínio depois)
     public static class Selecao {
         private String pais, grupo, tecnico;
+
         // getters e setters obrigatórios para PropertyValueFactory
         public String getPais() { return pais; }
         public void setPais(String pais) { this.pais = pais; }

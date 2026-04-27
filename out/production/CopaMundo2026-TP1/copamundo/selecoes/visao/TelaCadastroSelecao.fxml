@@ -25,7 +25,7 @@
             <HBox alignment="CENTER" spacing="10">
                 <Button fx:id="btnNovo" onAction="#novo" text="➕  Novo"/>
                 <Button fx:id="btnEditar" onAction="#editar" text="✏️  Editar"/>
-                <Button fx:id="btnExcluir" onAction="#excluir" text="🗑️  Excluir"/>
+                <Button fx:id="btnExcluir" onAction="#excluir" text="🗑️  Excluir" styleClass="button-cancelar"/>
                 <Button fx:id="btnSalvar" onAction="#salvar" text="💾  Salvar"/>
             </HBox>
         </VBox>

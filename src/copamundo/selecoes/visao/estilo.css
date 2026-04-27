@@ -56,3 +56,22 @@
 .table-row-cell:even {
     -fx-background-color: white;
 }
+
+.text-field:focused, .combo-box:focused {
+    -fx-border-color: #2E7D32;
+    -fx-border-width: 2px;
+}
+
+.button-cancelar {
+    -fx-background-color: #D32F2F; /* Vermelho padrão de alerta */
+    -fx-text-fill: white;
+    -fx-font-weight: bold;
+    -fx-font-size: 13px;
+    -fx-padding: 8 15 8 15;
+    -fx-background-radius: 5;
+    -fx-cursor: hand;
+}
+
+.button-cancelar:hover {
+    -fx-background-color: #B71C1C; /* Vermelho mais escuro no hover */
+}
