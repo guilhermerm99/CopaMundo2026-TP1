@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<TabPane stylesheets="@estilo.css" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1"
+         fx:controller="copamundo.selecoes.visao.TelaConsultaSelecoesJogadoresController">
+
+    <Tab text="🏆 Seleções" closable="false">
+        <BorderPane>
+            <top>
+                <HBox alignment="CENTER_LEFT" spacing="10" style="-fx-background-color: #F5F5F5;">
+                    <padding><Insets bottom="8" left="8" right="8" top="8"/></padding>
+                    <Label text="Grupo:"/>
+                    <ComboBox fx:id="comboGrupoFiltro" promptText="Todos"/>
+                    <Button fx:id="btnFiltrarSelecao" onAction="#filtrarSelecoes" text="🔍  Filtrar"/>
+                </HBox>
+            </top>
+            <center>
+                <TableView fx:id="tabelaSelecoes">
+                    <columns>
+                        <TableColumn fx:id="colunaPaisConsulta" text="País"/>
+                        <TableColumn fx:id="colunaGrupoConsulta" text="Grupo"/>
+                        <TableColumn fx:id="colunaTecnicoConsulta" text="Técnico"/>
+                    </columns>
+                </TableView>
+            </center>
+        </BorderPane>
+    </Tab>
+
+    <Tab text="👤 Jogadores" closable="false">
+        <BorderPane>
+            <top>
+                <HBox alignment="CENTER_LEFT" spacing="10" style="-fx-background-color: #F5F5F5;">
+                    <padding><Insets bottom="8" left="8" right="8" top="8"/></padding>
+                    <Label text="Posição:"/>
+                    <ComboBox fx:id="comboPosicaoFiltro" promptText="Todas"/>
+                    <Label text="Status:"/>
+                    <ComboBox fx:id="comboStatusFiltro" promptText="Todos"/>
+                    <Button fx:id="btnFiltrarJogador" onAction="#filtrarJogadores" text="🔍  Filtrar"/>
+                </HBox>
+            </top>
+            <center>
+                <TableView fx:id="tabelaJogadores">
+                    <columns>
+                        <TableColumn fx:id="colunaNomeJogador" text="Nome"/>
+                        <TableColumn fx:id="colunaPosicaoJogador" text="Posição"/>
+                        <TableColumn fx:id="colunaNumeroJogador" text="Nº"/>
+                        <TableColumn fx:id="colunaIdadeJogador" text="Idade"/>
+                        <TableColumn fx:id="colunaStatusJogador" text="Status"/>
+                        <TableColumn fx:id="colunaSelecaoJogador" text="Seleção"/>
+                    </columns>
+                </TableView>
+            </center>
+        </BorderPane>
+    </Tab>
+</TabPane>
