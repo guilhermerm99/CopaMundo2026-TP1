@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<VBox spacing="15" stylesheets="@estilo.css"
+      xmlns="http://javafx.com/javafx/17"
+      xmlns:fx="http://javafx.com/fxml/1"
+      fx:controller="copamundo.estadios.visao.TelaCadastroArbitroController">
+
+    <padding>
+        <Insets bottom="15" left="15" right="15" top="15"/>
+    </padding>
+
+    <Label text="👨‍⚖️ Cadastro de Árbitros" styleClass="label-titulo"/>
+
+    <GridPane hgap="10" vgap="10">
+        <Label text="Nome:" GridPane.rowIndex="0" GridPane.columnIndex="0"/>
+        <TextField fx:id="txtNome" promptText="Nome do árbitro"
+                   GridPane.rowIndex="0" GridPane.columnIndex="1"/>
+
+        <Label text="Federação:" GridPane.rowIndex="1" GridPane.columnIndex="0"/>
+        <TextField fx:id="txtFederacao" promptText="Federação"
+                   GridPane.rowIndex="1" GridPane.columnIndex="1"/>
+
+        <Label text="Categoria:" GridPane.rowIndex="2" GridPane.columnIndex="0"/>
+        <ComboBox fx:id="cbCategoria" promptText="Selecione"
+                  GridPane.rowIndex="2" GridPane.columnIndex="1"/>
+    </GridPane>
+
+    <HBox spacing="10" alignment="CENTER">
+        <Button text="➕ Novo"/>
+        <Button text="💾 Salvar"/>
+        <Button text="✏️ Editar"/>
+        <Button text="🗑️ Excluir" styleClass="button-cancelar"/>
+    </HBox>
+
+    <TableView fx:id="tabelaArbitros" prefHeight="220">
+        <columns>
+            <TableColumn text="Nome" prefWidth="180"/>
+            <TableColumn text="Federação" prefWidth="160"/>
+            <TableColumn text="Categoria" prefWidth="120"/>
+        </columns>
+    </TableView>
+
+</VBox>
