@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<VBox spacing="15" stylesheets="@estilo.css"
+      xmlns="http://javafx.com/javafx/17"
+      xmlns:fx="http://javafx.com/fxml/1"
+      fx:controller="copamundo.estadios.visao.TelaDesignacaoArbitroController">
+
+    <padding>
+        <Insets bottom="15" left="15" right="15" top="15"/>
+    </padding>
+
+    <Label text="📋 Designação de Árbitros" styleClass="label-titulo"/>
+
+    <GridPane hgap="10" vgap="10">
+        <Label text="Estádio:" GridPane.rowIndex="0" GridPane.columnIndex="0"/>
+        <ComboBox fx:id="cbEstadio" promptText="Selecione o estádio"
+                  GridPane.rowIndex="0" GridPane.columnIndex="1"/>
+
+        <Label text="Árbitro:" GridPane.rowIndex="1" GridPane.columnIndex="0"/>
+        <ComboBox fx:id="cbArbitro" promptText="Selecione o árbitro"
+                  GridPane.rowIndex="1" GridPane.columnIndex="1"/>
+
+        <Label text="Partida:" GridPane.rowIndex="2" GridPane.columnIndex="0"/>
+        <ComboBox fx:id="cbPartida" promptText="Selecione a partida"
+                  GridPane.rowIndex="2" GridPane.columnIndex="1"/>
+
+        <Label text="Data:" GridPane.rowIndex="3" GridPane.columnIndex="0"/>
+        <DatePicker fx:id="dpData"
+                    GridPane.rowIndex="3" GridPane.columnIndex="1"/>
+    </GridPane>
+
+    <HBox spacing="10" alignment="CENTER">
+        <Button text="✅ Designar"/>
+        <Button text="🧹 Limpar"/>
+        <Button text="🗑️ Excluir" styleClass="button-cancelar"/>
+    </HBox>
+
+    <TableView fx:id="tabelaDesignacoes" prefHeight="220">
+        <columns>
+            <TableColumn text="Estádio" prefWidth="140"/>
+            <TableColumn text="Árbitro" prefWidth="140"/>
+            <TableColumn text="Partida" prefWidth="160"/>
+            <TableColumn text="Data" prefWidth="100"/>
+        </columns>
+    </TableView>
+
+</VBox>

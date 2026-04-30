@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.VBox?>
+
+<VBox alignment="CENTER" spacing="15" stylesheets="@estilo.css"
+      xmlns="http://javafx.com/javafx/17"
+      xmlns:fx="http://javafx.com/fxml/1"
+      fx:controller="copamundo.estadios.visao.TelaMenuEstadiosController">
+
+    <padding>
+        <Insets bottom="20" left="20" right="20" top="20"/>
+    </padding>
+
+    <Label styleClass="label-titulo" text="🏟️ Gestão de Estádios e Arbitragem"/>
+
+    <Button fx:id="btnEstadios" mnemonicParsing="false"
+            onAction="#abrirCadastroEstadio"
+            text="🏟️  Estádios"/>
+
+    <Button fx:id="btnArbitros" mnemonicParsing="false"
+            onAction="#abrirCadastroArbitro"
+            text="👨‍⚖️  Árbitros"/>
+
+    <Button fx:id="btnDesignacao" mnemonicParsing="false"
+            onAction="#abrirDesignacao"
+            text="📋  Designações"/>
+
+</VBox>

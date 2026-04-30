@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.PasswordField?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/26" xmlns:fx="http://javafx.com/fxml/1" fx:controller="CONTROLLER_NAME">
+    <children>
+        <HBox alignment="CENTER" prefHeight="400.0" prefWidth="300.0" style="-fx-background-color: #2E7D32;">
+            <children>
+                <Label text="Gestão Copa do Mundo" textFill="WHITE">
+                    <font>
+                        <Font name="Calibri Bold" size="20.0" />
+                    </font>
+                </Label>
+            </children>
+        </HBox>
+        <VBox alignment="CENTER" layoutX="301.0" prefHeight="400.0" prefWidth="300.0" spacing="15.0" style="-fx-background-image: url(&quot;teste.jpg&quot;);">
+            <children>
+                <Label text="Login" textFill="#2e7d32">
+                    <font>
+                        <Font name="Calibri Bold" size="20.0" />
+                    </font>
+                </Label>
+                <TextField promptText="E-mail" style="-fx-background-radius: 15; -fx-focus-color: #2E7D32; -fx-faint-focus-color: transparent;" />
+                <TextField promptText="Nome de usuário" style="-fx-background-radius: 15; -fx-focus-color: #2E7D32; -fx-faint-focus-color: transparent;" />
+                <PasswordField promptText="Senha" style="-fx-background-radius: 15; -fx-focus-color: #2E7D32; -fx-faint-focus-color: transparent;" />
+                <Button mnemonicParsing="false" style="-fx-background-radius: 15; -fx-background-color: #2E7D32;" text="Entrar" textFill="WHITE" />
+                <Label text="Não possui conta? Cadastre-se" textFill="#2e7d32" />
+            </children>
+            <padding>
+                <Insets bottom="30.0" left="35.0" right="35.0" top="30.0" />
+            </padding>
+        </VBox>
+    </children>
+</AnchorPane>
