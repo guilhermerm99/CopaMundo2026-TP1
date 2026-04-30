@@ -6,46 +6,112 @@
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
+<?import javafx.scene.effect.DropShadow?>
 <?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.text.Font?>
 
-<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="602.0" prefWidth="700.0" xmlns="http://javafx.com/javafx/26" xmlns:fx="http://javafx.com/fxml/1">
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="602.0" prefWidth="1100.0" xmlns="http://javafx.com/javafx/26" xmlns:fx="http://javafx.com/fxml/1">
    <children>
-      <GridPane prefHeight="169.0" prefWidth="700.0">
+      <GridPane layoutX="237.0" layoutY="52.0" prefHeight="103.0" prefWidth="800.0">
         <columnConstraints>
-          <ColumnConstraints hgrow="SOMETIMES" maxWidth="344.0" minWidth="10.0" prefWidth="95.0" />
-          <ColumnConstraints hgrow="SOMETIMES" maxWidth="582.0" minWidth="10.0" prefWidth="208.0" />
-            <ColumnConstraints hgrow="SOMETIMES" maxWidth="582.0" minWidth="10.0" prefWidth="142.0" />
-            <ColumnConstraints hgrow="SOMETIMES" maxWidth="582.0" minWidth="10.0" prefWidth="254.0" />
+          <ColumnConstraints hgrow="SOMETIMES" maxWidth="344.0" minWidth="10.0" prefWidth="147.0" />
+          <ColumnConstraints hgrow="SOMETIMES" maxWidth="582.0" minWidth="10.0" prefWidth="272.0" />
+            <ColumnConstraints hgrow="SOMETIMES" maxWidth="582.0" minWidth="10.0" prefWidth="120.0" />
+            <ColumnConstraints hgrow="SOMETIMES" maxWidth="582.0" minWidth="10.0" prefWidth="257.0" />
         </columnConstraints>
         <rowConstraints>
           <RowConstraints maxHeight="58.0" minHeight="10.0" prefHeight="58.0" vgrow="SOMETIMES" />
           <RowConstraints maxHeight="65.0" minHeight="10.0" prefHeight="43.0" vgrow="SOMETIMES" />
-          <RowConstraints maxHeight="80.0" minHeight="0.0" prefHeight="68.0" vgrow="SOMETIMES" />
         </rowConstraints>
          <children>
-            <Label alignment="BOTTOM_RIGHT" prefHeight="43.0" prefWidth="138.0" text="Data:   " />
-            <Label alignment="BOTTOM_RIGHT" prefHeight="64.0" prefWidth="138.0" text="Seleção:   " GridPane.rowIndex="1" />
-            <Label alignment="BOTTOM_RIGHT" prefHeight="58.0" prefWidth="173.0" text="Fase da Competição:   " GridPane.columnIndex="2" />
-            <Label alignment="BOTTOM_RIGHT" prefHeight="43.0" prefWidth="154.0" text="Status:   " GridPane.columnIndex="2" GridPane.rowIndex="1" />
-            <ComboBox prefHeight="5.0" prefWidth="170.0" promptText="Selecionar" GridPane.columnIndex="1" GridPane.rowIndex="1" GridPane.valignment="BOTTOM" />
-            <ComboBox prefHeight="0.0" prefWidth="179.0" promptText="Selecionar" GridPane.columnIndex="3" GridPane.rowIndex="1" GridPane.valignment="BOTTOM" />
-            <ComboBox prefHeight="26.0" prefWidth="179.0" promptText="Selecionar" GridPane.columnIndex="3" GridPane.valignment="BOTTOM" />
-            <DatePicker prefHeight="26.0" prefWidth="170.0" promptText="aa/mm/dd" GridPane.columnIndex="1" GridPane.valignment="BOTTOM" />
-            <Button alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" prefHeight="26.0" prefWidth="79.0" text="Filtrar" textAlignment="CENTER" GridPane.columnIndex="2" GridPane.halignment="LEFT" GridPane.rowIndex="2" />
+            <Label alignment="BOTTOM_RIGHT" prefHeight="55.0" prefWidth="185.0" text="Data:   ">
+               <font>
+                  <Font name="System Bold" size="15.0" />
+               </font></Label>
+            <Label alignment="BOTTOM_RIGHT" prefHeight="40.0" prefWidth="201.0" text="Seleção:   " GridPane.rowIndex="1">
+               <font>
+                  <Font name="System Bold" size="15.0" />
+               </font></Label>
+            <Label alignment="BOTTOM_RIGHT" prefHeight="84.0" prefWidth="171.0" text="Fase:   " GridPane.columnIndex="2">
+               <font>
+                  <Font name="System Bold" size="15.0" />
+               </font></Label>
+            <Label alignment="BOTTOM_RIGHT" prefHeight="43.0" prefWidth="154.0" text="Status:   " GridPane.columnIndex="2" GridPane.rowIndex="1">
+               <font>
+                  <Font name="System Bold" size="15.0" />
+               </font></Label>
+            <ComboBox prefHeight="5.0" prefWidth="190.0" promptText="Selecionar" GridPane.columnIndex="1" GridPane.rowIndex="1" GridPane.valignment="BOTTOM" />
+            <ComboBox prefHeight="0.0" prefWidth="190.0" promptText="Selecionar" GridPane.columnIndex="3" GridPane.rowIndex="1" GridPane.valignment="BOTTOM" />
+            <ComboBox prefHeight="26.0" prefWidth="190.0" promptText="Selecionar" GridPane.columnIndex="3" GridPane.valignment="BOTTOM" />
+            <DatePicker prefHeight="26.0" prefWidth="190.0" promptText="aa/mm/dd" GridPane.columnIndex="1" GridPane.valignment="BOTTOM" />
          </children>
       </GridPane>
-      <TableView layoutY="165.0" prefHeight="437.0" prefWidth="700.0">
+      <TableView layoutX="225.0" layoutY="212.0" prefHeight="392.0" prefWidth="875.0">
         <columns>
-          <TableColumn prefWidth="75.0" text="Data" />
-          <TableColumn prefWidth="84.0" text="Horário" />
-            <TableColumn prefWidth="121.0" text="Fase" />
-            <TableColumn prefWidth="173.0" text="Seleções" />
-            <TableColumn prefWidth="73.0" text="Placar" />
-            <TableColumn prefWidth="173.0" text="Status" />
+          <TableColumn prefWidth="62.0" text="Data" />
+          <TableColumn prefWidth="62.0" text="Horário" />
+            <TableColumn prefWidth="128.0" text="Estádio" />
+            <TableColumn prefWidth="130.0" text="Fase" />
+            <TableColumn prefWidth="154.0" text="Seleções" />
+            <TableColumn prefWidth="59.0" text="Placar" />
+            <TableColumn prefWidth="148.0" text="Status" />
+            <TableColumn prefWidth="65.0" text="Editar" />
+            <TableColumn prefWidth="66.0" text="Excluir" />
         </columns>
       </TableView>
+      <GridPane layoutX="509.0" layoutY="172.0" prefHeight="30.0" prefWidth="307.0">
+        <columnConstraints>
+            <ColumnConstraints hgrow="SOMETIMES" maxWidth="117.0" minWidth="10.0" prefWidth="117.0" />
+          <ColumnConstraints hgrow="SOMETIMES" maxWidth="93.0" minWidth="10.0" prefWidth="51.0" />
+          <ColumnConstraints hgrow="SOMETIMES" maxWidth="168.0" minWidth="10.0" prefWidth="128.0" />
+        </columnConstraints>
+        <rowConstraints>
+          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+        </rowConstraints>
+         <children>
+            <Button mnemonicParsing="false" prefHeight="26.0" prefWidth="84.0" style="-fx-background-color: #2E7D32;" text="Filtrar" textFill="WHITE" GridPane.halignment="RIGHT">
+               <font>
+                  <Font name="System Bold" size="13.0" />
+               </font></Button>
+            <Button mnemonicParsing="false" style="-fx-background-color: #D32F2F;" text="Limpar filtros" textFill="WHITE" GridPane.columnIndex="2">
+               <font>
+                  <Font name="System Bold" size="13.0" />
+               </font></Button>
+         </children>
+      </GridPane>
+      <Pane layoutY="58.0" prefHeight="546.0" prefWidth="225.0" style="-fx-background-color: #2E7D32;">
+         <children>
+            <Button layoutX="14.0" layoutY="37.0" mnemonicParsing="false" prefHeight="55.0" prefWidth="198.0" style="-fx-background-color: #2E7D32;" text="Cadastro de Partidas" textFill="WHITE">
+               <font>
+                  <Font name="System Bold" size="15.0" />
+               </font>
+            </Button>
+            <Button layoutX="14.0" layoutY="120.0" mnemonicParsing="false" prefHeight="55.0" prefWidth="198.0" style="-fx-background-color: #2E7D32;" text="Registro de Resultados" textFill="WHITE">
+               <font>
+                  <Font name="System Bold" size="15.0" />
+               </font>
+            </Button>
+            <Button layoutX="17.0" layoutY="208.0" mnemonicParsing="false" prefHeight="55.0" prefWidth="198.0" style="-fx-background-color: #3a8c3d;" text="Consulta de Partidas" textFill="WHITE">
+               <font>
+                  <Font name="System Bold" size="15.0" />
+               </font>
+            </Button>
+         </children>
+      </Pane>
+      <Pane prefHeight="58.0" prefWidth="1100.0" style="-fx-background-color: #2E7D32;">
+         <children>
+            <Label layoutX="421.0" layoutY="11.0" text="Consulta de Partidas" textFill="WHITE">
+               <font>
+                  <Font name="System Bold" size="25.0" />
+               </font>
+            </Label>
+         </children>
+         <effect>
+            <DropShadow />
+         </effect>
+      </Pane>
    </children>
 </Pane>
