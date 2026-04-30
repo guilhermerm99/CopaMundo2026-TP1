@@ -5,6 +5,7 @@
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.Separator?>
 <?import javafx.scene.control.TextField?>
+<?import javafx.scene.effect.DropShadow?>
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.GridPane?>
@@ -13,11 +14,11 @@
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.text.Font?>
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="602.0" prefWidth="424.0" xmlns="http://javafx.com/javafx/26" xmlns:fx="http://javafx.com/fxml/1">
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="602.0" prefWidth="700.0" xmlns="http://javafx.com/javafx/26" xmlns:fx="http://javafx.com/fxml/1">
    <bottom>
-      <Pane prefHeight="515.0" prefWidth="424.0" BorderPane.alignment="CENTER">
+      <Pane prefHeight="515.0" prefWidth="700.0" BorderPane.alignment="CENTER">
          <children>
-            <GridPane layoutX="28.0" layoutY="52.0" prefHeight="45.0" prefWidth="371.0">
+            <GridPane layoutX="284.0" layoutY="51.0" prefHeight="45.0" prefWidth="371.0">
               <columnConstraints>
                 <ColumnConstraints hgrow="SOMETIMES" maxWidth="176.0" minWidth="10.0" prefWidth="149.0" />
                 <ColumnConstraints hgrow="SOMETIMES" maxWidth="238.0" minWidth="10.0" prefWidth="222.0" />
@@ -33,7 +34,7 @@
                   <ComboBox prefHeight="26.0" prefWidth="246.0" promptText="Selecionar" GridPane.columnIndex="1" />
                </children>
             </GridPane>
-            <GridPane layoutX="38.0" layoutY="171.0" prefHeight="174.0" prefWidth="348.0">
+            <GridPane layoutX="288.0" layoutY="169.0" prefHeight="174.0" prefWidth="348.0">
               <columnConstraints>
                 <ColumnConstraints hgrow="SOMETIMES" maxWidth="138.0" minWidth="10.0" prefWidth="135.0" />
                 <ColumnConstraints hgrow="SOMETIMES" maxWidth="91.0" minWidth="10.0" prefWidth="78.0" />
@@ -72,7 +73,7 @@
                   </TextField>
                </children>
             </GridPane>
-            <HBox alignment="CENTER" layoutX="1.0" layoutY="363.0" prefHeight="50.0" prefWidth="424.0">
+            <HBox alignment="CENTER" layoutX="252.0" layoutY="368.0" prefHeight="50.0" prefWidth="424.0">
                <children>
                   <Button alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" prefHeight="26.0" prefWidth="70.0" style="-fx-background-color: #2E7D32;" text="Salvar" textFill="WHITE">
                      <font>
@@ -85,23 +86,44 @@
                      </font></Button>
                </children>
             </HBox>
-            <Label layoutX="188.0" layoutY="134.0" text="Placar">
+            <Label layoutX="437.0" layoutY="122.0" text="Placar">
                <font>
                   <Font size="17.0" />
                </font>
             </Label>
+            <Pane layoutY="-4.0" prefHeight="520.0" prefWidth="225.0" style="-fx-background-color: #2E7D32;">
+               <children>
+                  <Button layoutX="11.0" layoutY="45.0" mnemonicParsing="false" prefHeight="45.0" prefWidth="201.0" style="-fx-background-color: #2E7D32;" text="Cadastro de Partidas" textFill="WHITE">
+                     <font>
+                        <Font name="System Bold" size="15.0" />
+                     </font>
+                  </Button>
+                  <Button layoutX="12.0" layoutY="117.0" mnemonicParsing="false" prefHeight="56.0" prefWidth="201.0" style="-fx-background-color: #3a8c3d;" text="Registro de Resultados" textFill="WHITE">
+                     <font>
+                        <Font name="System Bold" size="15.0" />
+                     </font>
+                  </Button>
+                  <Button layoutX="12.0" layoutY="202.0" mnemonicParsing="false" prefHeight="45.0" prefWidth="201.0" style="-fx-background-color: #2E7D32;" text="Consulta de Partidas" textFill="WHITE">
+                     <font>
+                        <Font name="System Bold" size="15.0" />
+                     </font>
+                  </Button>
+               </children></Pane>
          </children>
       </Pane>
    </bottom>
    <top>
       <Pane prefHeight="84.0" prefWidth="424.0" style="-fx-background-color: #2E7D32;" BorderPane.alignment="CENTER">
          <children>
-            <Label alignment="CENTER" layoutX="56.0" layoutY="23.0" prefHeight="42.0" prefWidth="313.0" text="Registro de Resultados" textAlignment="CENTER" textFill="WHITE">
+            <Label alignment="CENTER" layoutX="194.0" layoutY="21.0" prefHeight="42.0" prefWidth="313.0" text="Registro de Resultados" textAlignment="CENTER" textFill="WHITE">
                <font>
                   <Font name="System Bold" size="25.0" />
                </font>
             </Label>
          </children>
+         <effect>
+            <DropShadow />
+         </effect>
       </Pane>
    </top>
 </BorderPane>
