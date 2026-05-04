@@ -16,7 +16,7 @@
             <children>
                 <HBox alignment="CENTER" prefHeight="41.0" prefWidth="379.0" style="-fx-background-color: #2E7D32; -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.2), 12, 0, 0, 3);">
                     <children>
-                        <Label text="Cadastro de Usuário" textFill="WHITE">
+                        <Label text="Editar usuário" textFill="WHITE">
                             <font>
                                 <Font name="System Bold" size="16.0" />
                             </font>
@@ -71,13 +71,13 @@
                                 </VBox>
                                 <VBox prefHeight="275.0" prefWidth="200.0" spacing="15.0">
                                     <children>
-                                        <TextField layoutX="10.0" layoutY="10.0" promptText="Nome completo do usuário" style="-fx-background-radius: 9; -fx-focus-color: #2E7D32; -fx-faint-focus-color: transparent;" />
-                                        <TextField promptText="Somente números" style="-fx-background-radius: 9; -fx-focus-color: #2E7D32; -fx-faint-focus-color: transparent;" />
-                                        <TextField promptText="exemplo@email.com" style="-fx-background-radius: 9; -fx-faint-focus-color: #2E7D32; -fx-focus-color: #061751;" />
-                                        <ComboBox prefWidth="150.0" promptText="Status" style="-fx-background-radius: 9;" />
-                                        <ComboBox prefWidth="150.0" promptText="País" style="-fx-background-radius: 9;" />
-                                        <ComboBox prefWidth="150.0" promptText="Função" style="-fx-background-radius: 9;" />
-                                        <TextField layoutX="10.0" layoutY="10.0" promptText="Confirme sua senha" style="-fx-background-radius: 9; -fx-focus-color: #2E7D32; -fx-faint-focus-color: transparent;" />
+                                        <TextField layoutX="10.0" layoutY="10.0" promptText="Nome completo do usuário" style="-fx-background-radius: 6; -fx-focus-color: #2E7D32; -fx-faint-focus-color: transparent;" />
+                                        <TextField promptText="Somente números" style="-fx-background-radius: 6; -fx-focus-color: #2E7D32; -fx-faint-focus-color: transparent;" />
+                                        <TextField promptText="exemplo@email.com" style="-fx-background-radius: 6; -fx-faint-focus-color: #2E7D32; -fx-focus-color: #061751;" />
+                                        <ComboBox prefWidth="150.0" promptText="Status" style="-fx-background-radius: 6;" />
+                                        <ComboBox prefWidth="150.0" promptText="País" style="-fx-background-radius: 6;" />
+                                        <ComboBox prefWidth="150.0" promptText="Função" style="-fx-background-radius: 6;" />
+                                        <TextField layoutX="10.0" layoutY="10.0" promptText="Confirme sua senha" style="-fx-background-radius: 6; -fx-focus-color: #2E7D32; -fx-faint-focus-color: transparent;" />
                                     </children>
                                 </VBox>
                             </children>
@@ -92,8 +92,8 @@
                         </HBox>
                         <HBox alignment="BOTTOM_RIGHT" prefHeight="26.0" prefWidth="369.0" spacing="10.0">
                             <children>
-                                <Button mnemonicParsing="false" style="-fx-background-radius: 15;" text="Cancelar" />
-                                <Button mnemonicParsing="false" style="-fx-background-color: #008000; -fx-background-radius: 15;" text="Salvar" textFill="WHITE" />
+                                <Button mnemonicParsing="false" style="-fx-background-radius: 6;" text="Cancelar" />
+                                <Button mnemonicParsing="false" style="-fx-background-color: #008000; -fx-background-radius: 6;" text="Salvar" textFill="WHITE" />
                             </children>
                             <VBox.margin>
                                 <Insets right="10.0" />

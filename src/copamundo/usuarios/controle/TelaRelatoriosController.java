@@ -1,4 +1,4 @@
-package copamundo.selecoes.visao;
+package copamundo.usuarios.controle;
 
 public class TelaRelatoriosController {
 }
