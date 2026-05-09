@@ -4,13 +4,16 @@
 <?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.control.DatePicker?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Separator?>
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
 <?import javafx.scene.effect.DropShadow?>
 <?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
 <Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="602.0" prefWidth="1100.0" xmlns="http://javafx.com/javafx/26" xmlns:fx="http://javafx.com/fxml/1">
@@ -43,10 +46,10 @@
                <font>
                   <Font name="System Bold" size="15.0" />
                </font></Label>
-            <ComboBox prefHeight="5.0" prefWidth="190.0" promptText="Selecionar" GridPane.columnIndex="1" GridPane.rowIndex="1" GridPane.valignment="BOTTOM" />
             <ComboBox prefHeight="0.0" prefWidth="190.0" promptText="Selecionar" GridPane.columnIndex="3" GridPane.rowIndex="1" GridPane.valignment="BOTTOM" />
             <ComboBox prefHeight="26.0" prefWidth="190.0" promptText="Selecionar" GridPane.columnIndex="3" GridPane.valignment="BOTTOM" />
             <DatePicker prefHeight="26.0" prefWidth="190.0" promptText="aa/mm/dd" GridPane.columnIndex="1" GridPane.valignment="BOTTOM" />
+            <TextField maxHeight="26.0" maxWidth="190.0" prefHeight="26.0" prefWidth="190.0" promptText="Digite a seleção" GridPane.columnIndex="1" GridPane.rowIndex="1" GridPane.valignment="BOTTOM" />
          </children>
       </GridPane>
       <TableView layoutX="225.0" layoutY="212.0" prefHeight="392.0" prefWidth="875.0">
@@ -82,23 +85,30 @@
                </font></Button>
          </children>
       </GridPane>
-      <Pane layoutY="58.0" prefHeight="546.0" prefWidth="225.0" style="-fx-background-color: #2E7D32;">
+      <Pane layoutY="58.0" prefHeight="546.0" prefWidth="226.0" style="-fx-background-color: #2E7D32;">
          <children>
-            <Button layoutX="14.0" layoutY="37.0" mnemonicParsing="false" prefHeight="55.0" prefWidth="198.0" style="-fx-background-color: #2E7D32;" text="Cadastro de Partidas" textFill="WHITE">
-               <font>
-                  <Font name="System Bold" size="15.0" />
-               </font>
-            </Button>
-            <Button layoutX="14.0" layoutY="120.0" mnemonicParsing="false" prefHeight="55.0" prefWidth="198.0" style="-fx-background-color: #2E7D32;" text="Registro de Resultados" textFill="WHITE">
-               <font>
-                  <Font name="System Bold" size="15.0" />
-               </font>
-            </Button>
-            <Button layoutX="17.0" layoutY="208.0" mnemonicParsing="false" prefHeight="55.0" prefWidth="198.0" style="-fx-background-color: #3a8c3d;" text="Consulta de Partidas" textFill="WHITE">
-               <font>
-                  <Font name="System Bold" size="15.0" />
-               </font>
-            </Button>
+            <VBox alignment="TOP_CENTER" layoutY="4.0" prefHeight="500.0" prefWidth="226.0">
+               <children>
+                  <Separator opacity="0.0" prefHeight="33.0" prefWidth="200.0" />
+                  <Button mnemonicParsing="false" prefHeight="48.0" prefWidth="206.0" style="-fx-background-color: #2E7D32;" text="Cadastro de Partidas" textFill="WHITE">
+                     <font>
+                        <Font name="System Bold" size="15.0" />
+                     </font>
+                  </Button>
+                  <Separator opacity="0.0" prefHeight="28.0" prefWidth="200.0" />
+                  <Button mnemonicParsing="false" prefHeight="48.0" prefWidth="206.0" style="-fx-background-color: #2E7D32;" text="Registro de Resultados" textFill="WHITE">
+                     <font>
+                        <Font name="System Bold" size="15.0" />
+                     </font>
+                  </Button>
+                  <Separator opacity="0.0" prefHeight="28.0" prefWidth="200.0" />
+                  <Button mnemonicParsing="false" prefHeight="48.0" prefWidth="206.0" style="-fx-background-color: rgba(255, 255, 255, 0.10);" text="Consulta de Partidas" textFill="WHITE">
+                     <font>
+                        <Font name="System Bold" size="15.0" />
+                     </font>
+                  </Button>
+               </children>
+            </VBox>
          </children>
       </Pane>
       <Pane prefHeight="58.0" prefWidth="1100.0" style="-fx-background-color: #2E7D32;">
