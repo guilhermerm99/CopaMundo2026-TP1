@@ -9,6 +9,7 @@ public class Partida {
     private Fase fase;
     private StatusPartida status;
     private Resultado resultado;
+    private Arbitros arbitro;
 
     public Partida(String dataPartida, String horarioPartida, Estadio estadioPartida, Selecao selecao1, Selecao selecao2, Fase fase, StatusPartida status) {
         this.dataPartida = dataPartida;
@@ -84,4 +85,7 @@ public class Partida {
         this.status = status;
     }
 
+    public Arbitros getArbitro() { return arbitro; }
+
+    public void setArbitro(Arbitros arbitro) { this.arbitro = arbitro; }
 }
