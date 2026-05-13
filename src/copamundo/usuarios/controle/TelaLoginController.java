@@ -29,11 +29,15 @@ public class TelaLoginController {
     }
 
     private void exibirMensagem(String titulo, String mensagem) {
-        Alerta alerta = new Alert(Alert.AlertType.INFORMATION);
+        Alert alerta = new Alert(Alert.AlertType.INFORMATION);
         alerta.setTitle(titulo);
         alerta.setHeaderText(null);
         alerta.setContentText(mensagem);
         alerta.showAndWait();
+    }
+
+    private boolean verificarSenha(String senha) {
+        return true;
     }
 
     @FXML
