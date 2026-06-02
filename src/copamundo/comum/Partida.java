@@ -3,6 +3,8 @@ import copamundo.estadios.modelo.Arbitro;
 import copamundo.estadios.modelo.Estadio;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 import java.util.UUID;
 
@@ -41,8 +43,25 @@ public class Partida {
         );
     }
 
+
     public String getId() {
         return id;
+    }
+
+    public StatusPartida getStatus() {
+        return status;
+    }
+
+    public void setStatus(StatusPartida status) {
+        this.status = status;
+    }
+
+    public Fase getFase() {
+        return fase;
+    }
+
+    public void setFase(Fase fase) {
+        this.fase = fase;
     }
 
     public String getDataPartida() {

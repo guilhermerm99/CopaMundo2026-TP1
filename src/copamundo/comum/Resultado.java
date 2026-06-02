@@ -1,7 +1,6 @@
 package copamundo.comum;
 
 public class Resultado {
-    private Partida partida;
     private int golsSelecao1;
     private int golsSelecao2;
     private int faltasSelecao1;
@@ -19,8 +18,11 @@ public class Resultado {
     private int impedimentosSelecao1;
     private int impedimentosSelecao2;
 
-    public Resultado(Partida partida, int golsSelecao1, int golsSelecao2, int faltasSelecao1, int faltasSelecao2, int vermelhosSelecao1, int vermelhosSelecao2, int amarelosSelecao1, int amarelosSelecao2, float posseSelecao1, float posseSelecao2, int finalizacoesSelecao1, int finalizacoesSelecao2, int escanteiosSelecao1, int escanteiosSelecao2, int impedimentosSelecao1, int impedimentosSelecao2) {
-        this.partida = partida;
+    public Resultado(int golsSelecao1, int golsSelecao2, int faltasSelecao1, int faltasSelecao2, int vermelhosSelecao1,
+                     int vermelhosSelecao2, int amarelosSelecao1, int amarelosSelecao2, float posseSelecao1, float posseSelecao2,
+                     int finalizacoesSelecao1, int finalizacoesSelecao2, int escanteiosSelecao1, int escanteiosSelecao2, int impedimentosSelecao1,
+                     int impedimentosSelecao2) {
+
         this.golsSelecao1 = golsSelecao1;
         this.golsSelecao2 = golsSelecao2;
         this.faltasSelecao1 = faltasSelecao1;
