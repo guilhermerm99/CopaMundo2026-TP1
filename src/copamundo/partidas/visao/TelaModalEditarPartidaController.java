@@ -4,6 +4,7 @@ import copamundo.comum.Fase;
 import copamundo.comum.Selecao;
 import copamundo.comum.StatusPartida;
 import copamundo.estadios.modelo.Estadio;
+import copamundo.partidas.excecoes.PartidaNaoEncontradaException;
 
 import static copamundo.partidas.repositorio.PartidaRepositorio.listaPartidas;
 
@@ -23,7 +24,7 @@ public class TelaModalEditarPartidaController {
             }
 
         }
-        return "Partida não encontrada.\n";
+        throw new PartidaNaoEncontradaException("Partida não encontrada");
     }
 
 }

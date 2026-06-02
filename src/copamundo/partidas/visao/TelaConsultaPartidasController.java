@@ -11,12 +11,12 @@ import static copamundo.partidas.repositorio.PartidaRepositorio.listaPartidas;
 public class TelaConsultaPartidasController {
 
 
-    public ListarPartidas() {
+    public ArrayList<Partida>  ListarPartidas() {
         return listaPartidas;
     }
 
-    public ListaPorSelecao (Selecao selecao){
-        ArrayList<Partida> listaFiltradaPartidas;
+    public ArrayList<Partida>  ListaPorSelecao (Selecao selecao){
+        ArrayList<Partida> listaFiltradaPartidas = new ArrayList<Partida>();
         for (int i = 0; i < listaPartidas.size(); i++) {
             if (listaPartidas.get(i).getSelecao1().equals(selecao) || listaPartidas.get(i).getSelecao2().equals(selecao)) {
                 listaFiltradaPartidas.add(listaPartidas.get(i));
@@ -25,8 +25,8 @@ public class TelaConsultaPartidasController {
         return listaFiltradaPartidas;
     }
 
-    public ListaPorData (String data){
-        ArrayList<Partida> listaFiltradaPartidas;
+    public ArrayList<Partida> ListaPorData (String data){
+        ArrayList<Partida> listaFiltradaPartidas = new ArrayList<Partida>();
         for (int i = 0; i < listaPartidas.size(); i++) {
             if (listaPartidas.get(i).getDataPartida().equals(data)) {
                 listaFiltradaPartidas.add(listaPartidas.get(i));
@@ -35,23 +35,25 @@ public class TelaConsultaPartidasController {
         return listaFiltradaPartidas;
     }
 
-    public ListaPorFase (Fase fase){
-        ArrayList<Partida> listaFiltradaPartidas;
+    public ArrayList<Partida>  ListaPorFase (Fase fase){
+        ArrayList<Partida> listaFiltradaPartidas = new ArrayList<Partida>();
         for (int i = 0; i < listaPartidas.size(); i++) {
             if (listaPartidas.get(i).getFase().equals(fase)) {
                 listaFiltradaPartidas.add(listaPartidas.get(i));
             }
 
         }
+        return listaFiltradaPartidas;
     }
 
-    public ListaPorStatusPartida (StatusPartida status){
-        ArrayList<Partida> listaFiltradaPartidas;
+    public ArrayList<Partida> ListaPorStatusPartida (StatusPartida status){
+        ArrayList<Partida> listaFiltradaPartidas = new ArrayList<Partida>();
         for (int i = 0; i < listaPartidas.size(); i++) {
             if (listaPartidas.get(i).getStatusPartida().equals(status)) {
                 listaFiltradaPartidas.add(listaPartidas.get(i));
             }
 
         }
+        return listaFiltradaPartidas;
     }
 }

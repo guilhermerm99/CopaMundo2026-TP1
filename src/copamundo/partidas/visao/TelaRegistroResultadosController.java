@@ -1,12 +1,13 @@
 package copamundo.partidas.visao;
 
 import copamundo.comum.Resultado;
+import copamundo.partidas.excecoes.PartidaNaoEncontradaException;
 
 import static copamundo.partidas.repositorio.PartidaRepositorio.listaPartidas;
 
 public class TelaRegistroResultadosController {
 
-    public RegistrarResultado(String idPartida, int golsSelecao1, int golsSelecao2, int faltasSelecao1, int faltasSelecao2, int vermelhosSelecao1,
+    public String RegistrarResultado(String idPartida, int golsSelecao1, int golsSelecao2, int faltasSelecao1, int faltasSelecao2, int vermelhosSelecao1,
                               int vermelhosSelecao2, int amarelosSelecao1, int amarelosSelecao2, float posseSelecao1, float posseSelecao2,
                               int finalizacoesSelecao1, int finalizacoesSelecao2, int escanteiosSelecao1, int escanteiosSelecao2, int impedimentosSelecao1,
                               int impedimentosSelecao2) {
@@ -17,7 +18,9 @@ public class TelaRegistroResultadosController {
                 vermelhosSelecao2, amarelosSelecao1, amarelosSelecao2, posseSelecao1, posseSelecao2, finalizacoesSelecao1, finalizacoesSelecao2,
                 escanteiosSelecao1, escanteiosSelecao2, impedimentosSelecao1, impedimentosSelecao2));
             }
-
+            return "Resultado registrado com sucesso!";
         }
+
+        throw new PartidaNaoEncontradaException("Partida não encontrada");
     }
 }
