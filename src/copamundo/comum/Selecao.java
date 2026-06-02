@@ -20,8 +20,23 @@ public class Selecao {
         this.jogadores = new ArrayList<>();
     }
 
+    public Selecao(String pais, String nacionalidade) {
+        this.pais = pais;
+        this.grupo = "";
+        this.tecnico = "";
+        this.jogadores = new ArrayList<>();
+    }
+
     // Getters e Setters
     public String getPais() {
+        return pais;
+    }
+
+    public String getNome() {
+        return pais;
+    }
+
+    public String getNacionalidade() {
         return pais;
     }
 

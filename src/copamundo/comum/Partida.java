@@ -1,7 +1,13 @@
 package copamundo.comum;
 import copamundo.estadios.modelo.Arbitro;
+import copamundo.estadios.modelo.Estadio;
+
+import java.time.LocalDateTime;
+import java.util.Objects;
+import java.util.UUID;
 
 public class Partida {
+    private final String id;
     private String dataPartida;
     private String horarioPartida;
     private Selecao selecao1;
@@ -13,6 +19,7 @@ public class Partida {
     private Arbitro arbitro;
 
     public Partida(String dataPartida, String horarioPartida, Estadio estadioPartida, Selecao selecao1, Selecao selecao2, Fase fase, StatusPartida status) {
+        this.id = UUID.randomUUID().toString();
         this.dataPartida = dataPartida;
         this.horarioPartida = horarioPartida;
         this.estadioPartida = estadioPartida;
@@ -20,6 +27,22 @@ public class Partida {
         this.selecao2 = selecao2;
         this.fase = fase;
         this.status = status;
+    }
+
+    public Partida(Selecao selecao1, Selecao selecao2, Estadio estadioPartida, LocalDateTime dataHora) {
+        this(
+                dataHora.toLocalDate().toString(),
+                dataHora.toLocalTime().toString(),
+                estadioPartida,
+                selecao1,
+                selecao2,
+                Fase.GRUPOS,
+                StatusPartida.AGENDADA
+        );
+    }
+
+    public String getId() {
+        return id;
     }
 
     public String getDataPartida() {
@@ -36,6 +59,10 @@ public class Partida {
 
     public void setEstadioPartida(Estadio estadioPartida) {
         this.estadioPartida = estadioPartida;
+    }
+
+    public Estadio getEstadio() {
+        return estadioPartida;
     }
 
     public Fase getFasePartida() {
@@ -78,6 +105,14 @@ public class Partida {
         this.selecao2 = selecao2;
     }
 
+    public Selecao getMandante() {
+        return selecao1;
+    }
+
+    public Selecao getVisitante() {
+        return selecao2;
+    }
+
     public StatusPartida getStatusPartida() {
         return status;
     }
@@ -89,4 +124,31 @@ public class Partida {
     public Arbitro getArbitro() { return arbitro; }
 
     public void setArbitro(Arbitro arbitro) { this.arbitro = arbitro; }
+
+    public Arbitro getArbitroPrincipal() {
+        return arbitro;
+    }
+
+    public void setArbitroPrincipal(Arbitro arbitro) {
+        this.arbitro = arbitro;
+    }
+
+    public String getDescricao() {
+        return selecao1.getPais() + " x " + selecao2.getPais();
+    }
+
+    public String getDataHora() {
+        return dataPartida + " " + horarioPartida;
+    }
+
+    public boolean aconteceNoMesmoEstadioEHorario(Partida outra) {
+        return Objects.equals(estadioPartida, outra.estadioPartida)
+                && Objects.equals(dataPartida, outra.dataPartida)
+                && Objects.equals(horarioPartida, outra.horarioPartida);
+    }
+
+    @Override
+    public String toString() {
+        return getDescricao() + " - " + getDataHora();
+    }
 }

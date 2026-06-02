@@ -1,6 +1,10 @@
 package copamundo.estadios.modelo;
 
-public class Arbitro {
+import java.io.Serializable;
+import java.util.Objects;
+
+public final class Arbitro implements Serializable {
+    private static final long serialVersionUID = 1L;
 
     private int id;
     private String nome;
@@ -13,10 +17,10 @@ public class Arbitro {
 
     // Construtor completo
     public Arbitro(int id, String nome, String categoria, String federacao) {
-        this.id = id;
-        this.nome = nome;
-        this.categoria = categoria;
-        this.federacao = federacao;
+        setId(id);
+        setNome(nome);
+        setCategoria(categoria);
+        setFederacao(federacao);
     }
 
     // GETTERS
@@ -40,18 +44,60 @@ public class Arbitro {
     // SETTERS
 
     public void setId(int id) {
+        if (id < 0) {
+            throw new IllegalArgumentException("O id do arbitro nao pode ser negativo.");
+        }
         this.id = id;
     }
 
     public void setNome(String nome) {
-        this.nome = nome;
+        if (nome == null || nome.isBlank()) {
+            throw new IllegalArgumentException("O nome do arbitro e obrigatorio.");
+        }
+        this.nome = nome.trim();
     }
 
     public void setCategoria(String categoria) {
-        this.categoria = categoria;
+        if (categoria == null || categoria.isBlank()) {
+            throw new IllegalArgumentException("A categoria do arbitro e obrigatoria.");
+        }
+        this.categoria = categoria.trim();
     }
 
     public void setFederacao(String federacao) {
-        this.federacao = federacao;
+        if (federacao == null || federacao.isBlank()) {
+            throw new IllegalArgumentException("A federacao/nacionalidade do arbitro e obrigatoria.");
+        }
+        this.federacao = federacao.trim();
+    }
+
+    public String getNacionalidade() {
+        return federacao;
+    }
+
+    public boolean possuiNacionalidade(String nacionalidade) {
+        return federacao != null && federacao.equalsIgnoreCase(nacionalidade);
+    }
+
+    @Override
+    public String toString() {
+        return nome + " (" + federacao + ")";
+    }
+
+    @Override
+    public boolean equals(Object objeto) {
+        if (this == objeto) {
+            return true;
+        }
+        if (!(objeto instanceof Arbitro)) {
+            return false;
+        }
+        Arbitro arbitro = (Arbitro) objeto;
+        return id == arbitro.id;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id);
     }
 }

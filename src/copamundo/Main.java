@@ -9,8 +9,8 @@ import javafx.stage.Stage;
 public class Main extends Application {
     @Override
     public void start(Stage primaryStage) throws Exception {
-        Parent root = FXMLLoader.load(getClass().getResource("/copamundo/selecoes/visao/TelaMenuSelecoesJogadores.fxml"));
-        primaryStage.setTitle("Módulo Seleções e Jogadores");
+        Parent root = FXMLLoader.load(getClass().getResource("/copamundo/estadios/visao/TelaMenuEstadios.fxml"));
+        primaryStage.setTitle("Modulo Estadios e Arbitragem");
         primaryStage.setScene(new Scene(root, 500, 300));
         primaryStage.show();
     }

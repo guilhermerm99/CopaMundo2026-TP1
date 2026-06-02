@@ -13,15 +13,15 @@
         <Insets bottom="15" left="15" right="15" top="15"/>
     </padding>
 
-    <Label text="👨‍⚖️ Cadastro de Árbitros" styleClass="label-titulo"/>
+    <Label text="Cadastro de Arbitros" styleClass="label-titulo"/>
 
     <GridPane hgap="10" vgap="10">
         <Label text="Nome:" GridPane.rowIndex="0" GridPane.columnIndex="0"/>
-        <TextField fx:id="txtNome" promptText="Nome do árbitro"
+        <TextField fx:id="txtNome" promptText="Nome do arbitro"
                    GridPane.rowIndex="0" GridPane.columnIndex="1"/>
 
-        <Label text="Federação:" GridPane.rowIndex="1" GridPane.columnIndex="0"/>
-        <TextField fx:id="txtFederacao" promptText="Federação"
+        <Label text="Federacao/Nacionalidade:" GridPane.rowIndex="1" GridPane.columnIndex="0"/>
+        <TextField fx:id="txtFederacao" promptText="Federacao ou nacionalidade"
                    GridPane.rowIndex="1" GridPane.columnIndex="1"/>
 
         <Label text="Categoria:" GridPane.rowIndex="2" GridPane.columnIndex="0"/>
@@ -30,17 +30,16 @@
     </GridPane>
 
     <HBox spacing="10" alignment="CENTER">
-        <Button text="➕ Novo"/>
-        <Button text="💾 Salvar"/>
-        <Button text="✏️ Editar"/>
-        <Button text="🗑️ Excluir" styleClass="button-cancelar"/>
+        <Button text="Novo" onAction="#limparCampos"/>
+        <Button text="Salvar" onAction="#salvarArbitro"/>
+        <Button text="Limpar" onAction="#limparCampos"/>
     </HBox>
 
     <TableView fx:id="tabelaArbitros" prefHeight="220">
         <columns>
-            <TableColumn text="Nome" prefWidth="180"/>
-            <TableColumn text="Federação" prefWidth="160"/>
-            <TableColumn text="Categoria" prefWidth="120"/>
+            <TableColumn fx:id="colunaNome" text="Nome" prefWidth="180"/>
+            <TableColumn fx:id="colunaFederacao" text="Federacao/Nacionalidade" prefWidth="180"/>
+            <TableColumn fx:id="colunaCategoria" text="Categoria" prefWidth="120"/>
         </columns>
     </TableView>
 
