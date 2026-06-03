@@ -1,12 +1,17 @@
 package copamundo.comum;
 
-public class Jogador {
+import copamundo.selecoes.persistencia.Identificavel;
+import java.io.Serializable;
+
+public class Jogador implements Serializable, Identificavel {
+    private static final long serialVersionUID = 2L;
+
     private String nome;
     private String posicao;
     private int numero;
     private int idade;
     private StatusJogador status;
-    private Selecao selecao;   // referência para a seleção
+    private String paisSelecao;
 
     public Jogador() {}
 
@@ -16,10 +21,18 @@ public class Jogador {
         this.numero = numero;
         this.idade = idade;
         this.status = status;
-        this.selecao = selecao;
+        this.paisSelecao = selecao != null ? selecao.getPais() : "";
     }
 
-    // Getters e Setters
+    /**
+     * ID composto: nome + "|" + paisSelecao.
+     * Evita colisão entre jogadores homônimos de seleções diferentes.
+     */
+    @Override
+    public String getId() {
+        return nome + "|" + paisSelecao;
+    }
+
     public String getNome() { return nome; }
     public void setNome(String nome) { this.nome = nome; }
 
@@ -35,11 +48,26 @@ public class Jogador {
     public StatusJogador getStatus() { return status; }
     public void setStatus(StatusJogador status) { this.status = status; }
 
-    public Selecao getSelecao() { return selecao; }
-    public void setSelecao(Selecao selecao) { this.selecao = selecao; }
+    public String getPaisSelecao() { return paisSelecao; }
+    public void setPaisSelecao(String paisSelecao) { this.paisSelecao = paisSelecao; }
 
-    // Método de conveniência (não obrigatório agora, mas útil)
-    public boolean isDisponivel() {
-        return status == StatusJogador.ATIVO;
+    public String getSelecao() { return paisSelecao; }
+    public void setSelecao(Selecao selecao) {
+        this.paisSelecao = selecao != null ? selecao.getPais() : "";
     }
+
+    /** Exibe o status formatado (para uso na tabela via PropertyValueFactory). */
+    public String getStatusFormatado() {
+        if (status == null) return "";
+        return switch (status) {
+            case ATIVO     -> "✅ Ativo";
+            case LESIONADO -> "🟡 Lesionado";
+            case SUSPENSO  -> "🔴 Suspenso";
+        };
+    }
+
+    public boolean isDisponivel() { return status == StatusJogador.ATIVO; }
+
+    @Override
+    public String toString() { return nome; }
 }

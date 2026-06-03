@@ -57,6 +57,22 @@
     -fx-background-color: white;
 }
 
+.table-row-cell:hover {
+    -fx-background-color: #C8E6C9;
+}
+
+.table-row-cell:selected {
+    -fx-background-color: #2E7D32;
+}
+
+.table-row-cell:selected .text {
+    -fx-fill: white;
+}
+
+.table-row-cell:selected:hover {
+    -fx-background-color: #388E3C;
+}
+
 .text-field:focused, .combo-box:focused {
     -fx-border-color: #2E7D32;
     -fx-border-width: 2px;

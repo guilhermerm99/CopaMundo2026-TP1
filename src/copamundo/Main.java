@@ -9,9 +9,12 @@ import javafx.stage.Stage;
 public class Main extends Application {
     @Override
     public void start(Stage primaryStage) throws Exception {
-        Parent root = FXMLLoader.load(getClass().getResource("/copamundo/selecoes/visao/TelaMenuSelecoesJogadores.fxml"));
-        primaryStage.setTitle("Módulo Seleções e Jogadores");
-        primaryStage.setScene(new Scene(root, 500, 300));
+        Parent root = FXMLLoader.load(
+                getClass().getResource("/copamundo/principal/visao/TelaPrincipal.fxml"));
+        primaryStage.setTitle("Sistema de Gestão — Copa do Mundo 2026");
+        primaryStage.setScene(new Scene(root, 1100, 680));
+        primaryStage.setMinWidth(900);
+        primaryStage.setMinHeight(600);
         primaryStage.show();
     }
 
