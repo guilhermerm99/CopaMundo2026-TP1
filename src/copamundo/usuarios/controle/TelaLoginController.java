@@ -1,47 +1,313 @@
 package copamundo.usuarios.controle;
-import javafx.fxml.FXML;
-import javafx.scene.control.Alert;
-import javafx.scene.control.PasswordField;
-import javafx.scene.control.TextField;
+
+import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
 
 public class TelaLoginController {
-    @FXML private TextField txtEmail;
-    @FXML private PasswordField txtSenha;
+    private String email;
+    private String senha;
+    private Usuario usuarioLogado;
+    private Date ultimoLogin;
 
-    @FXML
-    private void onEntrar() {
-        String email = txtEmail.getText();
-        String senha = txtSenha.getText();
+    private int limiteTentativas = 3;
+    private Map<String, Integer> tentativasLogin = new HashMap<>();
 
-        if (email.isEmpty() || senha.isEmpty()) {
-            exibirMensagem("Erro", "Por favor, preencha todos os campos");
-            return;
+    // construtor vazio
+    public TelaLoginController() {}
+
+    // construtor 2
+    public TelaLoginController(String email, String senha) {
+        this.email = email;
+        this.senha = senha;
+    }
+
+    // setters
+    public void setEmail(String email) {
+        this.email = email;
+    }
+    public void setSenha(String senha) {
+        this.senha = senha;
+    }
+
+    // getters
+    public String getEmail() {
+        return email;
+    }
+    public String getSenha() {
+        return senha;
+    }
+    public Usuario getUsuarioLogado() {
+        return usuarioLogado;
+    }
+    public Date getUltimoLogin() {
+        return ultimoLogin;
+    }
+
+    // métodos
+    public boolean verificarAdministradorInicial() {
+        for (Usuario usuario : Usuario.usuarios) {
+            if (usuario.isAdministrador() && usuario.isAtivo()) {
+                return true;
+            }
         }
-        if (verificarSenha(senha)) {
-            System.out.println("Bem-vindo(a) de volta!");
-            irParaTelaInicial();
-        } else {
-            exibirMensagem("Falha no login", "Senha ou email incorretos.");
+
+        return false;
+    }
+
+    public boolean cadastrado() {
+        return !Usuario.usuarios.isEmpty();
+    }
+
+    public boolean cadastrado(String email) {
+        for (Usuario usuario : Usuario.usuarios) {
+            if (usuario.getEmailUsuario() != null &&
+                    usuario.getEmailUsuario().equalsIgnoreCase(email)) {
+                return true;
+            }
         }
+
+        return false;
     }
 
-    private void irParaTelaInicial() {
+    public void abrirTelaLogin() {
+        System.out.println("Tela de login aberta.");
     }
 
-    private void exibirMensagem(String titulo, String mensagem) {
-        Alert alerta = new Alert(Alert.AlertType.INFORMATION);
-        alerta.setTitle(titulo);
-        alerta.setHeaderText(null);
-        alerta.setContentText(mensagem);
-        alerta.showAndWait();
+    public boolean autenticarUsuario() {
+        return autenticarUsuario(this.email, this.senha);
     }
 
-    private boolean verificarSenha(String senha) {
+    public boolean autenticarUsuario(String email, String senha) {
+        if (email == null || senha == null || email.trim().isEmpty() || senha.trim().isEmpty()) {
+            System.out.println("Preencha e-mail e senha.");
+            return false;
+        }
+
+        Usuario usuario = buscarUsuarioLogin(email);
+
+        if (usuario == null) {
+            System.out.println("E-mail inválido!");
+            registrarTentativaLogin(email);
+            return false;
+        }
+
+        if (!verificarStatusUsuario(usuario)) {
+            System.out.println("Usuário inativo ou bloqueado.");
+            return false;
+        }
+
+        if (!usuario.validarSenha(senha)) {
+            System.out.println("Senha inválida!");
+            registrarTentativaLogin(email);
+            bloquearUsuarioPorTentativas(usuario, email);
+            return false;
+        }
+
+        this.usuarioLogado = usuario;
+        this.email = email;
+        this.senha = senha;
+
+        zerarTentativasLogin(email);
+        registrarUltimoLogin();
+
+        System.out.println("Login realizado com sucesso.");
+        abrirTelaPrincipalPorPerfil(usuario);
+
+        if (usuario.isTrocaSenhaObrigatoria()) {
+            abrirTelaTrocaSenha();
+        }
+
         return true;
     }
 
-    @FXML
-    public void onCadastrarse() {
+    public boolean validarCamposLogin(String email, String senha) {
+        for (Usuario usuario : Usuario.usuarios) {
+            if (usuario.getEmailUsuario() != null &&
+                    usuario.getEmailUsuario().equalsIgnoreCase(email)) {
+                if (usuario.validarSenha(senha)) {
+                    System.out.println("Dados de login válidos");
+                    return true;
+                } else {
+                    System.out.println("Senha inválida!");
+                    return false;
+                }
+            }
+        }
+
+        System.out.println("E-mail inválido!");
+        return false;
     }
 
+    // usar de usuário
+    public boolean verificarSenha(String senha) {
+        if (usuarioLogado == null) {
+            return false;
+        }
+
+        return usuarioLogado.validarSenha(senha);
+    }
+
+    public boolean verificarStatusUsuario() {
+        if (usuarioLogado == null) {
+            return false;
+        }
+
+        return verificarStatusUsuario(usuarioLogado);
+    }
+
+    public boolean verificarStatusUsuario(Usuario usuario) {
+        if (usuario == null) {
+            return false;
+        }
+
+        return usuario.isAtivo();
+    }
+
+    public Usuario.Funcao verificarPerfilUsuario() {
+        if (usuarioLogado == null) {
+            return null;
+        }
+
+        return usuarioLogado.getFuncao();
+    }
+
+    public void registrarTentativaLogin() {
+        registrarTentativaLogin(this.email);
+    }
+
+    public void registrarTentativaLogin(String email) {
+        if (email == null) {
+            return;
+        }
+
+        email = email.trim().toLowerCase();
+
+        int tentativas = 0;
+
+        if (tentativasLogin.containsKey(email)) {
+            tentativas = tentativasLogin.get(email);
+        }
+
+        tentativas++;
+        tentativasLogin.put(email, tentativas);
+
+        System.out.println("Tentativa de login registrada: " + tentativas);
+    }
+
+    public boolean bloquearUsuarioPorTentativas() {
+        if (usuarioLogado == null) {
+            return false;
+        }
+
+        return bloquearUsuarioPorTentativas(usuarioLogado, usuarioLogado.getEmailUsuario());
+    }
+
+    public boolean bloquearUsuarioPorTentativas(Usuario usuario, String email) {
+        if (usuario == null || email == null) {
+            return false;
+        }
+
+        email = email.trim().toLowerCase();
+
+        int tentativas = 0;
+
+        if (tentativasLogin.containsKey(email)) {
+            tentativas = tentativasLogin.get(email);
+        }
+
+        if (tentativas >= limiteTentativas) {
+            usuario.setStatus(Usuario.Status.INATIVO);
+            System.out.println("Usuário bloqueado por excesso de tentativas.");
+            return true;
+        }
+
+        return false;
+    }
+
+    public void zerarTentativasLogin() {
+        zerarTentativasLogin(this.email);
+    }
+
+    public void zerarTentativasLogin(String email) {
+        if (email == null) {
+            return;
+        }
+
+        tentativasLogin.remove(email.trim().toLowerCase());
+    }
+
+    public void registrarUltimoLogin() {
+        this.ultimoLogin = new Date();
+    }
+
+    public void abrirTelaPrincipalPorPerfil() {
+        if (usuarioLogado != null) {
+            abrirTelaPrincipalPorPerfil(usuarioLogado);
+        }
+    }
+
+    public void abrirTelaPrincipalPorPerfil(Usuario usuario) {
+        if (usuario == null) {
+            System.out.println("Nenhum usuário logado.");
+            return;
+        }
+
+        if (usuario.getFuncao() == Usuario.Funcao.ADMINISTRADOR) {
+            System.out.println("Abrindo tela principal do administrador.");
+        } else if (usuario.getFuncao() == Usuario.Funcao.ORGANIZADOR) {
+            System.out.println("Abrindo tela principal do organizador.");
+        } else if (usuario.getFuncao() == Usuario.Funcao.ARBITRO) {
+            System.out.println("Abrindo tela principal do árbitro.");
+        } else {
+            System.out.println("Perfil de usuário não reconhecido.");
+        }
+    }
+
+    public void abrirTelaTrocaSenha() {
+        System.out.println("Abrindo tela de troca de senha.");
+    }
+
+    public boolean redefinirSenha(String senhaAtual, String novaSenha) {
+        if (usuarioLogado == null) {
+            return false;
+        }
+
+        if (!usuarioLogado.validarSenha(senhaAtual)) {
+            System.out.println("Senha atual incorreta.");
+            return false;
+        }
+
+        if (novaSenha == null || novaSenha.length() < 6 || novaSenha.length() > 20) {
+            System.out.println("Nova senha inválida.");
+            return false;
+        }
+
+        usuarioLogado.setSenhaUsuario(novaSenha);
+        System.out.println("Senha redefinida com sucesso.");
+        return true;
+    }
+
+    public void sairDoSistema() {
+        usuarioLogado = null;
+        email = null;
+        senha = null;
+
+        System.out.println("Usuário saiu do sistema.");
+    }
+
+    private Usuario buscarUsuarioLogin(String email) {
+        if (email == null) {
+            return null;
+        }
+
+        for (Usuario usuario : Usuario.usuarios) {
+            if (usuario.getEmailUsuario() != null &&
+                    usuario.getEmailUsuario().equalsIgnoreCase(email.trim())) {
+                return usuario;
+            }
+        }
+
+        return null;
+    }
 }
