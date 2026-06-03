@@ -1,15 +1,11 @@
 package copamundo.partidas.visao;
 
-import java.time.LocalDateTime;
-import java.util.ArrayList;
-
 import copamundo.comum.Fase;
 import copamundo.comum.Partida;
 import copamundo.comum.Selecao;
 import copamundo.comum.StatusPartida;
 import copamundo.comum.Estadio;
-import copamundo.comum.PartidaNaoEncontradaException;
-import copamundo.partidas.repositorio.PartidaRepositorio;
+import copamundo.partidas.excecoes.PartidaNaoEncontradaException;
 
 import static copamundo.partidas.repositorio.PartidaRepositorio.listaPartidas;
 

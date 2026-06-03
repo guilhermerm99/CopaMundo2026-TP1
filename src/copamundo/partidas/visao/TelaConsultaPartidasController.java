@@ -11,11 +11,11 @@ import static copamundo.partidas.repositorio.PartidaRepositorio.listaPartidas;
 public class TelaConsultaPartidasController {
 
 
-    public ArrayList<Partida>  ListarPartidas() {
+    public ArrayList<Partida>  listarPartidas() {
         return listaPartidas;
     }
 
-    public ArrayList<Partida>  ListaPorSelecao (Selecao selecao){
+    public ArrayList<Partida>  listaPorSelecao (Selecao selecao){
         ArrayList<Partida> listaFiltradaPartidas = new ArrayList<Partida>();
         for (int i = 0; i < listaPartidas.size(); i++) {
             if (listaPartidas.get(i).getSelecao1().equals(selecao) || listaPartidas.get(i).getSelecao2().equals(selecao)) {
@@ -25,7 +25,7 @@ public class TelaConsultaPartidasController {
         return listaFiltradaPartidas;
     }
 
-    public ArrayList<Partida> ListaPorData (String data){
+    public ArrayList<Partida> listaPorData (String data){
         ArrayList<Partida> listaFiltradaPartidas = new ArrayList<Partida>();
         for (int i = 0; i < listaPartidas.size(); i++) {
             if (listaPartidas.get(i).getDataPartida().equals(data)) {
@@ -35,7 +35,7 @@ public class TelaConsultaPartidasController {
         return listaFiltradaPartidas;
     }
 
-    public ArrayList<Partida>  ListaPorFase (Fase fase){
+    public ArrayList<Partida>  listaPorFase (Fase fase){
         ArrayList<Partida> listaFiltradaPartidas = new ArrayList<Partida>();
         for (int i = 0; i < listaPartidas.size(); i++) {
             if (listaPartidas.get(i).getFase().equals(fase)) {
@@ -46,7 +46,7 @@ public class TelaConsultaPartidasController {
         return listaFiltradaPartidas;
     }
 
-    public ArrayList<Partida> ListaPorStatusPartida (StatusPartida status){
+    public ArrayList<Partida> listaPorStatusPartida (StatusPartida status){
         ArrayList<Partida> listaFiltradaPartidas = new ArrayList<Partida>();
         for (int i = 0; i < listaPartidas.size(); i++) {
             if (listaPartidas.get(i).getStatusPartida().equals(status)) {

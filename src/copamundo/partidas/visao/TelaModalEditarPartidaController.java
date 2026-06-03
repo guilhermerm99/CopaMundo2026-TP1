@@ -4,13 +4,13 @@ import copamundo.comum.Fase;
 import copamundo.comum.Selecao;
 import copamundo.comum.StatusPartida;
 import copamundo.comum.Estadio;
-import copamundo.comum.PartidaNaoEncontradaException;
+import copamundo.partidas.excecoes.PartidaNaoEncontradaException;
 
 import static copamundo.partidas.repositorio.PartidaRepositorio.listaPartidas;
 
 public class TelaModalEditarPartidaController {
 
-    public String EditarPartida(String id, String dataPartida, String horarioPartida, Estadio estadioPartida, Selecao selecao1, Selecao selecao2, Fase fase, StatusPartida status) {
+    public String editarPartida(String id, String dataPartida, String horarioPartida, Estadio estadioPartida, Selecao selecao1, Selecao selecao2, Fase fase, StatusPartida status) {
         for (int i = 0; i < listaPartidas.size(); i++) {
             if (listaPartidas.get(i).getId().equals(id)) {
                 listaPartidas.get(i).setDataPartida(dataPartida);
