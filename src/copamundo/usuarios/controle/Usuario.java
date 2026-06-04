@@ -1,12 +1,16 @@
 package copamundo.usuarios.controle;
 
+import copamundo.usuarios.excecoes.PersistenciaException;
+import copamundo.usuarios.persistencia.PersistenciaUsuarios;
+
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.Date;
 import java.util.List;
 import java.util.Random;
+import java.io.Serializable;
 
-public class Usuario {
+public class Usuario implements Serializable {
     private int idUsuario;
     private String nomeUsuario;
     private String emailUsuario;
@@ -28,6 +32,8 @@ public class Usuario {
     private boolean trocaSenhaObrigatoria;
 
     static List<Usuario> usuarios = new ArrayList<>();
+
+    private static final long serialVersionUID = 1L;
 
     // construtor 1
     public Usuario(int idUsuario, String nomeUsuario, String emailUsuario,
@@ -448,6 +454,13 @@ public class Usuario {
         if (validarDadosUsuario() && !usuarios.contains(this)) {
             usuarios.add(this);
         }
+
+        try {
+            PersistenciaUsuarios persistencia = new PersistenciaUsuarios();
+            persistencia.salvarUsuario(this);
+        } catch (PersistenciaException e) {
+            System.out.println("erro ao salvar usuário: " + e.getMessage());
+        }
     }
 
     public List<Usuario> atualizarTabelaUsuarios() {
@@ -540,6 +553,13 @@ public class Usuario {
             this.senhaUsuario = senhaUsuario;
             this.trocaSenhaObrigatoria = true;
             registrarAlteracaoUsuario();
+
+            try {
+                PersistenciaUsuarios persistencia = new PersistenciaUsuarios();
+                persistencia.salvarUsuario(this);
+            } catch (PersistenciaException e) {
+                System.out.println("erro ao salvar nova senha: " + e.getMessage());
+            }
             return true;
         }
 

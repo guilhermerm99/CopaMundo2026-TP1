@@ -1,8 +1,12 @@
 package copamundo.usuarios.controle;
 
+import copamundo.usuarios.excecoes.PersistenciaException;
+import copamundo.usuarios.persistencia.PersistenciaUsuarios;
+
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Optional;
 
 public class TelaLoginController {
     private String email;
@@ -45,6 +49,21 @@ public class TelaLoginController {
     }
 
     // métodos
+    public Usuario fazerLogin(String email, String senha) {
+        try {
+            PersistenciaUsuarios persistencia = new PersistenciaUsuarios();
+            Optional<Usuario> usuarioEncontrado = persistencia.buscarUsuarioPorEmail(email);
+
+            if (usuarioEncontrado.isPresent() && usuarioEncontrado.get().validarSenha(senha)) {
+                return usuarioEncontrado.get();
+            }
+        } catch (PersistenciaException e) {
+            System.out.println("erro ao fazer login: " + e.getMessage());
+        }
+
+        return null;
+    }
+
     public boolean verificarAdministradorInicial() {
         for (Usuario usuario : Usuario.usuarios) {
             if (usuario.isAdministrador() && usuario.isAtivo()) {

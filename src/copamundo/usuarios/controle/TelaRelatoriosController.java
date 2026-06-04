@@ -5,6 +5,12 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.IOException;
 
 public class TelaRelatoriosController {
     private int id;
@@ -22,6 +28,11 @@ public class TelaRelatoriosController {
 
     private Date dataInicio;
     private Date dataFim;
+
+    private String conteudoUltimoRelatorio = "";
+
+    private static final String PASTA_RELATORIOS = "relatorios";
+    private static final String ARQUIVO_HISTORICO = "relatorios/historico_relatorios.txt";
 
     private List<PartidaRelatorio> partidas = new ArrayList<>();
     private List<String> historicoRelatorios = new ArrayList<>();
@@ -54,35 +65,27 @@ public class TelaRelatoriosController {
         public String getSelecaoA() {
             return selecaoA;
         }
-
         public String getSelecaoB() {
             return selecaoB;
         }
-
         public int getGolsSelecaoA() {
             return golsSelecaoA;
         }
-
         public int getGolsSelecaoB() {
             return golsSelecaoB;
         }
-
         public String getStatus() {
             return status;
         }
-
         public String getFase() {
             return fase;
         }
-
         public String getEstadio() {
             return estadio;
         }
-
         public Date getDataPartida() {
             return dataPartida;
         }
-
         public int getPublico() {
             return publico;
         }
@@ -91,7 +94,6 @@ public class TelaRelatoriosController {
     public int getId() {
         return id;
     }
-
     public void setId(int id) {
         this.id = id;
     }
@@ -100,7 +102,6 @@ public class TelaRelatoriosController {
     public String getTipoRelatorio() {
         return tipoRelatorio;
     }
-
     public void setTipoRelatorio(String tipoRelatorio) {
         this.tipoRelatorio = tipoRelatorio;
     }
@@ -109,7 +110,6 @@ public class TelaRelatoriosController {
     public Date getDataGeracao() {
         return dataGeracao;
     }
-
     public void setDataGeracao(Date dataGeracao) {
         this.dataGeracao = dataGeracao;
     }
@@ -118,7 +118,6 @@ public class TelaRelatoriosController {
     public String getResponsavel() {
         return responsavel;
     }
-
     public void setResponsavel(String responsavel) {
         this.responsavel = responsavel;
     }
@@ -127,7 +126,6 @@ public class TelaRelatoriosController {
     public int getNumeroPartidas() {
         return numeroPartidas;
     }
-
     public void setNumeroPartidas(int numeroPartidas) {
         this.numeroPartidas = numeroPartidas;
     }
@@ -136,7 +134,6 @@ public class TelaRelatoriosController {
     public int getPublicoTotal() {
         return publicoTotal;
     }
-
     public void setPublicoTotal(int publicoTotal) {
         this.publicoTotal = publicoTotal;
     }
@@ -145,7 +142,6 @@ public class TelaRelatoriosController {
     public double getMediaPublico() {
         return mediaPublico;
     }
-
     public void setMediaPublico(double mediaPublico) {
         this.mediaPublico = mediaPublico;
     }
@@ -154,7 +150,6 @@ public class TelaRelatoriosController {
     public String getDesempenhoSelecoes() {
         return desempenhoSelecoes;
     }
-
     public void setDesempenhoSelecoes(String desempenhoSelecoes) {
         this.desempenhoSelecoes = desempenhoSelecoes;
     }
@@ -163,7 +158,6 @@ public class TelaRelatoriosController {
     public String getCaminhoPdf() {
         return caminhoPdf;
     }
-
     public void setCaminhoPdf(String caminhoPdf) {
         this.caminhoPdf = caminhoPdf;
     }
@@ -172,7 +166,6 @@ public class TelaRelatoriosController {
     public boolean isGerado() {
         return gerado;
     }
-
     public void setGerado(boolean gerado) {
         this.gerado = gerado;
     }
@@ -180,7 +173,6 @@ public class TelaRelatoriosController {
     public Date getDataInicio() {
         return dataInicio;
     }
-
     public void setDataInicio(Date dataInicio) {
         this.dataInicio = dataInicio;
     }
@@ -188,7 +180,6 @@ public class TelaRelatoriosController {
     public Date getDataFim() {
         return dataFim;
     }
-
     public void setDataFim(Date dataFim) {
         this.dataFim = dataFim;
     }
@@ -196,7 +187,6 @@ public class TelaRelatoriosController {
     public List<PartidaRelatorio> getPartidas() {
         return partidas;
     }
-
     public List<String> getHistoricoRelatorios() {
         return historicoRelatorios;
     }
@@ -249,18 +239,23 @@ public class TelaRelatoriosController {
         dataGeracao = new Date();
 
         String tipo = tipoRelatorio.trim().toLowerCase();
+        StringBuilder relatorio = new StringBuilder();
 
         if (tipo.contains("usuario") || tipo.contains("usuário")) {
-            gerarRelatorioUsuarios();
+            relatorio.append(gerarRelatorioUsuarios());
         } else if (tipo.contains("partida")) {
-            gerarRelatorioPartidas();
+            relatorio.append(gerarRelatorioPartidas());
         } else if (tipo.contains("desempenho") || tipo.contains("selecao") || tipo.contains("seleção")) {
-            gerarRelatorioDesempenhoSelecoes();
+            relatorio.append(gerarRelatorioDesempenhoSelecoes());
         } else {
-            gerarRelatorioUsuarios();
-            gerarRelatorioPartidas();
-            gerarRelatorioDesempenhoSelecoes();
+            relatorio.append(gerarRelatorioUsuarios());
+            relatorio.append("\n\n");
+            relatorio.append(gerarRelatorioPartidas());
+            relatorio.append("\n\n");
+            relatorio.append(gerarRelatorioDesempenhoSelecoes());
         }
+
+        conteudoUltimoRelatorio = relatorio.toString();
 
         gerado = true;
         registrarGeracaoRelatorio();
@@ -297,13 +292,27 @@ public class TelaRelatoriosController {
 
     public String exportarRelatorio() {
         if (!gerado) {
-            gerarRelatorio();
+            boolean conseguiuGerar = gerarRelatorio();
+
+            if (!conseguiuGerar) {
+                System.out.println("não foi possível exportar o relatório.");
+                return null;
+            }
         }
 
-        caminhoPdf = "relatorios/relatorio_" + id + ".pdf";
+        criarPastaRelatorios();
 
-        System.out.println("relatório exportado para: " + caminhoPdf);
-        return caminhoPdf;
+        caminhoPdf = PASTA_RELATORIOS + File.separator + "relatorio_" + id + ".txt";
+
+        boolean salvou = salvarTextoEmArquivo(caminhoPdf, conteudoUltimoRelatorio);
+
+        if (salvou) {
+            System.out.println("relatório exportado para: " + caminhoPdf);
+            return caminhoPdf;
+        }
+
+        System.out.println("erro ao exportar relatório.");
+        return null;
     }
 
     public void registrarGeracaoRelatorio() {
@@ -314,6 +323,7 @@ public class TelaRelatoriosController {
         }
 
         historicoRelatorios.add(registro);
+        salvarLinhaNoArquivo(ARQUIVO_HISTORICO, registro);
     }
 
     // relatórios de usuários
@@ -700,11 +710,9 @@ public class TelaRelatoriosController {
         if (partida == null || selecao == null) {
             return false;
         }
-
         if (partida.getSelecaoA() != null && partida.getSelecaoA().equalsIgnoreCase(selecao)) {
             return true;
         }
-
         if (partida.getSelecaoB() != null && partida.getSelecaoB().equalsIgnoreCase(selecao)) {
             return true;
         }
@@ -716,11 +724,9 @@ public class TelaRelatoriosController {
         if (!participouDaPartida(partida, selecao)) {
             return false;
         }
-
         if (partida.getSelecaoA().equalsIgnoreCase(selecao)) {
             return partida.getGolsSelecaoA() > partida.getGolsSelecaoB();
         }
-
         if (partida.getSelecaoB().equalsIgnoreCase(selecao)) {
             return partida.getGolsSelecaoB() > partida.getGolsSelecaoA();
         }
@@ -732,11 +738,9 @@ public class TelaRelatoriosController {
         if (!participouDaPartida(partida, selecao)) {
             return false;
         }
-
         if (partida.getSelecaoA().equalsIgnoreCase(selecao)) {
             return partida.getGolsSelecaoA() < partida.getGolsSelecaoB();
         }
-
         if (partida.getSelecaoB().equalsIgnoreCase(selecao)) {
             return partida.getGolsSelecaoB() < partida.getGolsSelecaoA();
         }
