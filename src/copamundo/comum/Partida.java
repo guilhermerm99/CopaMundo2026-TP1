@@ -8,6 +8,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 import java.util.UUID;
+import copamundo.estadios.modelo.Arbitro;
+
 
 public class Partida implements Serializable {
     private static final long serialVersionUID = 1L;
@@ -22,7 +24,7 @@ public class Partida implements Serializable {
     private Resultado resultado;
     private Arbitro arbitro;
 
-    public Partida(String dataPartida, String horarioPartida, Estadio estadioPartida, Selecao selecao1, Selecao selecao2, Fase fase, StatusPartida status) {
+    public Partida(String dataPartida, String horarioPartida, Estadio estadioPartida, Selecao selecao1, Selecao selecao2, Fase fase, StatusPartida status, Arbitro arbitro) {
         this.id = UUID.randomUUID().toString();
         this.dataPartida = dataPartida;
         this.horarioPartida = horarioPartida;
@@ -31,6 +33,7 @@ public class Partida implements Serializable {
         this.selecao2 = selecao2;
         this.fase = fase;
         this.status = status;
+        this.arbitro = arbitro;
     }
 
     public Partida(Selecao selecao1, Selecao selecao2, Estadio estadioPartida, LocalDateTime dataHora) {

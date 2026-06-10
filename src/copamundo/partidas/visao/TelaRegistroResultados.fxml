@@ -15,7 +15,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="602.0" prefWidth="700.0" xmlns="http://javafx.com/javafx/26" xmlns:fx="http://javafx.com/fxml/1">
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="602.0" prefWidth="700.0" xmlns="http://javafx.com/javafx/26" xmlns:fx="http://javafx.com/fxml/1" fx:controller="copamundo.partidas.visao.TelaRegistroResultadosController">
    <bottom>
       <Pane prefHeight="515.0" prefWidth="700.0" BorderPane.alignment="CENTER">
          <children>
@@ -34,13 +34,13 @@
                      <font>
                         <Font name="System Bold" size="15.0" />
                      </font></Label>
-                  <ComboBox prefHeight="26.0" prefWidth="246.0" promptText="Selecionar" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                  <ComboBox fx:id="seletorPartida" prefHeight="26.0" prefWidth="246.0" promptText="Selecionar" GridPane.columnIndex="1" GridPane.rowIndex="2" />
                   <Label alignment="TOP_RIGHT" prefHeight="21.0" prefWidth="178.0" text="Selecione a fase:  " textAlignment="RIGHT" GridPane.halignment="RIGHT">
                      <font>
                         <Font name="System Bold" size="15.0" />
                      </font>
                   </Label>
-                  <ComboBox prefHeight="26.0" prefWidth="246.0" promptText="Selecionar" GridPane.columnIndex="1" />
+                  <ComboBox fx:id="seletorFase" prefHeight="26.0" prefWidth="246.0" promptText="Selecionar" GridPane.columnIndex="1" />
                </children>
             </GridPane>
             <GridPane alignment="CENTER" layoutX="244.0" layoutY="100.0" prefHeight="334.0" prefWidth="432.0">
@@ -62,12 +62,12 @@
                   <RowConstraints maxHeight="93.0" minHeight="10.0" prefHeight="53.0" vgrow="SOMETIMES" />
               </rowConstraints>
                <children>
-                  <Label alignment="CENTER" prefHeight="63.0" prefWidth="135.0" text="&lt; Seleção 1 &gt;" textAlignment="CENTER" GridPane.columnIndex="1">
+                  <Label fx:id="labelSelecao1" alignment="CENTER" prefHeight="63.0" prefWidth="135.0" text="&lt; Seleção 1 &gt;" textAlignment="CENTER" GridPane.columnIndex="1">
                      <font>
                         <Font size="16.0" />
                      </font>
                   </Label>
-                  <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="73.0" prefWidth="135.0" text="&lt; Seleção 2 &gt;" textAlignment="CENTER" GridPane.columnIndex="3">
+                  <Label fx:id="labelSelecao2" alignment="CENTER" contentDisplay="CENTER" prefHeight="73.0" prefWidth="135.0" text="&lt; Seleção 2 &gt;" textAlignment="CENTER" GridPane.columnIndex="3">
                      <font>
                         <Font size="16.0" />
                      </font>
@@ -82,8 +82,8 @@
                         <Font name="System Bold" size="15.0" />
                      </font>
                   </Label>
-                  <TextField alignment="CENTER" maxWidth="70.0" prefWidth="70.0" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="1" />
-                  <TextField alignment="CENTER" maxWidth="70.0" GridPane.columnIndex="3" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER" />
+                  <TextField fx:id="textoGols1" alignment="CENTER" maxWidth="70.0" prefWidth="70.0" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="1" />
+                  <TextField fx:id="textoGols2" alignment="CENTER" maxWidth="70.0" GridPane.columnIndex="3" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER" />
                   <Label alignment="CENTER_RIGHT" text="Faltas:   " GridPane.halignment="RIGHT" GridPane.rowIndex="2">
                      <font>
                         <Font name="System Bold" size="15.0" />
@@ -119,30 +119,30 @@
                         <Font name="System Bold" size="15.0" />
                      </font>
                   </Label>
-                  <TextField alignment="CENTER" maxWidth="70.0" prefWidth="70.0" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="2" GridPane.valignment="CENTER" />
-                  <TextField alignment="CENTER" maxWidth="70.0" prefWidth="70.0" GridPane.columnIndex="3" GridPane.halignment="CENTER" GridPane.rowIndex="2" GridPane.valignment="CENTER" />
-                  <TextField alignment="CENTER" maxWidth="70.0" prefWidth="70.0" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="3" GridPane.valignment="CENTER" />
-                  <TextField alignment="CENTER" maxWidth="70.0" prefWidth="70.0" GridPane.columnIndex="3" GridPane.halignment="CENTER" GridPane.rowIndex="3" GridPane.valignment="CENTER" />
-                  <TextField alignment="CENTER" maxWidth="70.0" prefWidth="70.0" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="4" GridPane.valignment="CENTER" />
-                  <TextField alignment="CENTER" maxWidth="70.0" prefWidth="70.0" GridPane.columnIndex="3" GridPane.halignment="CENTER" GridPane.rowIndex="4" GridPane.valignment="CENTER" />
-                  <TextField alignment="CENTER" maxWidth="70.0" prefWidth="70.0" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="5" GridPane.valignment="CENTER" />
-                  <TextField alignment="CENTER" maxWidth="70.0" prefWidth="70.0" GridPane.columnIndex="3" GridPane.halignment="CENTER" GridPane.rowIndex="5" GridPane.valignment="CENTER" />
-                  <TextField alignment="CENTER" maxWidth="70.0" prefWidth="70.0" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="6" GridPane.valignment="CENTER" />
-                  <TextField alignment="CENTER" maxWidth="70.0" prefWidth="70.0" GridPane.columnIndex="3" GridPane.halignment="CENTER" GridPane.rowIndex="6" GridPane.valignment="CENTER" />
-                  <TextField alignment="CENTER" maxWidth="70.0" prefWidth="70.0" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="7" GridPane.valignment="CENTER" />
-                  <TextField alignment="CENTER" maxWidth="70.0" prefWidth="70.0" GridPane.columnIndex="3" GridPane.halignment="CENTER" GridPane.rowIndex="7" GridPane.valignment="CENTER" />
-                  <TextField alignment="CENTER" maxWidth="70.0" prefWidth="70.0" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="8" GridPane.valignment="CENTER" />
-                  <TextField alignment="CENTER" maxWidth="70.0" prefWidth="70.0" GridPane.columnIndex="3" GridPane.halignment="CENTER" GridPane.rowIndex="8" GridPane.valignment="CENTER" />
+                  <TextField fx:id="textoFaltas1" alignment="CENTER" maxWidth="70.0" prefWidth="70.0" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="2" GridPane.valignment="CENTER" />
+                  <TextField fx:id="textoFaltas2" alignment="CENTER" maxWidth="70.0" prefWidth="70.0" GridPane.columnIndex="3" GridPane.halignment="CENTER" GridPane.rowIndex="2" GridPane.valignment="CENTER" />
+                  <TextField fx:id="textoVermelhos1" alignment="CENTER" maxWidth="70.0" prefWidth="70.0" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="3" GridPane.valignment="CENTER" />
+                  <TextField fx:id="textoVermelhos2" alignment="CENTER" maxWidth="70.0" prefWidth="70.0" GridPane.columnIndex="3" GridPane.halignment="CENTER" GridPane.rowIndex="3" GridPane.valignment="CENTER" />
+                  <TextField fx:id="textoAmarelos1" alignment="CENTER" maxWidth="70.0" prefWidth="70.0" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="4" GridPane.valignment="CENTER" />
+                  <TextField fx:id="textoAmarelos2" alignment="CENTER" maxWidth="70.0" prefWidth="70.0" GridPane.columnIndex="3" GridPane.halignment="CENTER" GridPane.rowIndex="4" GridPane.valignment="CENTER" />
+                  <TextField fx:id="textoPosse1" alignment="CENTER" maxWidth="70.0" prefWidth="70.0" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="5" GridPane.valignment="CENTER" />
+                  <TextField fx:id="textoPosse2" alignment="CENTER" maxWidth="70.0" prefWidth="70.0" GridPane.columnIndex="3" GridPane.halignment="CENTER" GridPane.rowIndex="5" GridPane.valignment="CENTER" />
+                  <TextField fx:id="textoFinalizacoes1" alignment="CENTER" maxWidth="70.0" prefWidth="70.0" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="6" GridPane.valignment="CENTER" />
+                  <TextField fx:id="textoFinalizacoes2" alignment="CENTER" maxWidth="70.0" prefWidth="70.0" GridPane.columnIndex="3" GridPane.halignment="CENTER" GridPane.rowIndex="6" GridPane.valignment="CENTER" />
+                  <TextField fx:id="textoEscanteios1" alignment="CENTER" maxWidth="70.0" prefWidth="70.0" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="7" GridPane.valignment="CENTER" />
+                  <TextField fx:id="textoEscanteios2" alignment="CENTER" maxWidth="70.0" prefWidth="70.0" GridPane.columnIndex="3" GridPane.halignment="CENTER" GridPane.rowIndex="7" GridPane.valignment="CENTER" />
+                  <TextField fx:id="textoImpedimentos1" alignment="CENTER" maxWidth="70.0" prefWidth="70.0" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="8" GridPane.valignment="CENTER" />
+                  <TextField fx:id="textoImpedimentos2" alignment="CENTER" maxWidth="70.0" prefWidth="70.0" GridPane.columnIndex="3" GridPane.halignment="CENTER" GridPane.rowIndex="8" GridPane.valignment="CENTER" />
                </children>
             </GridPane>
             <HBox alignment="CENTER" layoutX="252.0" layoutY="451.0" prefHeight="50.0" prefWidth="424.0">
                <children>
-                  <Button alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" prefHeight="26.0" prefWidth="70.0" style="-fx-background-color: #2E7D32;" text="Salvar" textFill="WHITE">
+                  <Button fx:id="btnSalvarResultado" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#salvarResultado" prefHeight="26.0" prefWidth="70.0" style="-fx-background-color: #2E7D32;" text="Salvar" textFill="WHITE">
                      <font>
                         <Font name="System Bold" size="13.0" />
                      </font></Button>
                   <Separator opacity="0.0" orientation="VERTICAL" prefHeight="50.0" prefWidth="69.0" />
-                  <Button alignment="CENTER" contentDisplay="RIGHT" mnemonicParsing="false" style="-fx-background-color: #D32F2F;" text="Cancelar" textAlignment="CENTER" textFill="WHITE">
+                  <Button fx:id="btnCancelarRegistro" alignment="CENTER" contentDisplay="RIGHT" mnemonicParsing="false" onAction="#irTelaMenuInicial" style="-fx-background-color: #D32F2F;" text="Cancelar" textAlignment="CENTER" textFill="WHITE">
                      <font>
                         <Font name="System Bold" size="13.0" />
                      </font></Button>
@@ -153,7 +153,7 @@
                   <VBox alignment="TOP_CENTER" prefHeight="500.0" prefWidth="226.0">
                      <children>
                         <Separator opacity="0.0" prefHeight="50.0" prefWidth="200.0" />
-                        <Button mnemonicParsing="false" prefHeight="55.0" prefWidth="206.0" style="-fx-background-color: #2E7D32;" text="Cadastro de Partidas" textFill="WHITE">
+                        <Button fx:id="btnTelaCadastroPartidas" mnemonicParsing="false" onAction="#irTelaCadastroPartidas" prefHeight="55.0" prefWidth="206.0" style="-fx-background-color: #2E7D32;" text="Cadastro de Partidas" textFill="WHITE">
                            <font>
                               <Font name="System Bold" size="15.0" />
                            </font>
@@ -165,7 +165,7 @@
                            </font>
                         </Button>
                         <Separator opacity="0.0" prefHeight="28.0" prefWidth="200.0" />
-                        <Button mnemonicParsing="false" prefHeight="55.0" prefWidth="206.0" style="-fx-background-color: #2E7D32;" text="Consulta de Partidas" textFill="WHITE">
+                        <Button fx:id="btnTelaConsultaPartidas" mnemonicParsing="false" onAction="#irTelaConsultaPartidas" prefHeight="55.0" prefWidth="206.0" style="-fx-background-color: #2E7D32;" text="Consulta de Partidas" textFill="WHITE">
                            <font>
                               <Font name="System Bold" size="15.0" />
                            </font>
