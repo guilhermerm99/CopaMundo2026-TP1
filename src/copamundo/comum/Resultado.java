@@ -1,7 +1,7 @@
 package copamundo.comum;
 
 public class Resultado {
-    private int golsSelecao1;
+    private int golsSelecao1 = -1;
     private int golsSelecao2;
     private int faltasSelecao1;
     private int faltasSelecao2;
@@ -137,14 +137,6 @@ public class Resultado {
         this.impedimentosSelecao2 = impedimentosSelecao2;
     }
 
-    public Partida getPartida() {
-        return partida;
-    }
-
-    public void setPartida(Partida partida) {
-        this.partida = partida;
-    }
-
     public float getPosseSelecao1() {
         return posseSelecao1;
     }
@@ -175,5 +167,13 @@ public class Resultado {
 
     public void setVermelhosSelecao2(int vermelhosSelecao2) {
         this.vermelhosSelecao2 = vermelhosSelecao2;
+    }
+
+    @Override
+    public String toString() {
+        if (golsSelecao1 == -1) {
+            return "Não finalizada";
+        }
+        return golsSelecao1 + " x " + golsSelecao2;
     }
 }

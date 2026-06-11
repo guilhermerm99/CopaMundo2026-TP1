@@ -15,13 +15,13 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="602.0" prefWidth="1100.0" xmlns="http://javafx.com/javafx/26" xmlns:fx="http://javafx.com/fxml/1" fx:controller="copamundo.partidas.visao.TelaConsultaPartidasController">
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="602.0" prefWidth="1251.0" xmlns="http://javafx.com/javafx/26" xmlns:fx="http://javafx.com/fxml/1" fx:controller="copamundo.partidas.visao.TelaConsultaPartidasController">
    <children>
-      <GridPane layoutX="237.0" layoutY="52.0" prefHeight="103.0" prefWidth="800.0">
+      <GridPane layoutX="264.0" layoutY="61.0" prefHeight="94.0" prefWidth="915.0">
         <columnConstraints>
           <ColumnConstraints hgrow="SOMETIMES" maxWidth="344.0" minWidth="10.0" prefWidth="147.0" />
-          <ColumnConstraints hgrow="SOMETIMES" maxWidth="582.0" minWidth="10.0" prefWidth="272.0" />
-            <ColumnConstraints hgrow="SOMETIMES" maxWidth="582.0" minWidth="10.0" prefWidth="120.0" />
+          <ColumnConstraints hgrow="SOMETIMES" maxWidth="582.0" minWidth="10.0" prefWidth="321.0" />
+            <ColumnConstraints hgrow="SOMETIMES" maxWidth="582.0" minWidth="10.0" prefWidth="73.0" />
             <ColumnConstraints hgrow="SOMETIMES" maxWidth="582.0" minWidth="10.0" prefWidth="257.0" />
         </columnConstraints>
         <rowConstraints>
@@ -45,29 +45,30 @@
                <font>
                   <Font name="System Bold" size="15.0" />
                </font></Label>
-            <ComboBox fx:id="seletorStatus" prefHeight="0.0" prefWidth="190.0" promptText="Selecionar" GridPane.columnIndex="3" GridPane.rowIndex="1" GridPane.valignment="BOTTOM" />
-            <ComboBox fx:id="SeletorFase" prefHeight="26.0" prefWidth="190.0" promptText="Selecionar" GridPane.columnIndex="3" GridPane.valignment="BOTTOM" />
-            <TextField fx:id="textoData" maxWidth="190.0" prefHeight="26.0" prefWidth="190.0" promptText="Informe a data" GridPane.columnIndex="1" GridPane.valignment="BOTTOM" />
-            <ComboBox fx:id="seletorSelecao" prefWidth="190.0" promptText="Selecionar" GridPane.columnIndex="1" GridPane.rowIndex="1" GridPane.valignment="BOTTOM" />
+            <ComboBox fx:id="seletorStatus" prefHeight="0.0" prefWidth="200.0" promptText="Selecionar" GridPane.columnIndex="3" GridPane.rowIndex="1" GridPane.valignment="BOTTOM" />
+            <ComboBox fx:id="seletorFase" prefHeight="26.0" prefWidth="200.0" promptText="Selecionar" GridPane.columnIndex="3" GridPane.valignment="BOTTOM" />
+            <TextField fx:id="textoData" maxWidth="200.0" prefHeight="26.0" prefWidth="190.0" promptText="Informe a data" GridPane.columnIndex="1" GridPane.valignment="BOTTOM" />
+            <ComboBox fx:id="seletorSelecao" prefWidth="200.0" promptText="Selecionar" GridPane.columnIndex="1" GridPane.rowIndex="1" GridPane.valignment="BOTTOM" />
          </children>
       </GridPane>
-      <TableView fx:id="tabelaInteira" layoutX="225.0" layoutY="212.0" prefHeight="392.0" prefWidth="875.0">
+      <TableView fx:id="tabelaInteira" layoutX="225.0" layoutY="212.0" prefHeight="390.0" prefWidth="1026.0">
         <columns>
           <TableColumn fx:id="colunaData" prefWidth="89.0" text="Data" />
           <TableColumn fx:id="colunaHorario" prefWidth="67.0" text="Horário" />
             <TableColumn fx:id="colunaEstadio" prefWidth="135.0" text="Estádio" />
             <TableColumn fx:id="colunaFase" prefWidth="151.0" text="Fase" />
             <TableColumn fx:id="colunaSelecoes" prefWidth="190.0" text="Seleções" />
-            <TableColumn fx:id="colunaPlacar" prefWidth="93.0" text="Placar" />
-            <TableColumn fx:id="colunaStatus" prefWidth="149.0" text="Status" />
+            <TableColumn fx:id="colunaPlacar" prefWidth="121.0" text="Placar" />
+            <TableColumn fx:id="colunaStatus" prefWidth="156.0" text="Status" />
+            <TableColumn fx:id="colunaEditar" prefWidth="59.0" text="Editar" />
+            <TableColumn fx:id="colunaExcluir" prefWidth="58.0" text="Excluir" />
         </columns>
       </TableView>
-      <GridPane layoutX="403.0" layoutY="170.0" prefHeight="30.0" prefWidth="469.0">
+      <GridPane layoutX="530.0" layoutY="173.0" prefHeight="30.0" prefWidth="469.0">
         <columnConstraints>
-            <ColumnConstraints hgrow="SOMETIMES" maxWidth="117.0" minWidth="10.0" prefWidth="117.0" />
-          <ColumnConstraints hgrow="SOMETIMES" maxWidth="93.0" minWidth="10.0" prefWidth="62.0" />
-          <ColumnConstraints hgrow="SOMETIMES" maxWidth="168.0" minWidth="10.0" prefWidth="164.0" />
-            <ColumnConstraints hgrow="SOMETIMES" maxWidth="168.0" minWidth="10.0" prefWidth="109.0" />
+            <ColumnConstraints hgrow="SOMETIMES" maxWidth="160.0" minWidth="10.0" prefWidth="160.0" />
+          <ColumnConstraints hgrow="SOMETIMES" maxWidth="106.0" minWidth="10.0" prefWidth="72.0" />
+          <ColumnConstraints hgrow="SOMETIMES" maxWidth="263.0" minWidth="10.0" prefWidth="237.0" />
         </columnConstraints>
         <rowConstraints>
           <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
@@ -81,11 +82,6 @@
                <font>
                   <Font name="System Bold" size="13.0" />
                </font></Button>
-            <Button fx:id="btnTelaEditarPartida" mnemonicParsing="false" onAction="#irTelaEditarPartida" prefHeight="26.0" prefWidth="153.0" style="-fx-background-color: #023E8A;" text="Editar Partida" textFill="WHITE" GridPane.columnIndex="3">
-               <font>
-                  <Font name="System Bold" size="13.0" />
-               </font>
-            </Button>
          </children>
       </GridPane>
       <Pane layoutY="58.0" prefHeight="546.0" prefWidth="226.0" style="-fx-background-color: #2E7D32;">
@@ -114,7 +110,7 @@
             </VBox>
          </children>
       </Pane>
-      <Pane prefHeight="58.0" prefWidth="1100.0" style="-fx-background-color: #2E7D32;">
+      <Pane prefHeight="58.0" prefWidth="1251.0" style="-fx-background-color: #2E7D32;">
          <children>
             <Label layoutX="421.0" layoutY="11.0" text="Consulta de Partidas" textFill="WHITE">
                <font>

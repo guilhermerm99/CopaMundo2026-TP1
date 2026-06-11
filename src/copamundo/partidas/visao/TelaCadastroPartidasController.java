@@ -5,16 +5,24 @@ import copamundo.comum.Partida;
 import copamundo.comum.Selecao;
 import copamundo.comum.StatusPartida;
 import copamundo.comum.Estadio;
-import copamundo.estadios.controle.ArbitroController;
 import copamundo.estadios.controle.EstadioController;
+import copamundo.estadios.controle.ArbitroController;
 import copamundo.estadios.excecoes.PersistenciaException;
 import copamundo.estadios.excecoes.RegraNegocioException;
 import copamundo.estadios.modelo.Arbitro;
 import copamundo.partidas.excecoes.PartidaMesmaDataException;
 import copamundo.partidas.repositorio.PartidaRepositorio;
 import copamundo.partidas.excecoes.PartidaNaoEncontradaException;
+import copamundo.selecoes.persistencia.PersistenciaSelecoesJogadores;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Node;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
+import javafx.scene.control.Alert;
 import javafx.scene.control.ComboBox;
+import javafx.stage.Stage;
+
 import java.util.List;
 import java.util.ArrayList;
 import java.awt.*;
@@ -23,7 +31,6 @@ import java.io.IOException;
 //import static copamundo.partidas.repositorio.PartidaRepositorio.listaPartidas; RETIRAR DEPOIS !!!!!!!!!
 
 public class TelaCadastroPartidasController {
-    // AJUSTAR MÉTODOS - GARANTIR QUE NÃO ESTÃO REPETIDOS
 
     @FXML
     private Button btnCancelarCadastro;
@@ -38,13 +45,13 @@ public class TelaCadastroPartidasController {
     private Button btnTelaRegistroResultado;
 
     @FXML
-    private ComboBox<?> seletorEstadio;
+    private ComboBox<copamundo.estadios.modelo.Estadio> seletorEstadio;
 
     @FXML
-    private ComboBox<?> seletorSelecao1;
+    private ComboBox<Selecao> seletorSelecao1;
 
     @FXML
-    private ComboBox<?> seletorSelecao2;
+    private ComboBox<Selecao> seletorSelecao2;
 
     @FXML
     private TextField textoData;
@@ -53,26 +60,182 @@ public class TelaCadastroPartidasController {
     private TextField textoHorario;
 
     @FXML
-    private ComboBox<?> seletorArbitro;
+    private ComboBox<Arbitro> seletorArbitro;
 
     @FXML
-    void irTelaConsultaPartidas(javafx.event.ActionEvent event) throws IOException {
+    private ComboBox<Fase> seletorFase;
 
+    @FXML
+    private ComboBox<StatusPartida> seletorStatusPartida;
+
+    public void initialize() {
+
+        try {
+            ArbitroController arbitroObjeto = new ArbitroController();
+            PersistenciaSelecoesJogadores selecoesObjeto = new PersistenciaSelecoesJogadores();
+            EstadioController estadioObjeto = new EstadioController();
+
+            List<Selecao> listaSelecoes = selecoesObjeto.carregarSelecoes();
+            List<copamundo.estadios.modelo.Estadio> listaEstadios = estadioObjeto.listarEstadios();
+            List<Arbitro> listaArbitros = arbitroObjeto.listarArbitros();
+
+            seletorFase.getItems().addAll(Fase.values());
+            seletorStatusPartida.getItems().addAll(StatusPartida.values());
+            seletorSelecao1.getItems().addAll(listaSelecoes);
+            seletorSelecao2.getItems().addAll(listaSelecoes);
+            seletorEstadio.getItems().addAll(listaEstadios);
+            seletorArbitro.getItems().addAll(listaArbitros);
+
+        } catch (PersistenciaException e) {
+            e.printStackTrace();
+            System.out.println("Erro ao acessar lista.");
+        }
+
+
+    }
+
+    @FXML
+    void irTelaConsultaPartidas(javafx.event.ActionEvent event) {
+        try {
+            FXMLLoader loader = new FXMLLoader(
+                    getClass().getResource("TelaConsultaPartidas.fxml"));
+
+            Parent root = loader.load();
+
+            Stage stage = (Stage) ((Node) event.getSource())
+                    .getScene()
+                    .getWindow();
+
+            Scene scene = new Scene(root);
+
+            stage.setScene(scene);
+            stage.show();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     @FXML
     void irTelaRegistroResultado(javafx.event.ActionEvent event) throws IOException {
+        try {
+            FXMLLoader loader = new FXMLLoader(
+                    getClass().getResource("TelaRegistroResultados.fxml"));
 
+            Parent root = loader.load();
+
+            Stage stage = (Stage) ((Node) event.getSource())
+                    .getScene()
+                    .getWindow();
+
+            Scene scene = new Scene(root);
+
+            stage.setScene(scene);
+            stage.show();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     @FXML
     void salvarPartida(javafx.event.ActionEvent event) {
+        try {
+            Fase fase = seletorFase.getValue();
+            StatusPartida status = seletorStatusPartida.getValue();
+            Selecao selecao1 = seletorSelecao1.getValue();
+            Selecao selecao2 = seletorSelecao2.getValue();
+            copamundo.estadios.modelo.Estadio estadio = seletorEstadio.getValue();
+            String data = textoData.getText();
+            String horario = textoHorario.getText();
+            Arbitro arbitro = seletorArbitro.getValue();
 
+            if (data == "") {
+                Alert alert = new Alert(Alert.AlertType.WARNING);
+                alert.setContentText("Informe uma data!");
+                alert.showAndWait();
+                return;
+            }
+            if (horario == "") {
+                Alert alert = new Alert(Alert.AlertType.WARNING);
+                alert.setContentText("Informe um horário!");
+                alert.showAndWait();
+                return;
+            }
+            if (estadio == null) {
+                Alert alert = new Alert(Alert.AlertType.WARNING);
+                alert.setContentText("Selecione um estádio!");
+                alert.showAndWait();
+                return;
+            }
+            if ((selecao1 == null) || (selecao2 == null)) {
+                Alert alert = new Alert(Alert.AlertType.WARNING);
+                alert.setContentText("Selecione as seleções!");
+                alert.showAndWait();
+                return;
+            }
+            if (fase == null) {
+                Alert alert = new Alert(Alert.AlertType.WARNING);
+                alert.setContentText("Selecione a fase!");
+                alert.showAndWait();
+                return;
+            }
+            if (status == null) {
+                Alert alert = new Alert(Alert.AlertType.WARNING);
+                alert.setContentText("Selecione o status da partida!");
+                alert.showAndWait();
+                return;
+            }
+
+            List<Partida> listaPartidas = PartidaRepositorio.carregarListaPartidas();
+
+            if (selecao1 != selecao2) {
+                for (Partida p : listaPartidas) {
+                    if ((p.getSelecao1() == selecao1) || (p.getSelecao1() == selecao2) || (p.getSelecao2() == selecao1) || (p.getSelecao2() == selecao2)) {
+                        if (p.getDataPartida().equals(data)) {
+                            Alert alert = new Alert(Alert.AlertType.WARNING);
+                            alert.setContentText("Uma seleção já possui partida nesta data!");
+                            alert.showAndWait();
+                            throw new PartidaMesmaDataException("Uma seleção já possui partida nesta data.");
+                        }
+                    }
+                }
+                Partida partida = new Partida(data, horario, estadio, selecao1, selecao2, fase, status, arbitro);
+
+                estadioController.validarEstadioDisponivel(partida);
+                designarArbitroPrincipal(partida, arbitro);
+
+                listaPartidas.add(partida);
+            }
+
+            PartidaRepositorio.salvarListaPartidas(listaPartidas);
+
+        } catch (IOException | ClassNotFoundException e) {
+            e.printStackTrace();
+        } catch (PersistenciaException e) {
+            throw new RuntimeException(e);
+        } catch (RegraNegocioException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     @FXML
-    void voltarMenuInicial(javafx.event.ActionEvent event) throws IOException {
+    void voltarMenuInicial(javafx.event.ActionEvent event) {
+        try {
+            FXMLLoader loader = new FXMLLoader(
+                    getClass().getResource("/copamundo/principal/visao/TelaPrincipal.fxml"));
 
+            Parent root = loader.load();
+
+            Stage stage = (Stage) ((Node) event.getSource())
+                    .getScene()
+                    .getWindow();
+
+            Scene scene = new Scene(root);
+
+            stage.setScene(scene);
+            stage.show();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
 
@@ -87,9 +250,10 @@ public class TelaCadastroPartidasController {
 
         arbitroController.validarNacionalidadeParaPartida(arbitro, partida);
         partida.setArbitroPrincipal(arbitro);
-        //repositorioPartidas.salvar(partida);
+
     }
 
+    /*
     public void CadastrarPartida(String dataPartida, String horarioPartida, Estadio estadioPartida, Selecao selecao1, Selecao selecao2, Fase fase,
                                  StatusPartida status, Arbitro arbitro) throws IOException, ClassNotFoundException, PersistenciaException, RegraNegocioException {
         List<Partida> listaPartidas = PartidaRepositorio.carregarListaPartidas();
@@ -133,6 +297,6 @@ public class TelaCadastroPartidasController {
         }
 
     }
-
+*/
 
 }

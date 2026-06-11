@@ -82,13 +82,13 @@
                         <Font size="15.0" />
                      </font>
                   </Label>
-                  <ComboBox prefHeight="26.0" prefWidth="320.0" promptText="Selecione a fase" GridPane.columnIndex="1" GridPane.rowIndex="6" GridPane.valignment="BOTTOM" />
+                  <ComboBox fx:id="seletorFase" prefHeight="26.0" prefWidth="320.0" promptText="Selecione a fase" GridPane.columnIndex="1" GridPane.rowIndex="6" GridPane.valignment="BOTTOM" />
                   <Label alignment="BOTTOM_RIGHT" prefHeight="140.0" prefWidth="106.0" text="Status da   &#10;Partida:   " textAlignment="RIGHT" GridPane.rowIndex="7">
                      <font>
                         <Font size="15.0" />
                      </font>
                   </Label>
-                  <ComboBox prefHeight="26.0" prefWidth="320.0" promptText="Selecione o status" GridPane.columnIndex="1" GridPane.rowIndex="7" GridPane.valignment="BOTTOM" />
+                  <ComboBox fx:id="seletorStatusPartida" prefHeight="26.0" prefWidth="320.0" promptText="Selecione o status" GridPane.columnIndex="1" GridPane.rowIndex="7" GridPane.valignment="BOTTOM" />
                   <ComboBox fx:id="seletorEstadio" prefWidth="320.0" promptText="Selecione o estádio" GridPane.columnIndex="1" GridPane.rowIndex="2" GridPane.valignment="BOTTOM" />
                   <ComboBox fx:id="seletorSelecao1" prefWidth="320.0" promptText="Selecione a seleção" GridPane.columnIndex="1" GridPane.rowIndex="3" GridPane.valignment="BOTTOM" />
                   <ComboBox fx:id="seletorSelecao2" prefWidth="320.0" promptText="Selecione a seleção" GridPane.columnIndex="1" GridPane.rowIndex="4" GridPane.valignment="BOTTOM" />
