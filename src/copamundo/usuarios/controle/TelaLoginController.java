@@ -2,6 +2,17 @@ package copamundo.usuarios.controle;
 
 import copamundo.usuarios.excecoes.PersistenciaException;
 import copamundo.usuarios.persistencia.PersistenciaUsuarios;
+import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Node;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
+import javafx.scene.control.PasswordField;
+import javafx.scene.control.TextField;
+import javafx.stage.Stage;
+import javafx.event.ActionEvent;
+
+import java.io.IOException;
 
 import java.util.Date;
 import java.util.HashMap;
@@ -9,9 +20,47 @@ import java.util.Map;
 import java.util.Optional;
 
 public class TelaLoginController {
+    @FXML
+    private TextField campoEmail;
+    @FXML
+    private PasswordField campoSenha;
     private String email;
     private String senha;
-    private Usuario usuarioLogado;
+    @FXML
+    private void entrar() {
+        this.email = campoEmail.getText();
+        this.senha = campoSenha.getText();
+
+        autenticarUsuario(this.email, this.senha);
+
+    }
+
+    @FXML
+    private void telaCadastro(ActionEvent event) throws IOException {
+        FXMLLoader loader = new FXMLLoader(
+                getClass().getResource("/copamundo/usuarios/visao/TelaCadastro.fxml")
+        );
+
+        Parent root = loader.load();
+
+        Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+        stage.setScene(new Scene(root));
+        stage.show();
+    }
+
+    @FXML
+    private void telaUsuarios(ActionEvent event) throws IOException {
+        FXMLLoader loader = new FXMLLoader(
+                getClass().getResource("/copamundo/usuarios/visao/TelaUsuarios.fxml")
+        );
+
+        Parent root = loader.load();
+
+        Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+        stage.setScene(new Scene(root));
+        stage.show();
+    }
+    private static Usuario usuarioLogado;
     private Date ultimoLogin;
 
     private int limiteTentativas = 3;
@@ -21,10 +70,10 @@ public class TelaLoginController {
     public TelaLoginController() {}
 
     // construtor 2
-    public TelaLoginController(String email, String senha) {
+    /*public TelaLoginController(String email, String senha) {
         this.email = email;
         this.senha = senha;
-    }
+    }*/
 
     // setters
     public void setEmail(String email) {
@@ -41,7 +90,7 @@ public class TelaLoginController {
     public String getSenha() {
         return senha;
     }
-    public Usuario getUsuarioLogado() {
+    public static Usuario getUsuarioLogado() {
         return usuarioLogado;
     }
     public Date getUltimoLogin() {
@@ -123,7 +172,7 @@ public class TelaLoginController {
             return false;
         }
 
-        this.usuarioLogado = usuario;
+        usuarioLogado = usuario;
         this.email = email;
         this.senha = senha;
 
@@ -272,14 +321,21 @@ public class TelaLoginController {
             return;
         }
 
-        if (usuario.getFuncao() == Usuario.Funcao.ADMINISTRADOR) {
-            System.out.println("Abrindo tela principal do administrador.");
-        } else if (usuario.getFuncao() == Usuario.Funcao.ORGANIZADOR) {
-            System.out.println("Abrindo tela principal do organizador.");
-        } else if (usuario.getFuncao() == Usuario.Funcao.ARBITRO) {
-            System.out.println("Abrindo tela principal do árbitro.");
-        } else {
-            System.out.println("Perfil de usuário não reconhecido.");
+        try {
+            FXMLLoader loader = new FXMLLoader(
+                    getClass().getResource("/copamundo/usuarios/visao/TelaUsuarios.fxml")
+            );
+            Parent root = loader.load();
+
+            Stage stage = (Stage) campoEmail.getScene().getWindow();
+            stage.setScene(new Scene(root));
+            stage.show();
+
+            System.out.println("Tela principal aberta para o perfil: " + usuario.getFuncao());
+
+        } catch (IOException e) {
+            System.out.println("Erro ao carregar a tela principal: " + e.getMessage());
+            e.printStackTrace();
         }
     }
 

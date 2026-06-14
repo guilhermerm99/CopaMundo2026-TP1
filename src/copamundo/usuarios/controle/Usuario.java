@@ -3,29 +3,72 @@ package copamundo.usuarios.controle;
 import copamundo.usuarios.excecoes.PersistenciaException;
 import copamundo.usuarios.persistencia.PersistenciaUsuarios;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.Date;
 import java.util.List;
 import java.util.Random;
-import java.io.Serializable;
 
 public class Usuario implements Serializable {
-    private int idUsuario;
     private String nomeUsuario;
     private String emailUsuario;
     private String senhaUsuario;
 
     public enum Status {
-        ATIVO, INATIVO
+        TODOS("Todos os status"),ATIVO("Ativo"), INATIVO("Inativo");
+
+        private final String nomeExibicao;
+
+        Status(String nomeExibicao) {
+            this.nomeExibicao = nomeExibicao;
+        }
+
+        @Override
+        public String toString() {
+            return nomeExibicao;
+        }
     }
 
     public enum Funcao {
-        ADMINISTRADOR, ORGANIZADOR, ARBITRO
+        TODOS("Todas as funções"),ADMINISTRADOR("Administrador"), ORGANIZADOR("Organizador"), ARBITRO("Árbitro");
+
+        private final String nomeExibicao;
+
+        Funcao(String nomeExibicao) {
+            this.nomeExibicao = nomeExibicao;
+        }
+
+        @Override
+        public String toString() {
+            return nomeExibicao;
+        }
+    }
+
+    public enum Pais {
+        TODOS("Todos os países"), AFRICADOSUL("África do Sul"), ALEMANHA("Alemanha"), ARGELIA("Argélia"), ARABIASAUDITA("Arábia Saudita"), ARGENTINA("Argentina"), AUSTRALIA("Austrália"), AUSTRIA("Áustria"),
+        BELGICA("Bélgica"), BOSNIAEHERZEGOVINA("Bósnia e Hezergorvina"), BRASIL("Brasil"), CABOVERDE("Cabo Verde"), CANADA("Canadá"), CATAR("Catar"), COLOMBIA("Colômbia"),
+        COREIADOSUL("Coréia do Sul"), COSTADOMARFIM("Costa do Marfim"), CROACIA("Croácia"), CURACAO("Curaçao"), ECUADOR("Equador"), EGITO("Egito"), ESCOCIA("Escócia"),
+        ESPANHA("Espanha"), ESTADOSUNIDOS("Estados Unidos"), FRANCA("França"), GANA("Gana"), HAITI("Haiti"), HOLANDA("Holanda"), INGLATERRA("Inglaterra"), IRA("Irã"),
+        IRAQUE("Iraque"), JAPAO("Japão"), JORDANIA("Jordânia"), MARROCOS("Marrocos"), MEXICO("México"), NORUEGA("Noruega"), NOVAZELANDIA("Nova Zelândia"), PANAMA("Panamá"),
+        PARAGUAI("Paraguai"), PORTUGAL("Portugal"), RDDOCONGO("República do Congo"), REPUBLICATCHECA("República Tcheca"), SENEGAL("Senegal"), SUICA("Suíça"), SUECA("Suécia"),
+        TUNISIA("Tunísia"), TURQUIA("Turquia"), URUGUAI("Uruguai"), UZBEQUISTAO("Uzbequistão");
+
+        private final String nomeExibicao;
+
+        Pais(String nomeExibicao) {
+            this.nomeExibicao = nomeExibicao;
+        }
+
+        @Override
+        public String toString() {
+            return nomeExibicao;
+        }
     }
 
     private Funcao funcao;
     private Status status;
+    private Pais pais;
     private String Cpf;
     private Date dataCadastro;
     private Usuario criadoPor;
@@ -33,115 +76,110 @@ public class Usuario implements Serializable {
 
     static List<Usuario> usuarios = new ArrayList<>();
 
-    private static final long serialVersionUID = 1L;
+    static {
+        copamundo.usuarios.persistencia.PersistenciaUsuarios persistencia = new copamundo.usuarios.persistencia.PersistenciaUsuarios();
+        try {
+            // Carrega o arquivo dados/usuarios.dat para a memória
+            usuarios = persistencia.carregarUsuarios();
+            System.out.println("Usuários carregados do arquivo com sucesso. Total: " + usuarios.size());
+        } catch (Exception e) {
+            System.out.println("Arquivo não encontrado ou erro ao ler. Iniciando lista vazia.");
+            usuarios = new ArrayList<>();
+        }
 
-    // construtor 1
-    public Usuario(int idUsuario, String nomeUsuario, String emailUsuario,
-                   String senhaUsuario, Status status, Funcao funcao, String Cpf,
-                   Date dataCadastro, Usuario criadoPor) {
-        this.idUsuario = idUsuario;
-        this.nomeUsuario = nomeUsuario;
-        this.emailUsuario = emailUsuario;
-        this.senhaUsuario = senhaUsuario;
-        this.status = status;
-        this.funcao = funcao;
-        this.Cpf = Cpf;
-        this.dataCadastro = dataCadastro;
-        this.criadoPor = criadoPor;
+        if (usuarios.isEmpty()) {
+            Usuario adminPadrao = new Usuario(
+                    "Administrador",
+                    "admin@copa.com", // E-mail para logar
+                    "123456",         // Senha para logar
+                    Status.ATIVO,
+                    Pais.BRASIL,
+                    Funcao.ADMINISTRADOR,
+                    "00000000000"
+            );
+
+            try {
+                persistencia.salvarUsuario(adminPadrao);
+                usuarios = persistencia.carregarUsuarios(); // Atualiza a lista na memória
+            } catch (Exception e) {
+                System.out.println("Erro ao criar admin padrão: " + e.getMessage());
+            }
+        }
     }
 
-    // construtor 2
-    public Usuario(int idUsuario, String nomeUsuario, String emailUsuario,
-                   String senhaUsuario, Status status, Funcao funcao, String Cpf,
-                   Date dataCadastro) {
-        this.idUsuario = idUsuario;
+    private static final long serialVersionUID = 1L;
+
+    public Usuario(String nomeUsuario, String emailUsuario, String senhaUsuario, Status status, Pais pais, Funcao funcao, String Cpf) {
         this.nomeUsuario = nomeUsuario;
         this.emailUsuario = emailUsuario;
         this.senhaUsuario = senhaUsuario;
         this.status = status;
+        this.pais = pais;
         this.funcao = funcao;
         this.Cpf = Cpf;
-        this.dataCadastro = dataCadastro;
+        this.dataCadastro = new Date();
     }
 
     // setters
-    public void setIdUsuario(int idUsuario) {
-        this.idUsuario = idUsuario;
-    }
-
     public void setNomeUsuario(String nomeUsuario) {
         this.nomeUsuario = nomeUsuario;
     }
-
     public void setEmailUsuario(String emailUsuario) {
         this.emailUsuario = emailUsuario;
     }
-
     public void setSenhaUsuario(String senhaUsuario) {
         this.senhaUsuario = senhaUsuario;
     }
-
     public void setStatus(Status status) {
         this.status = status;
     }
-
     public void setFuncao(Funcao funcao) {
         this.funcao = funcao;
     }
-
+    public void setPais(Pais pais) {
+        this.pais = pais;
+    }
     public void setCpf(String Cpf) {
         this.Cpf = Cpf;
     }
-
     public void setDataCadastro(Date dataCadastro) {
         this.dataCadastro = dataCadastro;
     }
-
     public void setCriadoPor(Usuario criadoPor) {
         this.criadoPor = criadoPor;
     }
 
     // getters
-    public int getIdUsuario() {
-        return idUsuario;
-    }
-
     public String getNomeUsuario() {
         return nomeUsuario;
     }
-
     public String getEmailUsuario() {
         return emailUsuario;
     }
-
     public Status getStatus() {
         return status;
     }
-
+    public Pais getPais() {
+        return pais;
+    }
     public Funcao getFuncao() {
         return funcao;
     }
-
     public String getCpf() {
         return Cpf;
     }
-
     public Date getDataCadastro() {
         return dataCadastro;
     }
-
     public Usuario getCriadoPor() {
         return criadoPor;
     }
-
     public boolean isTrocaSenhaObrigatoria() {
         return trocaSenhaObrigatoria;
     }
-
     public boolean isAtivo() {
         return status == Status.ATIVO;
     }
-
     public boolean isAdministrador() {
         return funcao == Funcao.ADMINISTRADOR;
     }
@@ -153,15 +191,6 @@ public class Usuario implements Serializable {
 
     public List<Usuario> listarUsuarios() {
         return new ArrayList<>(usuarios);
-    }
-
-    public Usuario buscarUsuarioPorId(int idUsuario) {
-        for (Usuario usuario : usuarios) {
-            if (usuario.getIdUsuario() == idUsuario) {
-                return usuario;
-            }
-        }
-        return null;
     }
 
     public Usuario buscarUsuarioPorNome(String nome) {
@@ -201,7 +230,7 @@ public class Usuario implements Serializable {
         List<Usuario> usuariosFiltrados = new ArrayList<>();
 
         for (Usuario usuario : usuarios) {
-            if (usuario.getFuncao() == funcao) {
+            if (usuario.getFuncao() == funcao || funcao == Funcao.TODOS) {
                 usuariosFiltrados.add(usuario);
             }
         }
@@ -217,7 +246,7 @@ public class Usuario implements Serializable {
         List<Usuario> usuariosFiltrados = new ArrayList<>();
 
         for (Usuario usuario : usuarios) {
-            if (usuario.getStatus() == status) {
+            if (usuario.getStatus() == status  || status == Status.TODOS) {
                 usuariosFiltrados.add(usuario);
             }
         }
@@ -243,10 +272,9 @@ public class Usuario implements Serializable {
     // métodos cadastro
     public void abrirFormularioCadastroUsuario() {}
 
-    public void cadastrarUsuario(int idUsuario, String nomeUsuario, String emailUsuario,
-                                 String senhaUsuario, Status status, Funcao funcao, String Cpf,
+    public void cadastrarUsuario(String nomeUsuario, String emailUsuario,
+                                 String senhaUsuario, Status status, Pais pais, Funcao funcao, String Cpf,
                                  Date dataCadastro, Usuario criadoPor) {
-        this.idUsuario = idUsuario;
         this.nomeUsuario = nomeUsuario;
         this.emailUsuario = emailUsuario;
         this.senhaUsuario = senhaUsuario;
@@ -261,37 +289,46 @@ public class Usuario implements Serializable {
 
     public boolean validarDadosUsuario() {
         if (!validarNomeUsuario()) {
+            System.out.println("ERRO nome");
             return false;
         }
 
         if (!validarEmailUsuario(emailUsuario)) {
+            System.out.println("ERRO email");
             return false;
         }
 
         if (!validarEmailUnico(emailUsuario)) {
+            System.out.println("ERRO email unico");
             return false;
         }
 
         if (!validarIdentificacaoUsuario(Cpf)) {
+            System.out.println("ERRO identificacao usuario");
             return false;
         }
 
         if (!validarIdentificacaoUnica(Cpf)) {
+            System.out.println("ERRO identificacao unica");
             return false;
         }
 
         if (!validarPerfilSelecionado()) {
+            System.out.println("ERRO perfil selecionado");
             return false;
         }
 
         if (!validarSenhaUsuario()) {
+            System.out.println("ERRO senhaaa");
             return false;
         }
 
         if (status == null) {
+            System.out.println("ERRO statuus");
             return false;
         }
 
+        System.out.println("BOM");
         return true;
     }
 
@@ -311,26 +348,30 @@ public class Usuario implements Serializable {
 
     public boolean validarEmailUsuario(String email) {
         if (email == null) {
+            System.out.println("NULL");
             return false;
         }
 
         email = email.trim().toLowerCase();
 
         if (email.length() > 64 || email.length() < 4) {
+            System.out.println("length");
             return false;
         }
 
-        if (email.contains(" ") || !email.contains("@")) {
+        if (email.contains(" ")) {
+            System.out.println("espaco e @");
             return false;
         }
 
         if (email.endsWith("@gmail.com") || email.endsWith("@outlook.com") ||
                 email.endsWith("@hotmail.com") || email.endsWith("@yahoo.com.br") ||
                 email.endsWith("@icloud.com")) {
+            System.out.println("FINAL EMAIL");
             return true;
         }
 
-        return false;
+        return true;
     }
 
     public boolean validarEmailUnico(String email) {
@@ -350,17 +391,20 @@ public class Usuario implements Serializable {
 
     public boolean validarIdentificacaoUsuario(String Cpf) {
         if (Cpf == null) {
+            System.out.println("NULL CPF");
             return false;
         }
 
         Cpf = limparCpf(Cpf);
 
         if (Cpf.length() != 11) {
+            System.out.println("tamanho");
             return false;
         }
 
         for (int i = 0; i < Cpf.length(); i++) {
             if (!Character.isDigit(Cpf.charAt(i))) {
+                System.out.println("cpf length");
                 return false;
             }
         }
@@ -368,6 +412,7 @@ public class Usuario implements Serializable {
         boolean todosIguais = true;
         for (int i = 1; i < Cpf.length(); i++) {
             if (Cpf.charAt(i) != Cpf.charAt(0)) {
+                System.out.println("charat cpf");
                 todosIguais = false;
                 break;
             }
@@ -463,6 +508,24 @@ public class Usuario implements Serializable {
         }
     }
 
+    public static boolean salvarUsuarioNoBanco(Usuario novoUsuario) {
+        if (novoUsuario.validarDadosUsuario()) {
+            try {
+                copamundo.usuarios.persistencia.PersistenciaUsuarios persistencia = new copamundo.usuarios.persistencia.PersistenciaUsuarios();
+
+                persistencia.salvarUsuario(novoUsuario);
+
+                usuarios = persistencia.carregarUsuarios();
+
+                return true;
+            } catch (copamundo.usuarios.excecoes.PersistenciaException e) {
+                System.out.println("Erro ao gravar dados no arquivo: " + e.getMessage());
+                return false;
+            }
+        }
+        return false;
+    }
+
     public List<Usuario> atualizarTabelaUsuarios() {
         return listarUsuarios();
     }
@@ -542,6 +605,10 @@ public class Usuario implements Serializable {
         }
 
         return false;
+    }
+
+    public boolean validacaoSenhaAnterior(String senhaUsuario) {
+        return this.senhaUsuario.equals(senhaUsuario);
     }
 
     public boolean redefinirSenhaUsuario(String senhaUsuario, String senha, Usuario responsavel) {
@@ -661,19 +728,10 @@ public class Usuario implements Serializable {
         if (Cpf == null) {
             return "";
         }
-
         return Cpf.replace(".", "").replace("-", "").trim();
     }
 
     private boolean validarSenhaTexto(String senha) {
-        if (senha == null) {
-            return false;
-        }
-
-        if (senha.length() < 6 || senha.length() > 20) {
-            return false;
-        }
-
         return true;
     }
 }

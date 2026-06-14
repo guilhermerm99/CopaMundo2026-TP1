@@ -10,7 +10,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="400.0" prefWidth="600.0" style="-fx-background-color: #2E7D32;" xmlns="http://javafx.com/javafx/26" xmlns:fx="http://javafx.com/fxml/1" fx:controller="CONTROLLER_NAME">
+<AnchorPane prefHeight="400.0" prefWidth="600.0" style="-fx-background-color: #2E7D32;" xmlns="http://javafx.com/javafx/26" xmlns:fx="http://javafx.com/fxml/1" fx:controller="copamundo.usuarios.controle.TelaLoginController">
     <children>
       <HBox alignment="CENTER" prefHeight="380.0" prefWidth="600.0">
          <children>
@@ -24,22 +24,16 @@
                       <VBox alignment="CENTER_LEFT" prefHeight="114.0" prefWidth="210.0" spacing="4.0">
                           <children>
                               <Label text="E-mail" textFill="#b9b0b0" />
-                              <TextField promptText="E-mail" style="-fx-background-radius: 15; -fx-focus-color: #2E7D32; -fx-faint-focus-color: transparent;" />
+                              <TextField fx:id="campoEmail" promptText="E-mail" style="-fx-background-radius: 15; -fx-focus-color: #2E7D32; -fx-faint-focus-color: transparent;" />
                               <Label text="Senha" textFill="#b9b0b0" />
-                              <PasswordField promptText="Senha" style="-fx-background-radius: 15; -fx-focus-color: #2E7D32; -fx-faint-focus-color: transparent;" />
+                              <PasswordField fx:id="campoSenha" promptText="Senha" style="-fx-background-radius: 15; -fx-focus-color: #2E7D32; -fx-faint-focus-color: transparent;" />
                           </children>
                       </VBox>
-                      <Button mnemonicParsing="false" prefHeight="25.0" prefWidth="210.0" style="-fx-background-radius: 15; -fx-background-color: #2E7D32; -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.2), 12, 0, 0, 3);" text="Entrar" textFill="WHITE">
+                      <Button fx:id="entrar" mnemonicParsing="false" onAction="#entrar" prefHeight="25.0" prefWidth="210.0" style="-fx-background-radius: 15; -fx-background-color: #2E7D32; -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.2), 12, 0, 0, 3);" text="Entrar" textFill="WHITE">
                           <VBox.margin>
                               <Insets bottom="3.0" />
                           </VBox.margin>
                   </Button>
-                      <HBox alignment="CENTER" prefHeight="30.0" prefWidth="210.0" spacing="2.5">
-                          <children>
-                              <Label text="Não possui conta?" textFill="#b9b0b0" />
-                              <Label layoutX="10.0" layoutY="10.0" text="Cadastre-se" textFill="#2e7d32" />
-                          </children>
-                      </HBox>
                   </children>
                   <padding>
                       <Insets bottom="30.0" left="30.0" right="30.0" top="30.0" />
