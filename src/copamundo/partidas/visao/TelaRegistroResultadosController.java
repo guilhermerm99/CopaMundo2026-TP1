@@ -22,7 +22,6 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-//import static copamundo.partidas.repositorio.PartidaRepositorio.listaPartidas;
 
 public class TelaRegistroResultadosController {
 
@@ -98,7 +97,9 @@ public class TelaRegistroResultadosController {
     @FXML
     private TextField textoVermelhos2;
 
+    // preenche os seletores com as fases e partidas
     public void initialize() {
+        // determina o formato da String que irá aparecer: "seleção 1 x seleção 2" - já tinha uma toString na classe e tive que fazer assim
         seletorPartida.setConverter(new StringConverter<Partida>() {
             @Override
             public String toString(Partida p) {
@@ -113,8 +114,17 @@ public class TelaRegistroResultadosController {
 
         seletorFase.getItems().addAll(Fase.values());
         seletorFase.setOnAction(event -> atualizarPartidasSeletor());
+
+
+        // muda o texto das labels para os das seleções
+        seletorPartida.setOnAction(event -> {
+            labelSelecao1.setText(seletorPartida.getValue().getSelecao1().getPais());
+            labelSelecao2.setText(seletorPartida.getValue().getSelecao2().getPais());
+        });
+
     }
 
+    // atualiza o que aparece na comboBox de partidas, a partir da seleção da fase
     private void atualizarPartidasSeletor() {
         try {
             Fase f = seletorFase.getValue();
@@ -218,6 +228,7 @@ public class TelaRegistroResultadosController {
             int vermelhosSelecao1 = Integer.parseInt(textoVermelhos1.getText());
             int vermelhosSelecao2 = Integer.parseInt(textoVermelhos2.getText());
 
+            // é obrigatório selecionar uma partida para salvar um resultado
             if (p == null) {
                 Alert alert = new Alert(Alert.AlertType.WARNING);
                 alert.setContentText("Selecione uma partida!");
@@ -227,9 +238,12 @@ public class TelaRegistroResultadosController {
 
             List<Partida> listaPartidas = PartidaRepositorio.carregarListaPartidas();
 
+            // verifica se a partida escolhida está finalizada antes de salvar
             for (int i = 0; i < listaPartidas.size(); i++) {
                 if (listaPartidas.get(i).getId().equals(p.getId())) {
                     if (listaPartidas.get(i).getStatusPartida() == StatusPartida.FINALIZADA) {
+
+                        // se está finalizada, salva o resultado e salva a lista nova
                         listaPartidas.get(i).setResultado(new Resultado(golsSelecao1, golsSelecao2, faltasSelecao1, faltasSelecao2, vermelhosSelecao1,
                                 vermelhosSelecao2, amarelosSelecao1, amarelosSelecao2, posseSelecao1, posseSelecao2, finalizacoesSelecao1, finalizacoesSelecao2,
                                 escanteiosSelecao1, escanteiosSelecao2, impedimentosSelecao1, impedimentosSelecao2));
@@ -266,7 +280,7 @@ public class TelaRegistroResultadosController {
 
     ////////////////////////////////////////////////////////////////
     ///
-    ///
+    /*
     public String registrarResultado(String idPartida, int golsSelecao1, int golsSelecao2, int faltasSelecao1, int faltasSelecao2, int vermelhosSelecao1,
                                      int vermelhosSelecao2, int amarelosSelecao1, int amarelosSelecao2, float posseSelecao1, float posseSelecao2,
                                      int finalizacoesSelecao1, int finalizacoesSelecao2, int escanteiosSelecao1, int escanteiosSelecao2, int impedimentosSelecao1,
@@ -290,4 +304,6 @@ public class TelaRegistroResultadosController {
 
         throw new PartidaNaoEncontradaException("Partida não encontrada");
     }
+
+     */
 }

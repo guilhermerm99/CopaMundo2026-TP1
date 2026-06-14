@@ -24,7 +24,7 @@ public class Partida implements Serializable {
     private Resultado resultado;
     private Arbitro arbitro;
 
-    public Partida(String dataPartida, String horarioPartida, copamundo.estadios.modelo.Estadio estadioPartida, Selecao selecao1, Selecao selecao2, Fase fase, StatusPartida status, Arbitro arbitro) {
+    public Partida(String dataPartida, String horarioPartida, copamundo.estadios.modelo.Estadio estadioPartida, Selecao selecao1, Selecao selecao2, Fase fase, StatusPartida status) {
         this.id = UUID.randomUUID().toString();
         this.dataPartida = dataPartida;
         this.horarioPartida = horarioPartida;
@@ -33,7 +33,6 @@ public class Partida implements Serializable {
         this.selecao2 = selecao2;
         this.fase = fase;
         this.status = status;
-        this.arbitro = arbitro;
     }
 
     public Partida(Selecao selecao1, Selecao selecao2, copamundo.estadios.modelo.Estadio estadioPartida, LocalDateTime dataHora) {

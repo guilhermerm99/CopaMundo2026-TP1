@@ -25,7 +25,7 @@
       </Pane>
    </top>
    <center>
-      <GridPane prefHeight="394.0" prefWidth="401.0" BorderPane.alignment="CENTER">
+      <GridPane prefHeight="455.0" prefWidth="450.0" BorderPane.alignment="CENTER">
         <columnConstraints>
           <ColumnConstraints hgrow="SOMETIMES" maxWidth="219.0" minWidth="10.0" prefWidth="201.0" />
           <ColumnConstraints hgrow="SOMETIMES" maxWidth="249.0" minWidth="10.0" prefWidth="249.0" />
@@ -34,6 +34,7 @@
           <RowConstraints maxHeight="70.0" minHeight="0.0" prefHeight="45.0" vgrow="SOMETIMES" />
           <RowConstraints maxHeight="70.0" minHeight="2.0" prefHeight="45.0" vgrow="SOMETIMES" />
           <RowConstraints maxHeight="70.0" minHeight="10.0" prefHeight="45.0" vgrow="SOMETIMES" />
+            <RowConstraints maxHeight="70.0" minHeight="10.0" prefHeight="45.0" vgrow="SOMETIMES" />
             <RowConstraints maxHeight="70.0" minHeight="10.0" prefHeight="45.0" vgrow="SOMETIMES" />
             <RowConstraints maxHeight="70.0" minHeight="10.0" prefHeight="45.0" vgrow="SOMETIMES" />
             <RowConstraints maxHeight="70.0" minHeight="10.0" prefHeight="45.0" vgrow="SOMETIMES" />
@@ -76,11 +77,11 @@
                   <Font name="System Bold" size="15.0" />
                </font>
             </Label>
-            <ComboBox fx:id="SeletorStatus" prefWidth="200.0" promptText="Status da partida" GridPane.columnIndex="1" GridPane.rowIndex="6" GridPane.valignment="BOTTOM" />
+            <ComboBox fx:id="seletorStatus" prefWidth="200.0" promptText="Status da partida" GridPane.columnIndex="1" GridPane.rowIndex="6" GridPane.valignment="BOTTOM" />
             <ComboBox fx:id="seletorFase" prefWidth="200.0" promptText="Fase da competição" GridPane.columnIndex="1" GridPane.rowIndex="5" GridPane.valignment="BOTTOM" />
             <TextField fx:id="textoData" maxWidth="200.0" prefWidth="200.0" promptText="dd/mm/aaaa" text="dd/mm/aaaa" GridPane.columnIndex="1" GridPane.valignment="BOTTOM" />
             <TextField fx:id="textoHorario" maxWidth="200.0" prefWidth="200.0" promptText="hh:mm" text="hh:mm" GridPane.columnIndex="1" GridPane.rowIndex="1" GridPane.valignment="BOTTOM" />
-            <Button fx:id="btnEditarPartida" mnemonicParsing="false" onAction="#editarPartida" prefHeight="30.0" prefWidth="60.0" style="-fx-background-color: #2E7D32;" text="Editar" textFill="WHITE" GridPane.halignment="RIGHT" GridPane.rowIndex="7" GridPane.valignment="CENTER">
+            <Button fx:id="btnEditarPartida" mnemonicParsing="false" onAction="#editarPartida" prefHeight="30.0" prefWidth="60.0" style="-fx-background-color: #2E7D32;" text="Editar" textFill="WHITE" GridPane.halignment="RIGHT" GridPane.rowIndex="8" GridPane.valignment="CENTER">
                <GridPane.margin>
                   <Insets right="10.0" />
                </GridPane.margin>
@@ -88,7 +89,7 @@
                   <Font name="System Bold" size="13.0" />
                </font>
             </Button>
-            <Button fx:id="btnCancelarEdicao" alignment="CENTER" mnemonicParsing="false" onAction="#fecharTelaEditarPartida" prefHeight="30.0" prefWidth="80.0" style="-fx-background-color: #D32F2F;" text="Cancelar" textFill="WHITE" GridPane.columnIndex="1" GridPane.halignment="LEFT" GridPane.rowIndex="7">
+            <Button fx:id="btnCancelarEdicao" alignment="CENTER" mnemonicParsing="false" onAction="#fecharTelaEditarPartida" prefHeight="30.0" prefWidth="80.0" style="-fx-background-color: #D32F2F;" text="Cancelar" textFill="WHITE" GridPane.columnIndex="1" GridPane.halignment="LEFT" GridPane.rowIndex="8">
                <GridPane.margin>
                   <Insets left="30.0" />
                </GridPane.margin>
@@ -99,6 +100,12 @@
             <ComboBox fx:id="seletorEstadio" prefWidth="200.0" promptText="Estádio" GridPane.columnIndex="1" GridPane.rowIndex="2" GridPane.valignment="BOTTOM" />
             <ComboBox fx:id="seletorSelecao1" prefWidth="200.0" promptText="Seleção" GridPane.columnIndex="1" GridPane.rowIndex="3" GridPane.valignment="BOTTOM" />
             <ComboBox fx:id="seletorSelecao2" prefWidth="200.0" promptText="Seleção" GridPane.columnIndex="1" GridPane.rowIndex="4" GridPane.valignment="BOTTOM" />
+            <Label text="Árbitro:   " GridPane.halignment="RIGHT" GridPane.rowIndex="7" GridPane.valignment="BOTTOM">
+               <font>
+                  <Font name="System Bold" size="15.0" />
+               </font>
+            </Label>
+            <ComboBox fx:id="seletorArbitro" prefWidth="200.0" promptText="Árbitro" GridPane.columnIndex="1" GridPane.rowIndex="7" GridPane.valignment="BOTTOM" />
          </children>
       </GridPane>
    </center>

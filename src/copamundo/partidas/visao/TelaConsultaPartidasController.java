@@ -1,7 +1,5 @@
 package copamundo.partidas.visao;
 import copamundo.comum.*;
-import copamundo.estadios.controle.EstadioController;
-import copamundo.estadios.modelo.Arbitro;
 import copamundo.estadios.modelo.Estadio;
 import copamundo.partidas.repositorio.PartidaRepositorio;
 import copamundo.selecoes.persistencia.PersistenciaSelecoesJogadores;
@@ -16,16 +14,15 @@ import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
-import javafx.util.StringConverter;
-
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
+import java.util.Optional;
 
-//import static copamundo.partidas.repositorio.PartidaRepositorio.listaPartidas;
 
 public class TelaConsultaPartidasController {
-    // AJUSTAR METODOS
+
     @FXML
     private TableView<Partida> tabelaInteira;
 
@@ -40,6 +37,7 @@ public class TelaConsultaPartidasController {
 
     @FXML
     private Button btnTelaCadastroPartidas;
+    btnTelaCadastroPartidas.setVisible();
 
     @FXML
     private Button btnTelaRegistroResultados;
@@ -80,11 +78,7 @@ public class TelaConsultaPartidasController {
     @FXML
     private TextField textoData;
 
-    @FXML
-    void filtrarListaPartidas(javafx.event.ActionEvent event) {
-        carregarTabela();
-    }
-
+    // povoa os seletores com os objetos da lista e as colunas com os objetos da lista de Partidas
     public void initialize() {
         try {
             PersistenciaSelecoesJogadores selecoesObjeto = new PersistenciaSelecoesJogadores();
@@ -125,6 +119,7 @@ public class TelaConsultaPartidasController {
                     new PropertyValueFactory<>("status")
             );
 
+            // as pŕoximas colunas são botões, então contém as ações realizadas por eles - excluir e editar
             colunaExcluir.setCellFactory(param -> new TableCell<>() {
 
                 private final Button btnExcluir = new Button("Excluir");
@@ -132,24 +127,43 @@ public class TelaConsultaPartidasController {
                 {
                     btnExcluir.setOnAction(event -> {
 
-                        Partida partida = getTableView().getItems().get(getIndex());
+                        // alerta de confirmação de exclusão da partida
+                        ButtonType sim = new ButtonType("Sim");
+                        ButtonType nao = new ButtonType("Não");
 
-                        for (int i = 0; i < listaPartidas.size(); i++) {
-                            if (listaPartidas.get(i).getId().equals(partida.getId())) {
-                                listaPartidas.remove(i);
-                                try {
-                                    PartidaRepositorio.salvarListaPartidas(listaPartidas);
-                                } catch (IOException e) {
-                                    throw new RuntimeException(e);
+                        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+                        alert.setTitle("Confirmação");
+                        alert.setHeaderText("Excluir partida");
+                        alert.setContentText("Tem certeza que deseja excluir esta partida?");
+                        alert.getButtonTypes().setAll(sim, nao);
+
+                        alert.showAndWait().ifPresent(resposta -> {
+                            if (resposta == sim) {
+                                Partida partida = getTableView().getItems().get(getIndex());
+
+                                // quando identifica a partida pelo id, remove e salva a lista atualizada no repositório - precisa do id??
+                                for (int i = 0; i < listaPartidas.size(); i++) {
+                                    if (listaPartidas.get(i).getId().equals(partida.getId())) {
+                                        listaPartidas.remove(i);
+                                        try {
+                                            PartidaRepositorio.salvarListaPartidas(listaPartidas);
+                                        } catch (IOException e) {
+                                            throw new RuntimeException(e);
+                                        }
+                                        break;
+                                    }
                                 }
-                                break;
-                            }
-                        }
 
-                        tabelaInteira.getItems().remove(partida);
+                                // aqui remove a linha que continha a partida
+                                tabelaInteira.getItems().remove(partida);
+
+                            }
+                        });
+
                     });
                 }
 
+                // determina em quais linhas o botão aparece (apenas nas que têm objetos)
                 @Override
                 protected void updateItem(Void item, boolean empty) {
                     super.updateItem(item, empty);
@@ -162,12 +176,16 @@ public class TelaConsultaPartidasController {
             });
 
 
+            // coluna com o botão de editar
             colunaEditar.setCellFactory(param -> new TableCell<>() {
 
                 private final Button btnEditar = new Button("Editar");
 
+                // carrega a partida e manda pro controller da tela de editar e carrega a tela nova
                 {
                     btnEditar.setOnAction(event -> {
+                        Partida partida = getTableView().getItems().get(getIndex());
+
                         FXMLLoader loader = new FXMLLoader(
                                 getClass().getResource("TelaModalEditarPartida.fxml"));
 
@@ -178,9 +196,12 @@ public class TelaConsultaPartidasController {
                             throw new RuntimeException(e);
                         }
 
-                        Stage stage = new Stage();
+                        TelaModalEditarPartidaController controller = loader.getController();
+
+                        controller.setPartida(partida);
+
+                        Stage stage = (Stage) tabelaInteira.getScene().getWindow();
                         stage.setScene(new Scene(root));
-                        stage.show();
 
                     });
                 }
@@ -200,12 +221,22 @@ public class TelaConsultaPartidasController {
             e.printStackTrace();
         }
 
+        // depois de definir tudo, carrega a tabela
+        carregarTabela();
+    }
+
+
+    // se clicar no botão de filtrar, ele chama carregarTabela
+    @FXML
+    void filtrarListaPartidas(javafx.event.ActionEvent event) {
+
         carregarTabela();
     }
 
 
     private void carregarTabela() {
 
+        // o conteúdo da tabela é obtido pela lista de partidas
         try {
             List<Partida> lista = PartidaRepositorio.carregarListaPartidas();
 
@@ -214,7 +245,8 @@ public class TelaConsultaPartidasController {
             Selecao selecao = seletorSelecao.getValue();
             StatusPartida status = seletorStatus.getValue();
 
-            if (data != "") {
+            // inicia a filtragem baseando-se nos campos que estão preenchidos
+            if (!Objects.equals(data, "")) {
                 lista = listaPorData(data, lista);
             }
 
@@ -230,6 +262,7 @@ public class TelaConsultaPartidasController {
                 lista = listaPorStatusPartida(status, lista);
             }
 
+            // preenche a tabela apenas com os dados da lista filtrada
             ObservableList<Partida> dados = FXCollections.observableArrayList(lista);
 
             tabelaInteira.setItems(dados);
@@ -256,6 +289,8 @@ public class TelaConsultaPartidasController {
 
     @FXML
     void irTelaCadastroPartidas(javafx.event.ActionEvent event) throws IOException {
+
+
         FXMLLoader loader = new FXMLLoader(
                 getClass().getResource("TelaCadastroPartidas.fxml"));
 
@@ -289,7 +324,7 @@ public class TelaConsultaPartidasController {
         stage.show();
     }
 
-/////////////////////////////////////////////////////
+///////////////////////////////////////////////////// Métodos das filtragens por tipo
 
     public List<Partida>  listaPorSelecao (Selecao selecao, List<Partida> lista) {
         ArrayList<Partida> listaFiltradaPartidas = new ArrayList<Partida>();

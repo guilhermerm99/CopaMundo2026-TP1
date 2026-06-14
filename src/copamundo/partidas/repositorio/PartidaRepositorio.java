@@ -18,6 +18,7 @@ public class PartidaRepositorio {
 
     private static final Path ARQUIVO_PARTIDAS = Paths.get("dados", "partidas.dat");
 
+
     public static void salvarListaPartidas(List<Partida> partidas) throws IOException {
         Files.createDirectories(PASTA_DADOS);
 

@@ -4,7 +4,6 @@ import copamundo.comum.Fase;
 import copamundo.comum.Partida;
 import copamundo.comum.Selecao;
 import copamundo.comum.StatusPartida;
-import copamundo.comum.Estadio;
 import copamundo.estadios.controle.EstadioController;
 import copamundo.estadios.controle.ArbitroController;
 import copamundo.estadios.excecoes.PersistenciaException;
@@ -12,7 +11,6 @@ import copamundo.estadios.excecoes.RegraNegocioException;
 import copamundo.estadios.modelo.Arbitro;
 import copamundo.partidas.excecoes.PartidaMesmaDataException;
 import copamundo.partidas.repositorio.PartidaRepositorio;
-import copamundo.partidas.excecoes.PartidaNaoEncontradaException;
 import copamundo.selecoes.persistencia.PersistenciaSelecoesJogadores;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -22,13 +20,11 @@ import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ComboBox;
 import javafx.stage.Stage;
-
 import java.util.List;
-import java.util.ArrayList;
 import java.awt.*;
 import java.io.IOException;
+import java.util.Objects;
 
-//import static copamundo.partidas.repositorio.PartidaRepositorio.listaPartidas; RETIRAR DEPOIS !!!!!!!!!
 
 public class TelaCadastroPartidasController {
 
@@ -60,35 +56,32 @@ public class TelaCadastroPartidasController {
     private TextField textoHorario;
 
     @FXML
-    private ComboBox<Arbitro> seletorArbitro;
-
-    @FXML
     private ComboBox<Fase> seletorFase;
 
     @FXML
     private ComboBox<StatusPartida> seletorStatusPartida;
 
+    // preenche os seletores com o conteúdo das listas
     public void initialize() {
 
         try {
-            ArbitroController arbitroObjeto = new ArbitroController();
             PersistenciaSelecoesJogadores selecoesObjeto = new PersistenciaSelecoesJogadores();
             EstadioController estadioObjeto = new EstadioController();
 
             List<Selecao> listaSelecoes = selecoesObjeto.carregarSelecoes();
             List<copamundo.estadios.modelo.Estadio> listaEstadios = estadioObjeto.listarEstadios();
-            List<Arbitro> listaArbitros = arbitroObjeto.listarArbitros();
 
             seletorFase.getItems().addAll(Fase.values());
             seletorStatusPartida.getItems().addAll(StatusPartida.values());
             seletorSelecao1.getItems().addAll(listaSelecoes);
             seletorSelecao2.getItems().addAll(listaSelecoes);
             seletorEstadio.getItems().addAll(listaEstadios);
-            seletorArbitro.getItems().addAll(listaArbitros);
 
         } catch (PersistenciaException e) {
             e.printStackTrace();
-            System.out.println("Erro ao acessar lista.");
+            Alert alert = new Alert(Alert.AlertType.WARNING);
+            alert.setContentText("Erro ao acessar uma das listas!");
+            alert.showAndWait();
         }
 
 
@@ -139,6 +132,7 @@ public class TelaCadastroPartidasController {
     @FXML
     void salvarPartida(javafx.event.ActionEvent event) {
         try {
+            // pega os valores informados
             Fase fase = seletorFase.getValue();
             StatusPartida status = seletorStatusPartida.getValue();
             Selecao selecao1 = seletorSelecao1.getValue();
@@ -146,15 +140,15 @@ public class TelaCadastroPartidasController {
             copamundo.estadios.modelo.Estadio estadio = seletorEstadio.getValue();
             String data = textoData.getText();
             String horario = textoHorario.getText();
-            Arbitro arbitro = seletorArbitro.getValue();
 
-            if (data == "") {
+            // avisos caso haja uma seção não preenchida - avisa e encerra o metodo antes de salvar
+            if (Objects.equals(data, "")) {
                 Alert alert = new Alert(Alert.AlertType.WARNING);
                 alert.setContentText("Informe uma data!");
                 alert.showAndWait();
                 return;
             }
-            if (horario == "") {
+            if (Objects.equals(horario, "")) {
                 Alert alert = new Alert(Alert.AlertType.WARNING);
                 alert.setContentText("Informe um horário!");
                 alert.showAndWait();
@@ -185,8 +179,11 @@ public class TelaCadastroPartidasController {
                 return;
             }
 
+
+            // carrega a lista de partidas
             List<Partida> listaPartidas = PartidaRepositorio.carregarListaPartidas();
 
+            // checa se as seleções são diferentes -> se uma das seleções não possui partida na mesma data
             if (selecao1 != selecao2) {
                 for (Partida p : listaPartidas) {
                     if ((p.getSelecao1() == selecao1) || (p.getSelecao1() == selecao2) || (p.getSelecao2() == selecao1) || (p.getSelecao2() == selecao2)) {
@@ -198,21 +195,33 @@ public class TelaCadastroPartidasController {
                         }
                     }
                 }
-                Partida partida = new Partida(data, horario, estadio, selecao1, selecao2, fase, status, arbitro);
+                // se tudo certo, cria uma partida e salva
+                Partida partida = new Partida(data, horario, estadio, selecao1, selecao2, fase, status);
 
                 estadioController.validarEstadioDisponivel(partida);
-                designarArbitroPrincipal(partida, arbitro);
 
                 listaPartidas.add(partida);
-            }
 
-            PartidaRepositorio.salvarListaPartidas(listaPartidas);
+                // salva a lista novamente no repositório
+                PartidaRepositorio.salvarListaPartidas(listaPartidas);
+
+                Alert alert = new Alert(Alert.AlertType.INFORMATION);
+                alert.setTitle("Sucesso");
+                alert.setHeaderText(null);
+                alert.setContentText("A partida foi salva com sucesso!");
+                alert.showAndWait();
+                return;
+            }
+            else {
+                Alert alert = new Alert(Alert.AlertType.WARNING);
+                alert.setContentText("As seleções devem ser diferentes!");
+                alert.showAndWait();
+                return;
+            }
 
         } catch (IOException | ClassNotFoundException e) {
             e.printStackTrace();
-        } catch (PersistenciaException e) {
-            throw new RuntimeException(e);
-        } catch (RegraNegocioException e) {
+        } catch (RegraNegocioException | PersistenciaException e) {
             throw new RuntimeException(e);
         }
     }
@@ -240,6 +249,9 @@ public class TelaCadastroPartidasController {
 
 
     private final EstadioController estadioController = new EstadioController();
+
+
+/*
     private final ArbitroController arbitroController = new ArbitroController();
 
     public void designarArbitroPrincipal(Partida partida, Arbitro arbitro)
@@ -253,7 +265,7 @@ public class TelaCadastroPartidasController {
 
     }
 
-    /*
+
     public void CadastrarPartida(String dataPartida, String horarioPartida, Estadio estadioPartida, Selecao selecao1, Selecao selecao2, Fase fase,
                                  StatusPartida status, Arbitro arbitro) throws IOException, ClassNotFoundException, PersistenciaException, RegraNegocioException {
         List<Partida> listaPartidas = PartidaRepositorio.carregarListaPartidas();
