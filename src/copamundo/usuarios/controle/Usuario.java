@@ -90,8 +90,8 @@ public class Usuario implements Serializable {
         if (usuarios.isEmpty()) {
             Usuario adminPadrao = new Usuario(
                     "Administrador",
-                    "admin@copa.com", // E-mail para logar
-                    "123456",         // Senha para logar
+                    "administrador@copa.com", // E-mail para logar
+                    "Comum@1234",         // Senha para logar
                     Status.ATIVO,
                     Pais.BRASIL,
                     Funcao.ADMINISTRADOR,
@@ -289,46 +289,36 @@ public class Usuario implements Serializable {
 
     public boolean validarDadosUsuario() {
         if (!validarNomeUsuario()) {
-            System.out.println("ERRO nome");
             return false;
         }
 
         if (!validarEmailUsuario(emailUsuario)) {
-            System.out.println("ERRO email");
             return false;
         }
 
         if (!validarEmailUnico(emailUsuario)) {
-            System.out.println("ERRO email unico");
             return false;
         }
 
         if (!validarIdentificacaoUsuario(Cpf)) {
-            System.out.println("ERRO identificacao usuario");
             return false;
         }
 
         if (!validarIdentificacaoUnica(Cpf)) {
-            System.out.println("ERRO identificacao unica");
             return false;
         }
 
         if (!validarPerfilSelecionado()) {
-            System.out.println("ERRO perfil selecionado");
             return false;
         }
 
         if (!validarSenhaUsuario()) {
-            System.out.println("ERRO senhaaa");
             return false;
         }
 
         if (status == null) {
-            System.out.println("ERRO statuus");
             return false;
         }
-
-        System.out.println("BOM");
         return true;
     }
 
@@ -348,26 +338,22 @@ public class Usuario implements Serializable {
 
     public boolean validarEmailUsuario(String email) {
         if (email == null) {
-            System.out.println("NULL");
             return false;
         }
 
         email = email.trim().toLowerCase();
 
         if (email.length() > 64 || email.length() < 4) {
-            System.out.println("length");
             return false;
         }
 
         if (email.contains(" ")) {
-            System.out.println("espaco e @");
             return false;
         }
 
         if (email.endsWith("@gmail.com") || email.endsWith("@outlook.com") ||
                 email.endsWith("@hotmail.com") || email.endsWith("@yahoo.com.br") ||
                 email.endsWith("@icloud.com")) {
-            System.out.println("FINAL EMAIL");
             return true;
         }
 
@@ -391,20 +377,17 @@ public class Usuario implements Serializable {
 
     public boolean validarIdentificacaoUsuario(String Cpf) {
         if (Cpf == null) {
-            System.out.println("NULL CPF");
             return false;
         }
 
         Cpf = limparCpf(Cpf);
 
         if (Cpf.length() != 11) {
-            System.out.println("tamanho");
             return false;
         }
 
         for (int i = 0; i < Cpf.length(); i++) {
             if (!Character.isDigit(Cpf.charAt(i))) {
-                System.out.println("cpf length");
                 return false;
             }
         }
@@ -412,7 +395,6 @@ public class Usuario implements Serializable {
         boolean todosIguais = true;
         for (int i = 1; i < Cpf.length(); i++) {
             if (Cpf.charAt(i) != Cpf.charAt(0)) {
-                System.out.println("charat cpf");
                 todosIguais = false;
                 break;
             }
@@ -732,6 +714,34 @@ public class Usuario implements Serializable {
     }
 
     private boolean validarSenhaTexto(String senha) {
+        if (senha == null) {
+            System.out.println("Digite uma senha!");
+            return false;
+        }
+
+        if (senha.length() < 8 || senha.length() > 20) {
+            System.out.println("Tamanho inválido de senha!");
+            return false;
+        }
+
+        boolean temNumero = false;
+        boolean temLetras = false;
+
+        for (int i = 0; i < senha.length(); i++) {
+            if (Character.isDigit(senha.charAt(i))) {
+                temNumero = true;
+            } else if (Character.isLetter(senha.charAt(i))) {
+                temLetras = true;
+            }
+        }
+
+        if (!temNumero) {
+            System.out.println("A senha deve ter no mínimo um número!");
+            return false;
+        } else if (!temLetras) {
+            System.out.println("A senha deve ter no mínimo uma letra!");
+            return false;
+        }
         return true;
     }
 }

@@ -1,11 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.geometry.Insets?>
+<?import javafx.scene.chart.BarChart?>
+<?import javafx.scene.chart.CategoryAxis?>
+<?import javafx.scene.chart.NumberAxis?>
+<?import javafx.scene.chart.PieChart?>
 <?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.DatePicker?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.ScrollPane?>
-<?import javafx.scene.control.TableColumn?>
-<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextArea?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.HBox?>
@@ -29,11 +34,6 @@
                                 <FontIcon iconColor="WHITE" iconLiteral="fas-chart-bar" />
                             </graphic>
                         </Button>
-                        <Button fx:id="btnRelatorios1" alignment="BASELINE_LEFT" layoutX="16.0" layoutY="65.0" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#handleMenuRelatorios" style="-fx-background-color: transparent; -fx-text-fill: white;" text="Configurações" textFill="WHITE">
-                            <graphic>
-                                <FontIcon iconColor="WHITE" iconLiteral="fas-cog" />
-                            </graphic>
-                        </Button>
                     </children>
                     <padding>
                         <Insets bottom="6.0" left="6.0" right="6.0" top="20.0" />
@@ -41,52 +41,163 @@
                 </VBox>
             </left>
             <center>
-                <VBox prefHeight="111.0" prefWidth="600.0" spacing="5.0" BorderPane.alignment="CENTER">
-                    <children>
-                        <HBox alignment="CENTER" prefHeight="40.0" prefWidth="600.0" spacing="20.0" style="-fx-background-color: #DCDCDC;">
-                            <children>
-                                <Button mnemonicParsing="false" onAction="#handleGerarPDF" style="-fx-background-color: #008000; -fx-background-radius: 6; -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.2), 12, 0, 0, 3);" text="Gerar PDF do relatório" textFill="WHITE" />
-                            </children>
+                <ScrollPane fitToWidth="true" prefHeight="364.0" prefWidth="526.0" style="-fx-background-color: transparent; -fx-background: transparent;" BorderPane.alignment="CENTER">
+                    <content>
+                        <VBox prefWidth="505.0" spacing="8.0" style="-fx-background-color: #DCDCDC;">
                             <padding>
-                                <Insets top="10.0" />
+                                <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
                             </padding>
-                        </HBox>
-                        <HBox alignment="CENTER" layoutX="10.0" layoutY="10.0" prefHeight="30.0" prefWidth="600.0" style="-fx-background-color: transparent;">
+
                             <children>
-                                <Label text="Tabela de relatórios">
-                                    <font>
-                                        <Font name="System Bold" size="14.0" />
-                                    </font>
-                                </Label>
+
+                                <VBox spacing="6.0" style="-fx-background-color: white; -fx-background-radius: 12; -fx-padding: 10; -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.16), 10, 0, 0, 3);">
+                                    <children>
+                                        <Label text="Painel de relatórios" textFill="#2E7D32">
+                                            <font>
+                                                <Font name="System Bold" size="14.0" />
+                                            </font>
+                                        </Label>
+
+                                        <HBox alignment="CENTER_LEFT" spacing="6.0">
+                                            <children>
+                                                <ComboBox fx:id="comboTipoRelatorio" prefWidth="115.0" promptText="Tipo" />
+                                                <ComboBox fx:id="comboSelecao" prefWidth="115.0" promptText="Seleção" />
+                                                <DatePicker fx:id="dateInicio" prefWidth="105.0" promptText="Início" />
+                                                <DatePicker fx:id="dateFim" prefWidth="105.0" promptText="Fim" />
+                                            </children>
+                                        </HBox>
+
+                                        <HBox alignment="CENTER_RIGHT" spacing="8.0">
+                                            <children>
+                                                <Button mnemonicParsing="false" onAction="#handleGerarRelatorio" style="-fx-background-color: #FFFFFF; -fx-background-radius: 6; -fx-border-color: #CFCFCF; -fx-border-radius: 6;" text="Visualizar" />
+                                                <Button mnemonicParsing="false" onAction="#handleGerarPDF" style="-fx-background-color: #008000; -fx-background-radius: 6; -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.2), 10, 0, 0, 3);" text="Gerar PDF" textFill="WHITE">
+                                                    <graphic>
+                                                        <FontIcon iconColor="WHITE" iconLiteral="fas-file-pdf" />
+                                                    </graphic>
+                                                </Button>
+                                            </children>
+                                        </HBox>
+                                    </children>
+                                </VBox>
+
+                                <HBox spacing="7.0">
+                                    <children>
+                                        <VBox prefWidth="118.0" spacing="2.0" style="-fx-background-color: white; -fx-background-radius: 10; -fx-padding: 9; -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.14), 8, 0, 0, 2);">
+                                            <children>
+                                                <Label text="Partidas" textFill="#606060" />
+                                                <Label fx:id="lblNumeroPartidas" text="0" textFill="#2E7D32">
+                                                    <font>
+                                                        <Font name="System Bold" size="22.0" />
+                                                    </font>
+                                                </Label>
+                                            </children>
+                                        </VBox>
+
+                                        <VBox prefWidth="118.0" spacing="2.0" style="-fx-background-color: white; -fx-background-radius: 10; -fx-padding: 9; -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.14), 8, 0, 0, 2);">
+                                            <children>
+                                                <Label text="Finalizadas" textFill="#606060" />
+                                                <Label fx:id="lblPartidasFinalizadas" text="0" textFill="#2E7D32">
+                                                    <font>
+                                                        <Font name="System Bold" size="22.0" />
+                                                    </font>
+                                                </Label>
+                                            </children>
+                                        </VBox>
+
+                                        <VBox prefWidth="118.0" spacing="2.0" style="-fx-background-color: white; -fx-background-radius: 10; -fx-padding: 9; -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.14), 8, 0, 0, 2);">
+                                            <children>
+                                                <Label text="Gols" textFill="#606060" />
+                                                <Label fx:id="lblTotalGols" text="0" textFill="#2E7D32">
+                                                    <font>
+                                                        <Font name="System Bold" size="22.0" />
+                                                    </font>
+                                                </Label>
+                                            </children>
+                                        </VBox>
+
+                                        <VBox prefWidth="118.0" spacing="2.0" style="-fx-background-color: white; -fx-background-radius: 10; -fx-padding: 9; -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.14), 8, 0, 0, 2);">
+                                            <children>
+                                                <Label text="Média" textFill="#606060" />
+                                                <Label fx:id="lblMediaGols" text="0.00" textFill="#2E7D32">
+                                                    <font>
+                                                        <Font name="System Bold" size="22.0" />
+                                                    </font>
+                                                </Label>
+                                            </children>
+                                        </VBox>
+                                    </children>
+                                </HBox>
+
+                                <HBox spacing="8.0">
+                                    <children>
+                                        <VBox prefWidth="247.0" spacing="5.0" style="-fx-background-color: white; -fx-background-radius: 12; -fx-padding: 9; -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.14), 8, 0, 0, 2);">
+                                            <children>
+                                                <Label text="Partidas por status" textFill="#2E7D32">
+                                                    <font>
+                                                        <Font name="System Bold" size="12.0" />
+                                                    </font>
+                                                </Label>
+                                                <PieChart fx:id="graficoStatus" labelsVisible="false" legendVisible="true" prefHeight="150.0" />
+                                            </children>
+                                        </VBox>
+
+                                        <VBox prefWidth="247.0" spacing="5.0" style="-fx-background-color: white; -fx-background-radius: 12; -fx-padding: 9; -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.14), 8, 0, 0, 2);">
+                                            <children>
+                                                <Label text="Partidas por fase" textFill="#2E7D32">
+                                                    <font>
+                                                        <Font name="System Bold" size="12.0" />
+                                                    </font>
+                                                </Label>
+
+                                                <BarChart fx:id="graficoFases" animated="false" legendVisible="false" prefHeight="150.0">
+                                                    <xAxis>
+                                                        <CategoryAxis side="BOTTOM" />
+                                                    </xAxis>
+                                                    <yAxis>
+                                                        <NumberAxis side="LEFT" />
+                                                    </yAxis>
+                                                </BarChart>
+                                            </children>
+                                        </VBox>
+                                    </children>
+                                </HBox>
+
+                                <HBox spacing="8.0">
+                                    <children>
+                                        <VBox prefWidth="247.0" spacing="5.0" style="-fx-background-color: white; -fx-background-radius: 12; -fx-padding: 9; -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.14), 8, 0, 0, 2);">
+                                            <children>
+                                                <Label text="Destaques" textFill="#2E7D32">
+                                                    <font>
+                                                        <Font name="System Bold" size="12.0" />
+                                                    </font>
+                                                </Label>
+
+                                                <Label fx:id="lblPartidaMaisGols" text="Partida com mais gols: nenhum relatório gerado." textFill="#303030" wrapText="true" />
+
+                                                <Label fx:id="lblMaiorGoleada" text="Maior goleada: nenhum relatório gerado." textFill="#303030" wrapText="true" />
+
+                                                <Label fx:id="lblSelecaoAnalisada" text="Seleção analisada: nenhuma seleção selecionada." textFill="#303030" wrapText="true" />
+                                            </children>
+                                        </VBox>
+
+                                        <VBox prefWidth="247.0" spacing="5.0" style="-fx-background-color: white; -fx-background-radius: 12; -fx-padding: 9; -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.14), 8, 0, 0, 2);">
+                                            <children>
+                                                <Label text="Prévia do relatório" textFill="#2E7D32">
+                                                    <font>
+                                                        <Font name="System Bold" size="12.0" />
+                                                    </font>
+                                                </Label>
+
+                                                <TextArea fx:id="txtRelatorio" editable="false" prefHeight="116.0" promptText="O relatório aparecerá aqui..." wrapText="true" />
+                                            </children>
+                                        </VBox>
+                                    </children>
+                                </HBox>
+
                             </children>
-                        </HBox>
-                        <ScrollPane prefHeight="238.0" prefWidth="473.0" style="-fx-background-radius: 15;">
-                            <content>
-                                <TableView prefHeight="238.0" prefWidth="510.0">
-                                    <columns>
-                                        <TableColumn minWidth="127.0" prefWidth="75.0" text="ID" />
-                                        <TableColumn minWidth="127.0" prefWidth="130.0" text="Tipo de relatório" />
-                                        <TableColumn prefWidth="130.0" text="Data da geração" />
-                                        <TableColumn prefWidth="130.0" text="Responsável" />
-                                    </columns>
-                                </TableView>
-                            </content>
-                        </ScrollPane>
-                        <HBox alignment="CENTER_RIGHT" prefHeight="16.0" prefWidth="473.0" spacing="10.0">
-                            <children>
-                                <Button mnemonicParsing="false" style="-fx-background-color: #FFFFFF; -FX-BACKGROUND-RADIUS: 6; -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.2), 12, 0, 0, 3);" text="Visualizar" />
-                                <Button mnemonicParsing="false" style="-fx-background-color: #ffffff; -fx-background-radius: 6; -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.2), 12, 0, 0, 3);" text="Editar" />
-                                <Button alignment="CENTER_RIGHT" mnemonicParsing="false" style="-fx-background-color: #b22222; -fx-background-radius: 6; -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.2), 12, 0, 0, 3);" text="Excluir" textFill="WHITE" />
-                            </children>
-                            <padding>
-                                <Insets bottom="10.0" left="10.0" right="30.0" top="10.0" />
-                            </padding>
-                        </HBox>
-                    </children>
-                    <padding>
-                        <Insets bottom="5.0" />
-                    </padding>
-                </VBox>
+                        </VBox>
+                    </content>
+                </ScrollPane>
             </center>
             <top>
                 <HBox alignment="CENTER" prefHeight="36.0" prefWidth="600.0" spacing="10.0" style="-fx-background-color: #2E7D32; -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.2), 12, 0, 0, 3);" BorderPane.alignment="CENTER">

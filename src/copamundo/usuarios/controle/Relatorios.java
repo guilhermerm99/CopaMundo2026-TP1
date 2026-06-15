@@ -23,7 +23,7 @@ import com.itextpdf.layout.element.LineSeparator;
 import com.itextpdf.layout.element.Paragraph;
 import com.itextpdf.layout.property.TextAlignment;
 
-public class RelatoriosController {
+public class Relatorios {
     private int id;
     private String tipoRelatorio;
     private Date dataGeracao;
@@ -237,6 +237,10 @@ public class RelatoriosController {
         }
 
         return true;
+    }
+
+    public String getConteudoUltimoRelatorio() {
+        return conteudoUltimoRelatorio;
     }
 
     public boolean gerarArquivoPDF(String caminhoDestino) {

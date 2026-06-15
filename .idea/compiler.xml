@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="CompilerConfiguration">
+    <excludeFromCompile>
+      <directory url="file://$PROJECT_DIR$/src/copamundo/comum" includeSubdirectories="true" />
+      <directory url="file://$PROJECT_DIR$/src/copamundo/estadios" includeSubdirectories="true" />
+      <directory url="file://$PROJECT_DIR$/src/copamundo/selecoes" includeSubdirectories="true" />
+      <directory url="file://$PROJECT_DIR$/src/copamundo/partidas" includeSubdirectories="true" />
+    </excludeFromCompile>
+  </component>
+</project>

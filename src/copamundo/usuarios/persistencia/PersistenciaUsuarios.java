@@ -16,8 +16,11 @@ import java.util.Optional;
 
 public class PersistenciaUsuarios {
 
-    private static final Path PASTA_DADOS = Paths.get("dados");
-    private static final Path ARQUIVO_USUARIOS = Paths.get("dados", "usuarios.dat");
+    private static final Path PASTA_DADOS =
+            Paths.get(System.getProperty("user.dir"), "dados");
+
+    private static final Path ARQUIVO_USUARIOS =
+            PASTA_DADOS.resolve("usuarios.dat");
 
     public void salvarUsuario(Usuario usuario) throws PersistenciaException {
         List<Usuario> usuarios = carregarUsuarios();
