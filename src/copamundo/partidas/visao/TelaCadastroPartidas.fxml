@@ -26,12 +26,6 @@
                         <Font name="System Bold" size="13.0" />
                      </font>
                   </Button>
-                  <Separator opacity="0.0" orientation="VERTICAL" prefHeight="50.0" prefWidth="57.0" />
-                  <Button fx:id="btnCancelarCadastro" mnemonicParsing="false" onAction="#voltarMenuInicial" prefHeight="32.0" prefWidth="83.0" style="-fx-background-color: #D32F2F;" text="Cancelar" textFill="WHITE">
-                     <font>
-                        <Font name="System Bold" size="13.0" />
-                     </font>
-                  </Button>
                </children>
             </HBox>
             <GridPane layoutX="290.0" layoutY="-14.0" prefHeight="412.0" prefWidth="339.0">
@@ -98,7 +92,13 @@
                   <VBox alignment="TOP_CENTER" prefHeight="520.0" prefWidth="226.0">
                      <children>
                         <Separator opacity="0.0" prefHeight="50.0" prefWidth="206.0" style="-fx-background-color: #2E7D32;" />
-                        <Button alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" prefHeight="55.0" prefWidth="206.0" style="-fx-background-color: rgba(255, 255, 255, 0.10);" text="Cadastro de Partidas" textAlignment="CENTER" textFill="WHITE">
+                        <Button fx:id="btnTelaPrincipal" mnemonicParsing="false" onAction="#irTelaPrincipal" prefHeight="55.0" prefWidth="206.0" style="-fx-background-color: #2E7D32;" text="Tela Principal" textFill="WHITE">
+                           <font>
+                              <Font name="System Bold" size="15.0" />
+                           </font>
+                        </Button>
+                        <Separator opacity="0.0" prefHeight="28.0" prefWidth="206.0" />
+                        <Button fx:id="btnTelaConsultaPartidas" mnemonicParsing="false" onAction="#irTelaConsultaPartidas" prefHeight="55.0" prefWidth="206.0" style="-fx-background-color: #2E7D32;" text="Consulta de Partidas" textFill="WHITE">
                            <font>
                               <Font name="System Bold" size="15.0" />
                            </font>
@@ -110,7 +110,7 @@
                            </font>
                         </Button>
                         <Separator opacity="0.0" prefHeight="28.0" prefWidth="206.0" />
-                        <Button fx:id="btnTelaConsultaPartidas" mnemonicParsing="false" onAction="#irTelaConsultaPartidas" prefHeight="55.0" prefWidth="206.0" style="-fx-background-color: #2E7D32;" text="Consulta de Partidas" textFill="WHITE">
+                        <Button alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" prefHeight="55.0" prefWidth="206.0" style="-fx-background-color: rgba(255, 255, 255, 0.10);" text="Cadastro de Partidas" textAlignment="CENTER" textFill="WHITE">
                            <font>
                               <Font name="System Bold" size="15.0" />
                            </font>

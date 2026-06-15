@@ -48,9 +48,6 @@ public class TelaModalEditarPartidaController {
     private ComboBox<Selecao> seletorSelecao2;
 
     @FXML
-    private ComboBox<Arbitro> seletorArbitro;
-
-    @FXML
     private TextField textoData;
 
     @FXML
@@ -59,20 +56,17 @@ public class TelaModalEditarPartidaController {
     // preenche os seletores
     public void initialize() {
         try {
-            ArbitroController arbitroObjeto = new ArbitroController();
             PersistenciaSelecoesJogadores selecoesObjeto = new PersistenciaSelecoesJogadores();
             EstadioController estadioObjeto = new EstadioController();
 
             List<Selecao> listaSelecoes = selecoesObjeto.carregarSelecoes();
             List<copamundo.estadios.modelo.Estadio> listaEstadios = estadioObjeto.listarEstadios();
-            List<Arbitro> listaArbitros = arbitroObjeto.listarArbitros();
 
             seletorFase.getItems().addAll(Fase.values());
             seletorStatus.getItems().addAll(StatusPartida.values());
             seletorSelecao1.getItems().addAll(listaSelecoes);
             seletorSelecao2.getItems().addAll(listaSelecoes);
             seletorEstadio.getItems().addAll(listaEstadios);
-            seletorArbitro.getItems().addAll(listaArbitros);
 
         } catch (PersistenciaException e) {
             e.printStackTrace();
@@ -106,7 +100,6 @@ public class TelaModalEditarPartidaController {
             copamundo.estadios.modelo.Estadio estadio = seletorEstadio.getValue();
             String data = textoData.getText();
             String horario = textoHorario.getText();
-            Arbitro arbitro = seletorArbitro.getValue();
 
             // verifica se há um campo em branco
             if (Objects.equals(data, "")) {
@@ -163,7 +156,6 @@ public class TelaModalEditarPartidaController {
 
                 // se tudo certo, altera os valores da partida e salva a lista editada no repositório
                 estadioController.validarEstadioDisponivel(partida);
-                designarArbitroPrincipal(partida, arbitro);
 
                 partida.setStatusPartida(status);
                 partida.setFase(fase);
@@ -172,7 +164,6 @@ public class TelaModalEditarPartidaController {
                 partida.setEstadioPartida(estadio);
                 partida.setDataPartida(data);
                 partida.setHorarioPartida(horario);
-                partida.setArbitro(arbitro);
 
                 Alert alert = new Alert(Alert.AlertType.INFORMATION);
                 alert.setTitle("Sucesso");
@@ -197,7 +188,18 @@ public class TelaModalEditarPartidaController {
         }
     }
 
+    @FXML
+    void fecharTelaEditarPartida(javafx.event.ActionEvent event) {
+        Stage stage = (Stage) ((Node) event.getSource())
+                .getScene()
+                .getWindow();
+
+        stage.close();
+    }
+
     private final EstadioController estadioController = new EstadioController();
+
+    /*
     private final ArbitroController arbitroController = new ArbitroController();
 
     public void designarArbitroPrincipal(Partida partida, Arbitro arbitro)
@@ -211,16 +213,9 @@ public class TelaModalEditarPartidaController {
 
     }
 
-    @FXML
-    void fecharTelaEditarPartida(javafx.event.ActionEvent event) {
-        Stage stage = (Stage) ((Node) event.getSource())
-                .getScene()
-                .getWindow();
 
-        stage.close();
-    }
 
-    /*
+
     public String editarPartida(String id, String dataPartida, String horarioPartida, copamundo.estadios.modelo.Estadio estadioPartida, Selecao selecao1, Selecao selecao2,
                                 Fase fase, StatusPartida status) throws IOException, ClassNotFoundException {
         List<Partida> listaPartidas = PartidaRepositorio.carregarListaPartidas();

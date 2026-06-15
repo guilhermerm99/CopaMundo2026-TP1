@@ -5,10 +5,8 @@ import copamundo.comum.Partida;
 import copamundo.comum.Selecao;
 import copamundo.comum.StatusPartida;
 import copamundo.estadios.controle.EstadioController;
-import copamundo.estadios.controle.ArbitroController;
 import copamundo.estadios.excecoes.PersistenciaException;
 import copamundo.estadios.excecoes.RegraNegocioException;
-import copamundo.estadios.modelo.Arbitro;
 import copamundo.partidas.excecoes.PartidaMesmaDataException;
 import copamundo.partidas.repositorio.PartidaRepositorio;
 import copamundo.selecoes.persistencia.PersistenciaSelecoesJogadores;
@@ -18,18 +16,21 @@ import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
+import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
+import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 import java.util.List;
-import java.awt.*;
 import java.io.IOException;
 import java.util.Objects;
 
 
 public class TelaCadastroPartidasController {
 
+    private final EstadioController estadioController = new EstadioController();
+
     @FXML
-    private Button btnCancelarCadastro;
+    private Button btnTelaPrincipal;
 
     @FXML
     private Button btnSalvarCadastroPartida;
@@ -131,6 +132,7 @@ public class TelaCadastroPartidasController {
 
     @FXML
     void salvarPartida(javafx.event.ActionEvent event) {
+
         try {
             // pega os valores informados
             Fase fase = seletorFase.getValue();
@@ -227,7 +229,7 @@ public class TelaCadastroPartidasController {
     }
 
     @FXML
-    void voltarMenuInicial(javafx.event.ActionEvent event) {
+    void irTelaPrincipal(javafx.event.ActionEvent event) {
         try {
             FXMLLoader loader = new FXMLLoader(
                     getClass().getResource("/copamundo/principal/visao/TelaPrincipal.fxml"));
@@ -248,7 +250,7 @@ public class TelaCadastroPartidasController {
     }
 
 
-    private final EstadioController estadioController = new EstadioController();
+
 
 
 /*

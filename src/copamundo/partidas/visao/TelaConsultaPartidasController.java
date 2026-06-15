@@ -3,9 +3,12 @@ import copamundo.comum.*;
 import copamundo.estadios.modelo.Estadio;
 import copamundo.partidas.repositorio.PartidaRepositorio;
 import copamundo.selecoes.persistencia.PersistenciaSelecoesJogadores;
+import copamundo.usuarios.controle.TelaLoginController;
+import copamundo.usuarios.controle.Usuario;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
@@ -36,8 +39,11 @@ public class TelaConsultaPartidasController {
     private Button btnLimparFiltros;
 
     @FXML
+    private Button btnTelaPrincipal;
+
+    @FXML
     private Button btnTelaCadastroPartidas;
-    btnTelaCadastroPartidas.setVisible();
+
 
     @FXML
     private Button btnTelaRegistroResultados;
@@ -78,8 +84,34 @@ public class TelaConsultaPartidasController {
     @FXML
     private TextField textoData;
 
+    private final Button btnExcluir = new Button("Excluir");
+    private final Button btnEditar = new Button("Editar");
+
+    private void esconderComponentesDeGerenciamento() {
+        btnTelaCadastroPartidas.setVisible(false);
+        btnTelaCadastroPartidas.setManaged(false);
+
+        btnTelaRegistroResultados.setVisible(false);
+        btnTelaRegistroResultados.setManaged(false);
+
+        btnExcluir.setVisible(false);
+        btnExcluir.setManaged(false);
+
+        btnEditar.setVisible(false);
+        btnEditar.setManaged(false);
+
+    }
+
+
     // povoa os seletores com os objetos da lista e as colunas com os objetos da lista de Partidas
     public void initialize() {
+
+        Usuario usuarioLogado = TelaLoginController.getUsuarioLogado();
+
+        if (usuarioLogado != null && usuarioLogado.getFuncao() == Usuario.Funcao.ARBITRO) {
+            esconderComponentesDeGerenciamento();
+        }
+
         try {
             PersistenciaSelecoesJogadores selecoesObjeto = new PersistenciaSelecoesJogadores();
             List<Selecao> listaSelecoes = selecoesObjeto.carregarSelecoes();
@@ -122,7 +154,7 @@ public class TelaConsultaPartidasController {
             // as pŕoximas colunas são botões, então contém as ações realizadas por eles - excluir e editar
             colunaExcluir.setCellFactory(param -> new TableCell<>() {
 
-                private final Button btnExcluir = new Button("Excluir");
+                //private final Button btnExcluir = new Button("Excluir");
 
                 {
                     btnExcluir.setOnAction(event -> {
@@ -179,7 +211,7 @@ public class TelaConsultaPartidasController {
             // coluna com o botão de editar
             colunaEditar.setCellFactory(param -> new TableCell<>() {
 
-                private final Button btnEditar = new Button("Editar");
+                //private final Button btnEditar = new Button("Editar");
 
                 // carrega a partida e manda pro controller da tela de editar e carrega a tela nova
                 {
@@ -283,6 +315,27 @@ public class TelaConsultaPartidasController {
             tabelaInteira.setItems(dados);
 
         } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    @FXML
+    void irTelaPrincipal(ActionEvent event) {
+        try {
+            FXMLLoader loader = new FXMLLoader(
+                    getClass().getResource("/copamundo/principal/visao/TelaPrincipal.fxml"));
+
+            Parent root = loader.load();
+
+            Stage stage = (Stage) ((Node) event.getSource())
+                    .getScene()
+                    .getWindow();
+
+            Scene scene = new Scene(root);
+
+            stage.setScene(scene);
+            stage.show();
+        } catch (IOException e) {
             e.printStackTrace();
         }
     }

@@ -12,21 +12,17 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Alert;
-import javafx.scene.control.ComboBox;
+import javafx.scene.control.*;
 import javafx.stage.Stage;
 import javafx.util.StringConverter;
-
-import java.awt.*;
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.List;
 
 
 public class TelaRegistroResultadosController {
 
     @FXML
-    private Button btnCancelarRegistro;
+    private Button btnTelaPrincipal;
 
     @FXML
     private Button btnSalvarResultado;
@@ -187,7 +183,7 @@ public class TelaRegistroResultadosController {
     }
 
     @FXML
-    void irTelaMenuInicial(javafx.event.ActionEvent event) {
+    void irTelaPrincipal(javafx.event.ActionEvent event) {
         try {
             FXMLLoader loader = new FXMLLoader(
                     getClass().getResource("/copamundo/principal/visao/TelaPrincipal.fxml"));
