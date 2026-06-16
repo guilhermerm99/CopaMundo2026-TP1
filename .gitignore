@@ -15,6 +15,10 @@ out/
 # Logs
 *.log
 
+# Local persistence generated while running the app
+dados/*.dat
+!dados/usuarios.dat
+
 # BlueJ files
 *.ctxt
 
