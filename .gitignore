@@ -43,6 +43,11 @@ replay_pid*
 *.so
 *.dylib
 
+# Project runtime libraries used by IntelliJ run configuration
+!lib/*.jar
+!lib/native/
+!lib/native/*.dll
+
 # OS generated files
 .DS_Store
 .DS_Store?

@@ -10,21 +10,11 @@
             fx:controller="copamundo.estadios.visao.TelaMenuEstadiosController">
 
     <top>
-        <VBox styleClass="app-header">
-            <Label text="Gestao de Estadios e Arbitragem - Copa do Mundo 2026" styleClass="app-title"/>
+        <VBox style="-fx-background-color: #1565C0; -fx-padding: 12 20 12 20;">
+            <Label text="Gestao de Estadios e Arbitragem - Copa do Mundo 2026"
+                   style="-fx-text-fill: white; -fx-font-size: 16px; -fx-font-weight: bold;"/>
         </VBox>
     </top>
-
-    <left>
-        <VBox spacing="10" styleClass="side-nav">
-            <Button maxWidth="Infinity" onAction="#abrirAbaEstadios" text="Estadios"/>
-            <Button maxWidth="Infinity" onAction="#abrirAbaArbitros" text="Arbitros"/>
-            <Button maxWidth="Infinity" onAction="#abrirAbaDesignacoes" text="Designacoes"/>
-            <Button maxWidth="Infinity" onAction="#abrirAbaConsulta" text="Consulta"/>
-            <Separator/>
-            <Button maxWidth="Infinity" onAction="#recarregarTudo" text="Recarregar"/>
-        </VBox>
-    </left>
 
     <center>
         <TabPane fx:id="tabPane" tabClosingPolicy="UNAVAILABLE">
@@ -32,6 +22,7 @@
                 <BorderPane>
                     <top>
                         <VBox spacing="10" styleClass="form-panel">
+                            <padding><Insets bottom="15" left="15" right="15" top="15"/></padding>
                             <GridPane hgap="12" vgap="10">
                                 <columnConstraints>
                                     <ColumnConstraints minWidth="95"/>
@@ -80,6 +71,7 @@
                 <BorderPane>
                     <top>
                         <VBox spacing="10" styleClass="form-panel">
+                            <padding><Insets bottom="15" left="15" right="15" top="15"/></padding>
                             <GridPane hgap="12" vgap="10">
                                 <columnConstraints>
                                     <ColumnConstraints minWidth="95"/>
@@ -131,6 +123,7 @@
                 <BorderPane>
                     <top>
                         <VBox spacing="10" styleClass="form-panel">
+                            <padding><Insets bottom="15" left="15" right="15" top="15"/></padding>
                             <GridPane hgap="12" vgap="10">
                                 <columnConstraints>
                                     <ColumnConstraints minWidth="95"/>
@@ -144,7 +137,7 @@
                                 <Label text="Arbitro:" GridPane.columnIndex="2" GridPane.rowIndex="0"/>
                                 <ComboBox fx:id="cbArbitroDesignacao" promptText="Selecione o arbitro" GridPane.columnIndex="3" GridPane.rowIndex="0"/>
                                 <Label text="Estadio:" GridPane.columnIndex="0" GridPane.rowIndex="1"/>
-                                <ComboBox fx:id="cbFiltroEstadioDesignacao" promptText="Todos" GridPane.columnIndex="1" GridPane.rowIndex="1"/>
+                                <Label fx:id="lblEstadioDesignacao" text="Selecione uma partida" styleClass="readonly-value" GridPane.columnIndex="1" GridPane.rowIndex="1"/>
                                 <Label text="Selecao:" GridPane.columnIndex="2" GridPane.rowIndex="1"/>
                                 <TextField fx:id="txtFiltroSelecaoDesignacao" promptText="Filtro por selecao" GridPane.columnIndex="3" GridPane.rowIndex="1"/>
                             </GridPane>
@@ -159,6 +152,7 @@
                                 <Button onAction="#limparArbitroSelecionado" styleClass="button-cancelar" text="Limpar selecao"/>
                                 <Button onAction="#filtrarDesignacoes" text="Filtrar"/>
                                 <Button onAction="#limparDesignacao" text="Limpar"/>
+                                <Button onAction="#recarregarTudo" text="Recarregar"/>
                             </HBox>
                         </VBox>
                     </top>
@@ -184,6 +178,7 @@
                 <BorderPane>
                     <top>
                         <VBox spacing="10" styleClass="form-panel">
+                            <padding><Insets bottom="15" left="15" right="15" top="15"/></padding>
                             <HBox alignment="CENTER_LEFT" spacing="10">
                                 <Label text="Texto:"/>
                                 <TextField fx:id="txtConsultaGeral" promptText="Estádio, localização, árbitro, federação ou seleção" HBox.hgrow="ALWAYS"/>

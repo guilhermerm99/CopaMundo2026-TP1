@@ -54,7 +54,7 @@ public class TelaMenuEstadiosController {
 
     @FXML private ComboBox<Partida> cbPartidaDesignacao;
     @FXML private ComboBox<Arbitro> cbArbitroDesignacao;
-    @FXML private ComboBox<Estadio> cbFiltroEstadioDesignacao;
+    @FXML private Label lblEstadioDesignacao;
     @FXML private TextField txtFiltroSelecaoDesignacao;
     @FXML private Label lblResumoArbitros;
     @FXML private TableView<Partida> tabelaDesignacoes;
@@ -276,7 +276,7 @@ public class TelaMenuEstadiosController {
         try {
             partidas.setAll(partidaController.buscarPartidas(
                     txtFiltroSelecaoDesignacao.getText(),
-                    cbFiltroEstadioDesignacao.getValue(),
+                    null,
                     null,
                     false
             ));
@@ -289,7 +289,7 @@ public class TelaMenuEstadiosController {
     private void limparDesignacao() {
         cbPartidaDesignacao.getSelectionModel().clearSelection();
         cbArbitroDesignacao.getSelectionModel().clearSelection();
-        cbFiltroEstadioDesignacao.getSelectionModel().clearSelection();
+        lblEstadioDesignacao.setText("Selecione uma partida");
         txtFiltroSelecaoDesignacao.clear();
         tabelaDesignacoes.getSelectionModel().clearSelection();
         carregarPartidas();
@@ -359,7 +359,9 @@ public class TelaMenuEstadiosController {
             atualizarArbitrosAptos(partida);
             if (partida != null) {
                 tabelaDesignacoes.getSelectionModel().select(partida);
-                cbFiltroEstadioDesignacao.setValue(partida.getEstadioPartida());
+                lblEstadioDesignacao.setText(formatarEstadio(partida.getEstadioPartida()));
+            } else {
+                lblEstadioDesignacao.setText("Selecione uma partida");
             }
         });
 
@@ -389,7 +391,7 @@ public class TelaMenuEstadiosController {
                 if (selecionada.getArbitroPrincipal() != null) {
                     cbArbitroDesignacao.setValue(selecionada.getArbitroPrincipal());
                 }
-                cbFiltroEstadioDesignacao.setValue(selecionada.getEstadioPartida());
+                lblEstadioDesignacao.setText(formatarEstadio(selecionada.getEstadioPartida()));
             }
         });
     }
@@ -428,7 +430,6 @@ public class TelaMenuEstadiosController {
 
     private void atualizarCombosDeApoio() {
         cbPartidaDesignacao.setItems(FXCollections.observableArrayList(partidas));
-        cbFiltroEstadioDesignacao.setItems(FXCollections.observableArrayList(estadios));
         atualizarArbitrosAptos(cbPartidaDesignacao.getValue());
     }
 
@@ -454,7 +455,8 @@ public class TelaMenuEstadiosController {
             }
 
             String status = partida.getArbitroPrincipal() == null ? "sem arbitro principal" : "com arbitro principal";
-            lblResumoArbitros.setText(partida.nomeSelecoes() + " - " + status + ". Arbitros aptos: " + aptos.size() + ".");
+            lblResumoArbitros.setText(partida.nomeSelecoes() + " - " + status + ". Estadio: "
+                    + formatarEstadio(partida.getEstadioPartida()) + ". Arbitros aptos: " + aptos.size() + ".");
         } catch (Exception erro) {
             lblResumoArbitros.setText("Nao foi possivel calcular arbitros aptos: " + erro.getMessage());
         }
