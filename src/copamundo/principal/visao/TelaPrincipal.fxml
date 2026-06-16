@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<BorderPane stylesheets="@estilo-principal.css"
+            xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="copamundo.principal.visao.TelaPrincipalController">
+
+    <top>
+        <HBox alignment="CENTER_LEFT" spacing="15"
+              style="-fx-background-color: #1565C0; -fx-padding: 12 20 12 20;">
+            <Label text="⚽" style="-fx-font-size: 22px;"/>
+            <VBox>
+                <Label text="Sistema de Gestão — Copa do Mundo 2026"
+                       style="-fx-text-fill: white; -fx-font-size: 16px; -fx-font-weight: bold;"/>
+                <Label fx:id="labelUsuarioLogado" text=""
+                       style="-fx-text-fill: #90CAF9; -fx-font-size: 11px;"/>
+            </VBox>
+            <HBox HBox.hgrow="ALWAYS"/>
+            <Button fx:id="btnSair" text="Sair" onAction="#sair"
+                    style="-fx-background-color: rgba(255,255,255,0.15); -fx-text-fill: white;
+                           -fx-background-radius: 5; -fx-cursor: hand;"/>
+        </HBox>
+    </top>
+
+    <left>
+        <VBox spacing="4" style="-fx-background-color: #1976D2; -fx-padding: 12 8 12 8; -fx-min-width: 200px;">
+
+            <Label text="ADMINISTRAÇÃO"
+                   style="-fx-text-fill: #90CAF9; -fx-font-size: 10px; -fx-font-weight: bold; -fx-padding: 8 0 4 6;"/>
+            <Button fx:id="btnUsuarios" text="👥  Usuários" maxWidth="Infinity"
+                    onAction="#abrirUsuarios" styleClass="menu-btn"/>
+            <Button fx:id="btnRelatorios" text="📊  Relatórios" maxWidth="Infinity"
+                    onAction="#abrirRelatorios" styleClass="menu-btn"/>
+
+            <Separator style="-fx-background-color: #42A5F5; -fx-padding: 4 0;"/>
+
+            <Label text="COMPETIÇÃO"
+                   style="-fx-text-fill: #90CAF9; -fx-font-size: 10px; -fx-font-weight: bold; -fx-padding: 8 0 4 6;"/>
+            <Button fx:id="btnSelecoes" text="🏆  Seleções e Jogadores" maxWidth="Infinity"
+                    onAction="#abrirSelecoes" styleClass="menu-btn"/>
+            <Button fx:id="btnEstadios" text="🏟️  Estádios e Árbitros" maxWidth="Infinity"
+                    onAction="#abrirEstadios" styleClass="menu-btn"/>
+            <Button fx:id="btnPartidas" text="⚽  Partidas" maxWidth="Infinity"
+                    onAction="#abrirPartidas" styleClass="menu-btn"/>
+
+        </VBox>
+    </left>
+
+    <center>
+        <StackPane fx:id="areaCentral" style="-fx-background-color: #F5F5F5;">
+            <VBox alignment="CENTER" spacing="20">
+                <Label text="⚽" style="-fx-font-size: 64px;"/>
+                <Label text="Copa do Mundo 2026"
+                       style="-fx-font-size: 24px; -fx-font-weight: bold; -fx-text-fill: #1565C0;"/>
+                <Label text="Selecione um módulo no menu lateral para começar."
+                       style="-fx-font-size: 14px; -fx-text-fill: #777;"/>
+                <HBox alignment="CENTER" spacing="20" style="-fx-padding: 30 0 0 0;">
+                    <VBox alignment="CENTER" spacing="8" styleClass="card-modulo"
+                          onMouseClicked="#abrirSelecoes" style="-fx-cursor: hand;">
+                        <Label text="🏆" style="-fx-font-size: 32px;"/>
+                        <Label text="Seleções e Jogadores" style="-fx-font-weight: bold;"/>
+                    </VBox>
+                    <VBox alignment="CENTER" spacing="8" styleClass="card-modulo"
+                          onMouseClicked="#abrirEstadios" style="-fx-cursor: hand;">
+                        <Label text="🏟️" style="-fx-font-size: 32px;"/>
+                        <Label text="Estádios e Árbitros" style="-fx-font-weight: bold;"/>
+                    </VBox>
+                    <VBox alignment="CENTER" spacing="8" styleClass="card-modulo"
+                          onMouseClicked="#abrirPartidas" style="-fx-cursor: hand;">
+                        <Label text="⚽" style="-fx-font-size: 32px;"/>
+                        <Label text="Partidas" style="-fx-font-weight: bold;"/>
+                    </VBox>
+                    <VBox fx:id="cardUsuarios" alignment="CENTER" spacing="8" styleClass="card-modulo"
+                          onMouseClicked="#abrirUsuarios" style="-fx-cursor: hand;">
+                        <Label text="👥" style="-fx-font-size: 32px;"/>
+                        <Label text="Usuários" style="-fx-font-weight: bold;"/>
+                    </VBox>
+                </HBox>
+            </VBox>
+        </StackPane>
+    </center>
+
+    <bottom>
+        <HBox alignment="CENTER_RIGHT" spacing="10"
+              style="-fx-background-color: #E3F2FD; -fx-padding: 5 15 5 15;
+                     -fx-border-color: #BBDEFB; -fx-border-width: 1 0 0 0;">
+            <Label fx:id="labelModuloAtivo" text="Nenhum módulo selecionado"
+                   style="-fx-text-fill: #666; -fx-font-size: 11px;"/>
+            <HBox HBox.hgrow="ALWAYS"/>
+            <Label text="CIC0197 — UnB 2026"
+                   style="-fx-text-fill: #999; -fx-font-size: 10px;"/>
+        </HBox>
+    </bottom>
+
+</BorderPane>
