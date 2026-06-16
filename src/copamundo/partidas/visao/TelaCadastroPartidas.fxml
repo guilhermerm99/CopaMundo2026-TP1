@@ -15,19 +15,13 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<BorderPane prefHeight="602.0" prefWidth="700.0" xmlns="http://javafx.com/javafx/26" xmlns:fx="http://javafx.com/fxml/1">
+<BorderPane prefHeight="602.0" prefWidth="700.0" xmlns="http://javafx.com/javafx/26" xmlns:fx="http://javafx.com/fxml/1" fx:controller="copamundo.partidas.visao.TelaCadastroPartidasController">
    <bottom>
       <Pane prefHeight="496.0" prefWidth="424.0" BorderPane.alignment="CENTER">
          <children>
             <HBox alignment="CENTER" layoutX="290.0" layoutY="432.0" prefHeight="39.0" prefWidth="353.0">
                <children>
-                  <Button alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" prefHeight="31.0" prefWidth="75.0" style="-fx-background-color: #2E7D32;" text="Salvar" textAlignment="CENTER" textFill="WHITE">
-                     <font>
-                        <Font name="System Bold" size="13.0" />
-                     </font>
-                  </Button>
-                  <Separator opacity="0.0" orientation="VERTICAL" prefHeight="50.0" prefWidth="57.0" />
-                  <Button mnemonicParsing="false" prefHeight="32.0" prefWidth="83.0" style="-fx-background-color: #D32F2F;" text="Cancelar" textFill="WHITE">
+                  <Button fx:id="btnSalvarCadastroPartida" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#salvarPartida" prefHeight="31.0" prefWidth="75.0" style="-fx-background-color: #2E7D32;" text="Salvar" textAlignment="CENTER" textFill="WHITE">
                      <font>
                         <Font name="System Bold" size="13.0" />
                      </font>
@@ -40,13 +34,13 @@
                 <ColumnConstraints hgrow="SOMETIMES" maxWidth="258.0" minWidth="10.0" prefWidth="233.0" />
               </columnConstraints>
               <rowConstraints>
-                <RowConstraints maxHeight="109.0" minHeight="0.0" prefHeight="70.0" vgrow="SOMETIMES" />
-                <RowConstraints maxHeight="302.0" minHeight="0.0" prefHeight="70.0" vgrow="SOMETIMES" />
-                <RowConstraints maxHeight="302.0" minHeight="10.0" prefHeight="70.0" vgrow="SOMETIMES" />
-                  <RowConstraints maxHeight="302.0" minHeight="0.0" prefHeight="70.0" vgrow="SOMETIMES" />
-                  <RowConstraints maxHeight="302.0" minHeight="0.0" prefHeight="70.0" vgrow="SOMETIMES" />
-                  <RowConstraints maxHeight="302.0" minHeight="0.0" prefHeight="80.0" vgrow="SOMETIMES" />
-                  <RowConstraints maxHeight="302.0" minHeight="0.0" prefHeight="80.0" vgrow="SOMETIMES" />
+                <RowConstraints maxHeight="109.0" minHeight="0.0" prefHeight="60.0" vgrow="SOMETIMES" />
+                <RowConstraints maxHeight="302.0" minHeight="0.0" prefHeight="60.0" vgrow="SOMETIMES" />
+                <RowConstraints maxHeight="302.0" minHeight="10.0" prefHeight="60.0" vgrow="SOMETIMES" />
+                  <RowConstraints maxHeight="302.0" minHeight="0.0" prefHeight="60.0" vgrow="SOMETIMES" />
+                  <RowConstraints maxHeight="302.0" minHeight="0.0" prefHeight="60.0" vgrow="SOMETIMES" />
+                  <RowConstraints maxHeight="302.0" minHeight="0.0" prefHeight="65.0" vgrow="SOMETIMES" />
+                  <RowConstraints maxHeight="302.0" minHeight="0.0" prefHeight="65.0" vgrow="SOMETIMES" />
               </rowConstraints>
                <children>
                   <Label alignment="BOTTOM_RIGHT" contentDisplay="BOTTOM" prefHeight="57.0" prefWidth="144.0" text="Data:   ">
@@ -54,8 +48,8 @@
                         <Font size="15.0" />
                      </font>
                   </Label>
-                  <TextField prefHeight="26.0" prefWidth="117.0" promptText="dd/mm/aaaa" GridPane.columnIndex="1" GridPane.valignment="BOTTOM" />
-                  <TextField prefHeight="26.0" prefWidth="216.0" promptText="hh:mm" GridPane.columnIndex="1" GridPane.rowIndex="1" GridPane.valignment="BOTTOM" />
+                  <TextField fx:id="textoData" prefHeight="26.0" prefWidth="117.0" promptText="dd/mm/aaaa" GridPane.columnIndex="1" GridPane.valignment="BOTTOM" />
+                  <TextField fx:id="textoHorario" prefHeight="26.0" prefWidth="216.0" promptText="hh:mm" GridPane.columnIndex="1" GridPane.rowIndex="1" GridPane.valignment="BOTTOM" />
                   <Label alignment="BOTTOM_RIGHT" prefHeight="57.0" prefWidth="143.0" text="Horário:   " textAlignment="RIGHT" GridPane.rowIndex="1">
                      <font>
                         <Font size="15.0" />
@@ -81,16 +75,16 @@
                         <Font size="15.0" />
                      </font>
                   </Label>
-                  <ComboBox prefHeight="26.0" prefWidth="320.0" promptText="Selecione a fase" GridPane.columnIndex="1" GridPane.rowIndex="5" GridPane.valignment="BOTTOM" />
+                  <ComboBox fx:id="seletorFase" prefHeight="26.0" prefWidth="320.0" promptText="Selecione a fase" GridPane.columnIndex="1" GridPane.rowIndex="5" GridPane.valignment="BOTTOM" />
                   <Label alignment="BOTTOM_RIGHT" prefHeight="140.0" prefWidth="106.0" text="Status da   &#10;Partida:   " textAlignment="RIGHT" GridPane.rowIndex="6">
                      <font>
                         <Font size="15.0" />
                      </font>
                   </Label>
-                  <ComboBox prefHeight="26.0" prefWidth="320.0" promptText="Selecione o status" GridPane.columnIndex="1" GridPane.rowIndex="6" GridPane.valignment="BOTTOM" />
-                  <TextField prefHeight="26.0" prefWidth="216.0" promptText="Digite o estádio" GridPane.columnIndex="1" GridPane.rowIndex="2" GridPane.valignment="BOTTOM" />
-                  <TextField prefHeight="26.0" prefWidth="216.0" promptText="Digite a seleção 1" GridPane.columnIndex="1" GridPane.rowIndex="3" GridPane.valignment="BOTTOM" />
-                  <TextField prefHeight="26.0" prefWidth="216.0" promptText="Digite a seleção 2" GridPane.columnIndex="1" GridPane.rowIndex="4" GridPane.valignment="BOTTOM" />
+                  <ComboBox fx:id="seletorStatusPartida" prefHeight="26.0" prefWidth="320.0" promptText="Selecione o status" GridPane.columnIndex="1" GridPane.rowIndex="6" GridPane.valignment="BOTTOM" />
+                  <ComboBox fx:id="seletorEstadio" prefWidth="320.0" promptText="Selecione o estádio" GridPane.columnIndex="1" GridPane.rowIndex="2" GridPane.valignment="BOTTOM" />
+                  <ComboBox fx:id="seletorSelecao1" prefWidth="320.0" promptText="Selecione a seleção" GridPane.columnIndex="1" GridPane.rowIndex="3" GridPane.valignment="BOTTOM" />
+                  <ComboBox fx:id="seletorSelecao2" prefWidth="320.0" promptText="Selecione a seleção" GridPane.columnIndex="1" GridPane.rowIndex="4" GridPane.valignment="BOTTOM" />
                </children>
             </GridPane>
             <Pane layoutY="-24.0" prefHeight="520.0" prefWidth="225.0" style="-fx-background-color: #2E7D32;">
@@ -98,19 +92,25 @@
                   <VBox alignment="TOP_CENTER" prefHeight="520.0" prefWidth="226.0">
                      <children>
                         <Separator opacity="0.0" prefHeight="50.0" prefWidth="206.0" style="-fx-background-color: #2E7D32;" />
+                        <Button fx:id="btnTelaPrincipal" mnemonicParsing="false" onAction="#irTelaPrincipal" prefHeight="55.0" prefWidth="206.0" style="-fx-background-color: #2E7D32;" text="Tela Principal" textFill="WHITE">
+                           <font>
+                              <Font name="System Bold" size="15.0" />
+                           </font>
+                        </Button>
+                        <Separator opacity="0.0" prefHeight="28.0" prefWidth="206.0" />
+                        <Button fx:id="btnTelaConsultaPartidas" mnemonicParsing="false" onAction="#irTelaConsultaPartidas" prefHeight="55.0" prefWidth="206.0" style="-fx-background-color: #2E7D32;" text="Consulta de Partidas" textFill="WHITE">
+                           <font>
+                              <Font name="System Bold" size="15.0" />
+                           </font>
+                        </Button>
+                        <Separator opacity="0.0" prefHeight="28.0" prefWidth="206.0" />
+                        <Button fx:id="btnTelaRegistroResultado" mnemonicParsing="false" onAction="#irTelaRegistroResultado" prefHeight="55.0" prefWidth="206.0" style="-fx-background-color: #2E7D32;" text="Registro de Resultados" textFill="WHITE">
+                           <font>
+                              <Font name="System Bold" size="15.0" />
+                           </font>
+                        </Button>
+                        <Separator opacity="0.0" prefHeight="28.0" prefWidth="206.0" />
                         <Button alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" prefHeight="55.0" prefWidth="206.0" style="-fx-background-color: rgba(255, 255, 255, 0.10);" text="Cadastro de Partidas" textAlignment="CENTER" textFill="WHITE">
-                           <font>
-                              <Font name="System Bold" size="15.0" />
-                           </font>
-                        </Button>
-                        <Separator opacity="0.0" prefHeight="28.0" prefWidth="206.0" />
-                        <Button mnemonicParsing="false" prefHeight="55.0" prefWidth="206.0" style="-fx-background-color: #2E7D32;" text="Registro de Resultados" textFill="WHITE">
-                           <font>
-                              <Font name="System Bold" size="15.0" />
-                           </font>
-                        </Button>
-                        <Separator opacity="0.0" prefHeight="28.0" prefWidth="206.0" />
-                        <Button mnemonicParsing="false" prefHeight="55.0" prefWidth="206.0" style="-fx-background-color: #2E7D32;" text="Consulta de Partidas" textFill="WHITE">
                            <font>
                               <Font name="System Bold" size="15.0" />
                            </font>

@@ -1,7 +1,7 @@
 package copamundo.usuarios.controle;
 
-import copamundo.comum.PersistenciaException;
-import copamundo.comum.PersistenciaUsuarios;
+import copamundo.usuarios.excecoes.PersistenciaException;
+import copamundo.usuarios.persistencia.PersistenciaUsuarios;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -77,7 +77,7 @@ public class Usuario implements Serializable {
     public static List<Usuario> usuarios = new ArrayList<>();
 
     static {
-        copamundo.comum.PersistenciaUsuarios persistencia = new copamundo.comum.PersistenciaUsuarios();
+        copamundo.usuarios.persistencia.PersistenciaUsuarios persistencia = new copamundo.usuarios.persistencia.PersistenciaUsuarios();
         try {
             // Carrega o arquivo dados/usuarios.dat para a memória
             usuarios = persistencia.carregarUsuarios();
@@ -516,14 +516,14 @@ public class Usuario implements Serializable {
     public static boolean salvarUsuarioNoBanco(Usuario novoUsuario) {
         if (novoUsuario.validarDadosUsuario()) {
             try {
-                copamundo.comum.PersistenciaUsuarios persistencia = new copamundo.comum.PersistenciaUsuarios();
+                copamundo.usuarios.persistencia.PersistenciaUsuarios persistencia = new copamundo.usuarios.persistencia.PersistenciaUsuarios();
 
                 persistencia.salvarUsuario(novoUsuario);
 
                 usuarios = persistencia.carregarUsuarios();
 
                 return true;
-            } catch (copamundo.comum.PersistenciaException e) {
+            } catch (copamundo.usuarios.excecoes.PersistenciaException e) {
                 System.out.println("Erro ao gravar dados no arquivo: " + e.getMessage());
                 return false;
             }

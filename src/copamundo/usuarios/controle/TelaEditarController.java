@@ -1,7 +1,7 @@
 package copamundo.usuarios.controle;
 
-import copamundo.comum.PersistenciaException;
-import copamundo.comum.PersistenciaUsuarios;
+import copamundo.usuarios.excecoes.PersistenciaException;
+import copamundo.usuarios.persistencia.PersistenciaUsuarios;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.Node;

@@ -1,7 +1,7 @@
 package copamundo.usuarios.controle;
 
-import copamundo.comum.PersistenciaException;
-import copamundo.comum.PersistenciaUsuarios;
+import copamundo.usuarios.excecoes.PersistenciaException;
+import copamundo.usuarios.persistencia.PersistenciaUsuarios;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
@@ -51,7 +51,7 @@ public class TelaLoginController {
     @FXML
     private void telaUsuarios(ActionEvent event) throws IOException {
         FXMLLoader loader = new FXMLLoader(
-                getClass().getResource("/copamundo/principal/visao/TelaPrincipal.fxml")
+                getClass().getResource("/copamundo/usuarios/visao/TelaUsuarios.fxml")
         );
 
         Parent root = loader.load();
@@ -323,7 +323,7 @@ public class TelaLoginController {
 
         try {
             FXMLLoader loader = new FXMLLoader(
-                    getClass().getResource("/copamundo/principal/visao/TelaPrincipal.fxml")
+                    getClass().getResource("/copamundo/usuarios/visao/TelaUsuarios.fxml")
             );
             Parent root = loader.load();
 

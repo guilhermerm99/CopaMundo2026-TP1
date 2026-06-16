@@ -10,7 +10,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="443.0" prefWidth="379.0" xmlns="http://javafx.com/javafx/26" xmlns:fx="http://javafx.com/fxml/1" fx:controller="CONTROLLER_NAME">
+<AnchorPane prefHeight="456.0" prefWidth="379.0" xmlns="http://javafx.com/javafx/26" xmlns:fx="http://javafx.com/fxml/1" fx:controller="copamundo.usuarios.controle.TelaEditarController">
     <children>
         <VBox prefHeight="443.0" prefWidth="379.0">
             <children>
@@ -30,7 +30,7 @@
                     <children>
                         <HBox alignment="CENTER" prefHeight="305.0" prefWidth="379.0">
                             <children>
-                                <VBox alignment="TOP_CENTER" prefHeight="200.0" prefWidth="100.0" spacing="19.0">
+                                <VBox alignment="TOP_CENTER" prefHeight="305.0" prefWidth="116.0" spacing="19.0">
                                     <children>
                                         <Label text="Nome:">
                                             <font>
@@ -62,22 +62,28 @@
                                                 <Font name="System Bold" size="15.0" />
                                             </font>
                                         </Label>
-                                        <Label layoutX="33.0" layoutY="190.0" text="Senha:">
+                                        <Label layoutX="33.0" layoutY="190.0" text="Nova senha:">
                                             <font>
                                                 <Font name="System Bold" size="15.0" />
                                             </font>
                                         </Label>
+                              <Label layoutX="37.0" layoutY="250.0" text="Senha anterior:">
+                                 <font>
+                                    <Font name="System Bold" size="15.0" />
+                                 </font>
+                              </Label>
                                     </children>
                                 </VBox>
                                 <VBox prefHeight="275.0" prefWidth="200.0" spacing="15.0">
                                     <children>
-                                        <TextField layoutX="10.0" layoutY="10.0" promptText="Nome completo do usuário" style="-fx-background-radius: 6; -fx-focus-color: #2E7D32; -fx-faint-focus-color: transparent;" />
-                                        <TextField promptText="Somente números" style="-fx-background-radius: 6; -fx-focus-color: #2E7D32; -fx-faint-focus-color: transparent;" />
-                                        <TextField promptText="exemplo@email.com" style="-fx-background-radius: 6; -fx-faint-focus-color: #2E7D32; -fx-focus-color: #061751;" />
-                                        <ComboBox prefWidth="150.0" promptText="Status" style="-fx-background-radius: 6;" />
-                                        <ComboBox prefWidth="150.0" promptText="País" style="-fx-background-radius: 6;" />
-                                        <ComboBox prefWidth="150.0" promptText="Função" style="-fx-background-radius: 6;" />
-                                        <TextField layoutX="10.0" layoutY="10.0" promptText="Confirme sua senha" style="-fx-background-radius: 6; -fx-focus-color: #2E7D32; -fx-faint-focus-color: transparent;" />
+                                        <TextField fx:id="campoNome" layoutX="10.0" layoutY="10.0" promptText="Nome completo do usuário" style="-fx-background-radius: 6; -fx-focus-color: #2E7D32; -fx-faint-focus-color: transparent;" />
+                                        <TextField fx:id="campoCpf" promptText="Somente números" style="-fx-background-radius: 6; -fx-focus-color: #2E7D32; -fx-faint-focus-color: transparent;" />
+                                        <TextField fx:id="campoEmail" promptText="exemplo@email.com" style="-fx-background-radius: 6; -fx-faint-focus-color: #2E7D32; -fx-focus-color: #061751;" />
+                                        <ComboBox fx:id="comboStatus" prefWidth="150.0" promptText="Status" style="-fx-background-radius: 6;" />
+                                        <ComboBox fx:id="comboPais" prefWidth="150.0" promptText="País" style="-fx-background-radius: 6;" />
+                                        <ComboBox fx:id="comboFuncao" prefWidth="150.0" promptText="Função" style="-fx-background-radius: 6;" />
+                                        <TextField fx:id="campoNovaSenha" layoutX="10.0" layoutY="10.0" promptText="Nova senha do usuário" style="-fx-background-radius: 6; -fx-focus-color: #2E7D32; -fx-faint-focus-color: transparent;" />
+                                        <TextField fx:id="campoSenhaAnterior" layoutX="10.0" layoutY="250.0" promptText="Senha anterior do usuário" style="-fx-background-radius: 6; -fx-focus-color: #2E7D32; -fx-faint-focus-color: transparent;" />
                                     </children>
                                 </VBox>
                             </children>
@@ -92,8 +98,8 @@
                         </HBox>
                         <HBox alignment="BOTTOM_RIGHT" prefHeight="26.0" prefWidth="369.0" spacing="10.0">
                             <children>
-                                <Button mnemonicParsing="false" style="-fx-background-radius: 6;" text="Cancelar" />
-                                <Button mnemonicParsing="false" style="-fx-background-color: #008000; -fx-background-radius: 6;" text="Salvar" textFill="WHITE" />
+                                <Button mnemonicParsing="false" onAction="#cancelar" style="-fx-background-radius: 6;" text="Cancelar" />
+                                <Button mnemonicParsing="false" onAction="#salvar" style="-fx-background-color: #008000; -fx-background-radius: 6;" text="Salvar" textFill="WHITE" />
                             </children>
                             <VBox.margin>
                                 <Insets right="10.0" />

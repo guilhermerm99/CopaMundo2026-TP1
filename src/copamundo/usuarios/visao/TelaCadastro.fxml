@@ -11,7 +11,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="443.0" prefWidth="379.0" xmlns="http://javafx.com/javafx/26" xmlns:fx="http://javafx.com/fxml/1" fx:controller="CONTROLLER_NAME">
+<AnchorPane prefHeight="443.0" prefWidth="379.0" xmlns="http://javafx.com/javafx/26" xmlns:fx="http://javafx.com/fxml/1" fx:controller="copamundo.usuarios.controle.TelaCadastroController">
     <children>
         <VBox prefHeight="443.0" prefWidth="379.0">
             <children>
@@ -72,13 +72,13 @@
                                 </VBox>
                                 <VBox prefHeight="275.0" prefWidth="200.0" spacing="15.0">
                                     <children>
-                                        <TextField layoutX="10.0" layoutY="10.0" promptText="Nome completo do usuário" style="-fx-background-radius: 6; -fx-focus-color: #2E7D32; -fx-faint-focus-color: transparent;" />
-                                        <TextField promptText="Somente números" style="-fx-background-radius: 6; -fx-focus-color: #2E7D32; -fx-faint-focus-color: transparent;" />
-                                        <TextField promptText="exemplo@email.com" style="-fx-background-radius: 6; -fx-faint-focus-color: transparent; -fx-focus-color: #2E7D32;" />
-                                        <ComboBox prefWidth="150.0" promptText="Status" style="-fx-background-radius: 6;" />
-                                        <ComboBox prefWidth="150.0" promptText="País" style="-fx-background-radius: 6;" />
-                                        <ComboBox prefWidth="150.0" promptText="Função" style="-fx-background-radius: 6;" />
-                              <PasswordField promptText="Confirme sua senha" style="-fx-focus-color: #2E7D32; -fx-faint-focus-color: transparent; -fx-background-radius: 6;" />
+                                        <TextField fx:id="campoNomeUsuario" layoutX="10.0" layoutY="10.0" promptText="Nome completo do usuário" style="-fx-background-radius: 6; -fx-focus-color: #2E7D32; -fx-faint-focus-color: transparent;" />
+                                        <TextField fx:id="campoCpfUsuario" promptText="Somente números" style="-fx-background-radius: 6; -fx-focus-color: #2E7D32; -fx-faint-focus-color: transparent;" />
+                                        <TextField fx:id="campoEmailUsuario" promptText="exemplo@email.com" style="-fx-background-radius: 6; -fx-faint-focus-color: transparent; -fx-focus-color: #2E7D32;" />
+                                        <ComboBox fx:id="campoStatus" prefWidth="150.0" promptText="Status" style="-fx-background-radius: 6;" />
+                                        <ComboBox fx:id="campoPais" prefWidth="150.0" promptText="País" style="-fx-background-radius: 6;" />
+                                        <ComboBox fx:id="campoFuncao" prefWidth="150.0" promptText="Função" style="-fx-background-radius: 6;" />
+                              <PasswordField fx:id="campoSenhaUsuario" promptText="Confirme sua senha" style="-fx-focus-color: #2E7D32; -fx-faint-focus-color: transparent; -fx-background-radius: 6;" />
                                     </children>
                                 </VBox>
                             </children>
@@ -93,8 +93,8 @@
                         </HBox>
                         <HBox alignment="BOTTOM_RIGHT" prefHeight="26.0" prefWidth="369.0" spacing="10.0">
                             <children>
-                                <Button mnemonicParsing="false" style="-fx-background-radius: 6; -fx-faint-focus-color: transparent;" text="Cancelar" />
-                                <Button mnemonicParsing="false" style="-fx-background-color: #008000; -fx-background-radius: 6;" text="Salvar" textFill="WHITE" />
+                                <Button onAction="#voltarTelaUsuarios" mnemonicParsing="false" style="-fx-background-radius: 6; -fx-faint-focus-color: transparent;" text="Cancelar" />
+                                <Button  fx:id="entrar" onAction="#entrar" mnemonicParsing="false" style="-fx-background-color: #008000; -fx-background-radius: 6;" text="Salvar" textFill="WHITE" />
                             </children>
                             <VBox.margin>
                                 <Insets right="10.0" />

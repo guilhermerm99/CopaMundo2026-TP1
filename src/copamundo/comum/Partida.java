@@ -8,6 +8,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 import java.util.UUID;
+import copamundo.estadios.modelo.Arbitro;
+
 
 public class Partida implements Serializable {
     private static final long serialVersionUID = 1L;
@@ -16,13 +18,13 @@ public class Partida implements Serializable {
     private String horarioPartida;
     private Selecao selecao1;
     private Selecao selecao2;
-    private Estadio estadioPartida;
+    private copamundo.estadios.modelo.Estadio estadioPartida;
     private Fase fase;
     private StatusPartida status;
     private Resultado resultado;
     private Arbitro arbitro;
 
-    public Partida(String dataPartida, String horarioPartida, Estadio estadioPartida, Selecao selecao1, Selecao selecao2, Fase fase, StatusPartida status) {
+    public Partida(String dataPartida, String horarioPartida, copamundo.estadios.modelo.Estadio estadioPartida, Selecao selecao1, Selecao selecao2, Fase fase, StatusPartida status) {
         this.id = UUID.randomUUID().toString();
         this.dataPartida = dataPartida;
         this.horarioPartida = horarioPartida;
@@ -33,7 +35,7 @@ public class Partida implements Serializable {
         this.status = status;
     }
 
-    public Partida(Selecao selecao1, Selecao selecao2, Estadio estadioPartida, LocalDateTime dataHora) {
+    public Partida(Selecao selecao1, Selecao selecao2, copamundo.estadios.modelo.Estadio estadioPartida, LocalDateTime dataHora) {
         this(
                 dataHora.toLocalDate().toString(),
                 dataHora.toLocalTime().toString(),
@@ -74,15 +76,15 @@ public class Partida implements Serializable {
         this.dataPartida = dataPartida;
     }
 
-    public Estadio getEstadioPartida() {
+    public copamundo.estadios.modelo.Estadio getEstadioPartida() {
         return estadioPartida;
     }
 
-    public void setEstadioPartida(Estadio estadioPartida) {
+    public void setEstadioPartida(copamundo.estadios.modelo.Estadio estadioPartida) {
         this.estadioPartida = estadioPartida;
     }
 
-    public Estadio getEstadio() {
+    public copamundo.estadios.modelo.Estadio getEstadio() {
         return estadioPartida;
     }
 
@@ -171,5 +173,11 @@ public class Partida implements Serializable {
     @Override
     public String toString() {
         return getDescricao() + " - " + getDataHora();
+    }
+
+    public String nomeSelecoes() {
+        String retorno;
+        retorno = selecao1 + " x " + selecao2;
+        return retorno;
     }
 }
