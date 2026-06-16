@@ -24,10 +24,7 @@ public class Jogador implements Serializable, Identificavel {
         this.paisSelecao = selecao != null ? selecao.getPais() : "";
     }
 
-    /**
-     * ID composto: nome + "|" + paisSelecao.
-     * Evita colisão entre jogadores homônimos de seleções diferentes.
-     */
+    // ID composto para evitar conflito entre jogadores com o mesmo nome em seleções diferentes
     @Override
     public String getId() {
         return nome + "|" + paisSelecao;
@@ -56,7 +53,7 @@ public class Jogador implements Serializable, Identificavel {
         this.paisSelecao = selecao != null ? selecao.getPais() : "";
     }
 
-    /** Exibe o status formatado (para uso na tabela via PropertyValueFactory). */
+    // Retorna o status com ícone para exibição na tabela
     public String getStatusFormatado() {
         if (status == null) return "";
         return switch (status) {

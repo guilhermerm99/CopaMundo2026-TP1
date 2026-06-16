@@ -4,6 +4,7 @@ import copamundo.selecoes.persistencia.Identificavel;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 public class Selecao implements Serializable, Identificavel {
     private static final long serialVersionUID = 2L;
@@ -51,6 +52,18 @@ public class Selecao implements Serializable, Identificavel {
     public void removerJogador(Jogador jogador) { this.jogadores.remove(jogador); }
     public int getQuantidadeJogadores() { return jogadores.size(); }
     public boolean isElencoCheio() { return jogadores.size() >= 26; }
+
+    // Duas seleções são iguais se têm o mesmo país
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) return true;
+        if (!(obj instanceof Selecao)) return false;
+        Selecao outra = (Selecao) obj;
+        return Objects.equals(pais, outra.pais);
+    }
+
+    @Override
+    public int hashCode() { return Objects.hash(pais); }
 
     @Override
     public String toString() { return pais; }

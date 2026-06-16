@@ -37,7 +37,7 @@
                             <!-- Melhoria 10: contador de jogadores -->
                             <Label fx:id="labelContadorJogadores"
                                    style="-fx-font-style: italic; -fx-text-fill: #555;"/>
-                            <HBox alignment="CENTER" spacing="10">
+                            <HBox fx:id="botoesSelecao" alignment="CENTER" spacing="10">
                                 <Button onAction="#novoSelecao" text="➕  Novo"/>
                                 <Button onAction="#editarSelecao" text="✏️  Editar"/>
                                 <Button onAction="#excluirSelecao" text="🗑️  Excluir" styleClass="button-cancelar"/>
@@ -82,7 +82,7 @@
                                     <ColumnConstraints/><ColumnConstraints hgrow="ALWAYS"/>
                                 </columnConstraints>
                             </GridPane>
-                            <HBox alignment="CENTER" spacing="10">
+                            <HBox fx:id="botoesJogador" alignment="CENTER" spacing="10">
                                 <Button onAction="#novoJogador" text="➕  Novo"/>
                                 <Button onAction="#editarJogador" text="✏️  Editar"/>
                                 <Button onAction="#excluirJogador" text="🗑️  Excluir" styleClass="button-cancelar"/>

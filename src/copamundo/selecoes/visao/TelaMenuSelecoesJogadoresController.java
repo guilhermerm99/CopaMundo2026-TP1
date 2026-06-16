@@ -7,33 +7,37 @@ import copamundo.selecoes.controle.GestaoSelecoesJogadores;
 import copamundo.selecoes.excecoes.ElencoCheioException;
 import copamundo.selecoes.excecoes.JogadorNaoEncontradoException;
 import copamundo.selecoes.excecoes.SelecaoNaoEncontradaException;
+import copamundo.comum.ControleAcesso;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.layout.HBox;
 
 import java.util.List;
 import java.util.stream.Collectors;
 
 public class TelaMenuSelecoesJogadoresController {
 
-    // ===== ABA SELEÇÕES =====
+    // Aba Seleções
     @FXML private TextField campoPais, campoTecnico;
     @FXML private ComboBox<String> comboGrupo;
     @FXML private TableView<Selecao> tabelaSelecoes;
     @FXML private TableColumn<Selecao, String> colunaPais, colunaGrupo, colunaTecnico;
-    @FXML private Label labelContadorJogadores; // melhoria 10
+    @FXML private Label labelContadorJogadores;
+    @FXML private HBox botoesSelecao;
 
-    // ===== ABA JOGADORES =====
+    // Aba Jogadores
     @FXML private TextField campoNome, campoNumero, campoIdade;
     @FXML private ComboBox<String> comboPosicao, comboStatus, comboSelecao;
     @FXML private TableView<Jogador> tabelaJogadores;
     @FXML private TableColumn<Jogador, String> colunaNome, colunaPosicao, colunaSelecao;
-    @FXML private TableColumn<Jogador, String> colunaStatusFormatado; // melhoria 9
+    @FXML private TableColumn<Jogador, String> colunaStatusFormatado;
     @FXML private TableColumn<Jogador, Integer> colunaNumero, colunaIdade;
+    @FXML private HBox botoesJogador;
 
-    // ===== ABA CONSULTA =====
+    // Aba Consulta
     @FXML private TextField campoBuscaPais, campoBuscaTecnico, campoBuscaNomeJogador;
     @FXML private ComboBox<String> comboGrupoFiltro, comboPosicaoFiltro, comboStatusFiltro, comboSelecaoFiltro;
     @FXML private TableView<Selecao> tabelaConsultaSelecoes;
@@ -44,14 +48,14 @@ public class TelaMenuSelecoesJogadoresController {
 
     @FXML private TabPane tabPane;
 
-    private final ObservableList<Selecao> listaSelecoes   = FXCollections.observableArrayList();
-    private final ObservableList<Jogador> listaJogadores  = FXCollections.observableArrayList();
+    private final ObservableList<Selecao> listaSelecoes          = FXCollections.observableArrayList();
+    private final ObservableList<Jogador> listaJogadores         = FXCollections.observableArrayList();
     private final ObservableList<Selecao> listaConsultaSelecoes  = FXCollections.observableArrayList();
     private final ObservableList<Jogador> listaConsultaJogadores = FXCollections.observableArrayList();
 
     private final GestaoSelecoesJogadores gestao = new GestaoSelecoesJogadores();
-    private String paisEmEdicao  = null;
-    private String idJogadorEmEdicao = null; // melhoria 1: guarda o ID composto
+    private String paisEmEdicao      = null;
+    private String idJogadorEmEdicao = null;
 
     @FXML
     public void initialize() {
@@ -61,9 +65,13 @@ public class TelaMenuSelecoesJogadoresController {
         carregarTabelaSelecoes();
         carregarTabelaJogadores();
         carregarComboSelecoes();
+        aplicarControlePorPerfil();
     }
 
-    // ==================== ABA SELEÇÕES ====================
+    private void aplicarControlePorPerfil() {
+        boolean podeGerenciar = ControleAcesso.podeGerenciarSelecoes();
+        ControleAcesso.esconderSeNaoPode(podeGerenciar, botoesSelecao, botoesJogador);
+    }
 
     private void configurarAbaSelecoes() {
         comboGrupo.setItems(FXCollections.observableArrayList(
@@ -73,32 +81,32 @@ public class TelaMenuSelecoesJogadoresController {
         colunaTecnico.setCellValueFactory(new PropertyValueFactory<>("tecnico"));
         tabelaSelecoes.setItems(listaSelecoes);
 
-        // Melhoria 8: clicar na linha preenche o formulário automaticamente
-        tabelaSelecoes.getSelectionModel().selectedItemProperty().addListener((obs, old, selecionada) -> {
+        // Clicar em uma linha já preenche o formulário
+        tabelaSelecoes.getSelectionModel().selectedItemProperty().addListener((obs, anterior, selecionada) -> {
             if (selecionada != null) preencherFormularioSelecao(selecionada);
         });
     }
 
-    /** Melhoria 10: atualiza contador de jogadores ao selecionar uma seleção */
-    private void preencherFormularioSelecao(Selecao s) {
-        paisEmEdicao = s.getPais();
-        campoPais.setText(s.getPais());
+    private void preencherFormularioSelecao(Selecao selecao) {
+        paisEmEdicao = selecao.getPais();
+        campoPais.setText(selecao.getPais());
         campoPais.setEditable(false);
-        comboGrupo.setValue(s.getGrupo());
-        campoTecnico.setText(s.getTecnico());
+        comboGrupo.setValue(selecao.getGrupo());
+        campoTecnico.setText(selecao.getTecnico());
         try {
-            int total = gestao.contarJogadoresDaSelecao(s.getPais());
+            int total = gestao.contarJogadoresDaSelecao(selecao.getPais());
             if (labelContadorJogadores != null) {
-                labelContadorJogadores.setText("Jogadores: " + total + " / " + GestaoSelecoesJogadores.MAX_JOGADORES
-                        + (total < GestaoSelecoesJogadores.MIN_JOGADORES
-                                ? "  ⚠️ mínimo: " + GestaoSelecoesJogadores.MIN_JOGADORES : ""));
+                String aviso = total < GestaoSelecoesJogadores.MIN_JOGADORES
+                        ? "  ⚠️ mínimo: " + GestaoSelecoesJogadores.MIN_JOGADORES : "";
+                labelContadorJogadores.setText("Jogadores: " + total + " / " + GestaoSelecoesJogadores.MAX_JOGADORES + aviso);
             }
         } catch (Exception e) { /* silencioso */ }
     }
 
     @FXML private void novoSelecao() {
         paisEmEdicao = null;
-        campoPais.clear(); campoTecnico.clear();
+        campoPais.clear();
+        campoTecnico.clear();
         comboGrupo.getSelectionModel().clearSelection();
         campoPais.setEditable(true);
         tabelaSelecoes.getSelectionModel().clearSelection();
@@ -106,87 +114,94 @@ public class TelaMenuSelecoesJogadoresController {
     }
 
     @FXML private void editarSelecao() {
-        Selecao s = tabelaSelecoes.getSelectionModel().getSelectedItem();
-        if (s == null) { mostrarAlerta(Alert.AlertType.WARNING, "Atenção", "Selecione uma seleção para editar."); return; }
-        preencherFormularioSelecao(s);
+        Selecao selecao = tabelaSelecoes.getSelectionModel().getSelectedItem();
+        if (selecao == null) { alerta(Alert.AlertType.WARNING, "Atenção", "Selecione uma seleção para editar."); return; }
+        preencherFormularioSelecao(selecao);
     }
 
     @FXML private void excluirSelecao() {
-        Selecao s = tabelaSelecoes.getSelectionModel().getSelectedItem();
-        if (s == null) { mostrarAlerta(Alert.AlertType.WARNING, "Atenção", "Selecione uma seleção para excluir."); return; }
-        confirmar("Excluir seleção \"" + s.getPais() + "\"?", () -> {
+        if (ControleAcesso.bloquearAcesso(ControleAcesso.podeGerenciarSelecoes())) {
+            alerta(Alert.AlertType.WARNING, "Acesso Negado", "Seu perfil não permite excluir seleções."); return;
+        }
+        Selecao selecao = tabelaSelecoes.getSelectionModel().getSelectedItem();
+        if (selecao == null) { alerta(Alert.AlertType.WARNING, "Atenção", "Selecione uma seleção para excluir."); return; }
+        confirmar("Excluir seleção \"" + selecao.getPais() + "\"?", () -> {
             try {
-                gestao.excluirSelecao(s.getPais());
-                carregarTabelaSelecoes(); carregarComboSelecoes(); novoSelecao();
-                mostrarAlerta(Alert.AlertType.INFORMATION, "Sucesso", "Seleção excluída.");
+                gestao.excluirSelecao(selecao.getPais());
+                carregarTabelaSelecoes();
+                carregarComboSelecoes();
+                novoSelecao();
+                alerta(Alert.AlertType.INFORMATION, "Sucesso", "Seleção excluída.");
             } catch (SelecaoNaoEncontradaException | IllegalStateException e) {
-                mostrarAlerta(Alert.AlertType.ERROR, "Erro", e.getMessage());
+                alerta(Alert.AlertType.ERROR, "Erro", e.getMessage());
             } catch (Exception e) {
-                mostrarAlerta(Alert.AlertType.ERROR, "Erro inesperado", e.getMessage());
+                alerta(Alert.AlertType.ERROR, "Erro inesperado", e.getMessage());
             }
         });
     }
 
     @FXML private void salvarSelecao() {
-        String pais   = campoPais.getText().trim();
+        if (ControleAcesso.bloquearAcesso(ControleAcesso.podeGerenciarSelecoes())) {
+            alerta(Alert.AlertType.WARNING, "Acesso Negado", "Seu perfil não permite salvar seleções."); return;
+        }
+        String pais    = campoPais.getText().trim();
         String tecnico = campoTecnico.getText().trim();
-        String grupo  = comboGrupo.getValue();
+        String grupo   = comboGrupo.getValue();
         if (pais.isBlank() || tecnico.isBlank() || grupo == null) {
-            mostrarAlerta(Alert.AlertType.WARNING, "Campos Obrigatórios", "Preencha todos os campos."); return;
+            alerta(Alert.AlertType.WARNING, "Campos Obrigatórios", "Preencha todos os campos."); return;
         }
         try {
             if (paisEmEdicao == null) {
                 gestao.cadastrarSelecao(new Selecao(pais, grupo, tecnico));
-                mostrarAlerta(Alert.AlertType.INFORMATION, "Sucesso", "Seleção cadastrada!");
+                alerta(Alert.AlertType.INFORMATION, "Sucesso", "Seleção cadastrada!");
             } else {
                 gestao.editarSelecao(paisEmEdicao, new Selecao(paisEmEdicao, grupo, tecnico));
-                mostrarAlerta(Alert.AlertType.INFORMATION, "Sucesso", "Seleção atualizada!");
+                alerta(Alert.AlertType.INFORMATION, "Sucesso", "Seleção atualizada!");
             }
-            carregarTabelaSelecoes(); carregarComboSelecoes(); novoSelecao();
+            carregarTabelaSelecoes();
+            carregarComboSelecoes();
+            novoSelecao();
         } catch (IllegalArgumentException e) {
-            mostrarAlerta(Alert.AlertType.WARNING, "Dado Inválido", e.getMessage());
+            alerta(Alert.AlertType.WARNING, "Dado Inválido", e.getMessage());
         } catch (Exception e) {
-            mostrarAlerta(Alert.AlertType.ERROR, "Erro", e.getMessage());
+            alerta(Alert.AlertType.ERROR, "Erro", e.getMessage());
         }
     }
 
-    // ==================== ABA JOGADORES ====================
-
     private void configurarAbaJogadores() {
-        comboPosicao.setItems(FXCollections.observableArrayList(
-                "Goleiro","Zagueiro","Lateral","Meio-campo","Atacante"));
-        // Melhoria 9: exibe status legível
+        comboPosicao.setItems(FXCollections.observableArrayList("Goleiro","Zagueiro","Lateral","Meio-campo","Atacante"));
         comboStatus.setItems(FXCollections.observableArrayList("ATIVO","LESIONADO","SUSPENSO"));
 
         colunaNome.setCellValueFactory(new PropertyValueFactory<>("nome"));
         colunaPosicao.setCellValueFactory(new PropertyValueFactory<>("posicao"));
         colunaNumero.setCellValueFactory(new PropertyValueFactory<>("numero"));
         colunaIdade.setCellValueFactory(new PropertyValueFactory<>("idade"));
-        // Melhoria 9: usa getStatusFormatado() no lugar de getStatus()
         colunaStatusFormatado.setCellValueFactory(new PropertyValueFactory<>("statusFormatado"));
         colunaSelecao.setCellValueFactory(new PropertyValueFactory<>("selecao"));
         tabelaJogadores.setItems(listaJogadores);
 
-        // Melhoria 8: clicar na linha preenche o formulário
-        tabelaJogadores.getSelectionModel().selectedItemProperty().addListener((obs, old, j) -> {
-            if (j != null) preencherFormularioJogador(j);
+        // Clicar em uma linha já preenche o formulário
+        tabelaJogadores.getSelectionModel().selectedItemProperty().addListener((obs, anterior, jogador) -> {
+            if (jogador != null) preencherFormularioJogador(jogador);
         });
     }
 
-    private void preencherFormularioJogador(Jogador j) {
-        idJogadorEmEdicao = j.getId();
-        campoNome.setText(j.getNome());
+    private void preencherFormularioJogador(Jogador jogador) {
+        idJogadorEmEdicao = jogador.getId();
+        campoNome.setText(jogador.getNome());
         campoNome.setEditable(false);
-        campoNumero.setText(String.valueOf(j.getNumero()));
-        campoIdade.setText(String.valueOf(j.getIdade()));
-        comboPosicao.setValue(j.getPosicao());
-        comboStatus.setValue(j.getStatus().name());
-        comboSelecao.setValue(j.getPaisSelecao());
+        campoNumero.setText(String.valueOf(jogador.getNumero()));
+        campoIdade.setText(String.valueOf(jogador.getIdade()));
+        comboPosicao.setValue(jogador.getPosicao());
+        comboStatus.setValue(jogador.getStatus().name());
+        comboSelecao.setValue(jogador.getPaisSelecao());
     }
 
     @FXML private void novoJogador() {
         idJogadorEmEdicao = null;
-        campoNome.clear(); campoNumero.clear(); campoIdade.clear();
+        campoNome.clear();
+        campoNumero.clear();
+        campoIdade.clear();
         comboPosicao.getSelectionModel().clearSelection();
         comboStatus.getSelectionModel().clearSelection();
         comboSelecao.getSelectionModel().clearSelection();
@@ -195,38 +210,45 @@ public class TelaMenuSelecoesJogadoresController {
     }
 
     @FXML private void editarJogador() {
-        Jogador j = tabelaJogadores.getSelectionModel().getSelectedItem();
-        if (j == null) { mostrarAlerta(Alert.AlertType.WARNING, "Atenção", "Selecione um jogador para editar."); return; }
-        preencherFormularioJogador(j);
+        Jogador jogador = tabelaJogadores.getSelectionModel().getSelectedItem();
+        if (jogador == null) { alerta(Alert.AlertType.WARNING, "Atenção", "Selecione um jogador para editar."); return; }
+        preencherFormularioJogador(jogador);
     }
 
     @FXML private void excluirJogador() {
-        Jogador j = tabelaJogadores.getSelectionModel().getSelectedItem();
-        if (j == null) { mostrarAlerta(Alert.AlertType.WARNING, "Atenção", "Selecione um jogador para excluir."); return; }
-        confirmar("Excluir jogador \"" + j.getNome() + "\"?", () -> {
+        if (ControleAcesso.bloquearAcesso(ControleAcesso.podeGerenciarSelecoes())) {
+            alerta(Alert.AlertType.WARNING, "Acesso Negado", "Seu perfil não permite excluir jogadores."); return;
+        }
+        Jogador jogador = tabelaJogadores.getSelectionModel().getSelectedItem();
+        if (jogador == null) { alerta(Alert.AlertType.WARNING, "Atenção", "Selecione um jogador para excluir."); return; }
+        confirmar("Excluir jogador \"" + jogador.getNome() + "\"?", () -> {
             try {
-                gestao.excluirJogador(j.getId());
-                carregarTabelaJogadores(); novoJogador();
-                mostrarAlerta(Alert.AlertType.INFORMATION, "Sucesso", "Jogador excluído.");
+                gestao.excluirJogador(jogador.getId());
+                carregarTabelaJogadores();
+                novoJogador();
+                alerta(Alert.AlertType.INFORMATION, "Sucesso", "Jogador excluído.");
             } catch (JogadorNaoEncontradoException | IllegalStateException e) {
-                mostrarAlerta(Alert.AlertType.ERROR, "Erro", e.getMessage());
+                alerta(Alert.AlertType.ERROR, "Erro", e.getMessage());
             } catch (Exception e) {
-                mostrarAlerta(Alert.AlertType.ERROR, "Erro inesperado", e.getMessage());
+                alerta(Alert.AlertType.ERROR, "Erro inesperado", e.getMessage());
             }
         });
     }
 
     @FXML private void salvarJogador() {
-        String nome       = campoNome.getText().trim();
-        String posicao    = comboPosicao.getValue();
-        String statusStr  = comboStatus.getValue();
+        if (ControleAcesso.bloquearAcesso(ControleAcesso.podeGerenciarSelecoes())) {
+            alerta(Alert.AlertType.WARNING, "Acesso Negado", "Seu perfil não permite salvar jogadores."); return;
+        }
+        String nome        = campoNome.getText().trim();
+        String posicao     = comboPosicao.getValue();
+        String statusStr   = comboStatus.getValue();
         String paisSelecao = comboSelecao.getValue();
-        String numeroStr  = campoNumero.getText().trim();
-        String idadeStr   = campoIdade.getText().trim();
+        String numeroStr   = campoNumero.getText().trim();
+        String idadeStr    = campoIdade.getText().trim();
 
         if (nome.isBlank() || posicao == null || statusStr == null || paisSelecao == null
                 || numeroStr.isBlank() || idadeStr.isBlank()) {
-            mostrarAlerta(Alert.AlertType.WARNING, "Campos Obrigatórios", "Preencha todos os campos."); return;
+            alerta(Alert.AlertType.WARNING, "Campos Obrigatórios", "Preencha todos os campos."); return;
         }
         try {
             Jogador jogador = new Jogador();
@@ -239,33 +261,30 @@ public class TelaMenuSelecoesJogadoresController {
 
             if (idJogadorEmEdicao == null) {
                 gestao.cadastrarJogador(jogador);
-                mostrarAlerta(Alert.AlertType.INFORMATION, "Sucesso", "Jogador cadastrado!");
+                alerta(Alert.AlertType.INFORMATION, "Sucesso", "Jogador cadastrado!");
             } else {
                 gestao.editarJogador(idJogadorEmEdicao, jogador);
-                mostrarAlerta(Alert.AlertType.INFORMATION, "Sucesso", "Jogador atualizado!");
+                alerta(Alert.AlertType.INFORMATION, "Sucesso", "Jogador atualizado!");
             }
-            carregarTabelaJogadores(); novoJogador();
+            carregarTabelaJogadores();
+            novoJogador();
         } catch (NumberFormatException e) {
-            mostrarAlerta(Alert.AlertType.WARNING, "Dado Inválido", "Número e Idade devem ser inteiros.");
+            alerta(Alert.AlertType.WARNING, "Dado Inválido", "Número e Idade devem ser inteiros.");
         } catch (ElencoCheioException e) {
-            mostrarAlerta(Alert.AlertType.WARNING, "Elenco Cheio", e.getMessage());
+            alerta(Alert.AlertType.WARNING, "Elenco Cheio", e.getMessage());
         } catch (JogadorNaoEncontradoException e) {
-            mostrarAlerta(Alert.AlertType.ERROR, "Erro", e.getMessage());
+            alerta(Alert.AlertType.ERROR, "Erro", e.getMessage());
         } catch (IllegalArgumentException e) {
-            mostrarAlerta(Alert.AlertType.WARNING, "Dado Inválido", e.getMessage());
+            alerta(Alert.AlertType.WARNING, "Dado Inválido", e.getMessage());
         } catch (Exception e) {
-            mostrarAlerta(Alert.AlertType.ERROR, "Erro inesperado", e.getMessage());
+            alerta(Alert.AlertType.ERROR, "Erro inesperado", e.getMessage());
         }
     }
 
-    // ==================== ABA CONSULTA ====================
-
     private void configurarAbaConsulta() {
-        comboGrupoFiltro.setItems(FXCollections.observableArrayList(
-                "Todos","A","B","C","D","E","F","G","H","I","J","K","L"));
+        comboGrupoFiltro.setItems(FXCollections.observableArrayList("Todos","A","B","C","D","E","F","G","H","I","J","K","L"));
         comboGrupoFiltro.setValue("Todos");
-        comboPosicaoFiltro.setItems(FXCollections.observableArrayList(
-                "Todas","Goleiro","Zagueiro","Lateral","Meio-campo","Atacante"));
+        comboPosicaoFiltro.setItems(FXCollections.observableArrayList("Todas","Goleiro","Zagueiro","Lateral","Meio-campo","Atacante"));
         comboPosicaoFiltro.setValue("Todas");
         comboStatusFiltro.setItems(FXCollections.observableArrayList("Todos","ATIVO","LESIONADO","SUSPENSO"));
         comboStatusFiltro.setValue("Todos");
@@ -279,13 +298,13 @@ public class TelaMenuSelecoesJogadoresController {
         colunaPosicaoJogador.setCellValueFactory(new PropertyValueFactory<>("posicao"));
         colunaNumeroJogador.setCellValueFactory(new PropertyValueFactory<>("numero"));
         colunaIdadeJogador.setCellValueFactory(new PropertyValueFactory<>("idade"));
-        // Melhoria 9: status formatado também na consulta
         colunaStatusJogador.setCellValueFactory(new PropertyValueFactory<>("statusFormatado"));
         colunaSelecaoJogador.setCellValueFactory(new PropertyValueFactory<>("selecao"));
         tabelaConsultaJogadores.setItems(listaConsultaJogadores);
 
-        tabPane.getSelectionModel().selectedItemProperty().addListener((obs, old, newTab) -> {
-            if (newTab != null && newTab.getText().contains("Consulta")) {
+        // Atualiza a consulta toda vez que o usuário entra nessa aba
+        tabPane.getSelectionModel().selectedItemProperty().addListener((obs, anterior, novaAba) -> {
+            if (novaAba != null && novaAba.getText().contains("Consulta")) {
                 carregarComboSelecaoFiltro();
                 filtrarSelecoes();
                 filtrarJogadores();
@@ -293,7 +312,6 @@ public class TelaMenuSelecoesJogadoresController {
         });
     }
 
-    // Melhoria 7: filtros combinados
     @FXML private void filtrarSelecoes() {
         try {
             listaConsultaSelecoes.setAll(gestao.buscarSelecoes(
@@ -301,12 +319,14 @@ public class TelaMenuSelecoesJogadoresController {
                     campoBuscaTecnico.getText().trim(),
                     comboGrupoFiltro.getValue()));
         } catch (Exception e) {
-            mostrarAlerta(Alert.AlertType.ERROR, "Erro ao filtrar", e.getMessage());
+            alerta(Alert.AlertType.ERROR, "Erro ao filtrar", e.getMessage());
         }
     }
 
     @FXML private void limparFiltrosSelecoes() {
-        campoBuscaPais.clear(); campoBuscaTecnico.clear(); comboGrupoFiltro.setValue("Todos");
+        campoBuscaPais.clear();
+        campoBuscaTecnico.clear();
+        comboGrupoFiltro.setValue("Todos");
         filtrarSelecoes();
     }
 
@@ -321,26 +341,26 @@ public class TelaMenuSelecoesJogadoresController {
                     status,
                     comboSelecaoFiltro.getValue()));
         } catch (Exception e) {
-            mostrarAlerta(Alert.AlertType.ERROR, "Erro ao filtrar", e.getMessage());
+            alerta(Alert.AlertType.ERROR, "Erro ao filtrar", e.getMessage());
         }
     }
 
     @FXML private void limparFiltrosJogadores() {
-        campoBuscaNomeJogador.clear(); comboPosicaoFiltro.setValue("Todas");
-        comboStatusFiltro.setValue("Todos"); comboSelecaoFiltro.getSelectionModel().clearSelection();
+        campoBuscaNomeJogador.clear();
+        comboPosicaoFiltro.setValue("Todas");
+        comboStatusFiltro.setValue("Todos");
+        comboSelecaoFiltro.getSelectionModel().clearSelection();
         filtrarJogadores();
     }
 
-    // ==================== HELPERS ====================
-
     private void carregarTabelaSelecoes() {
         try { listaSelecoes.setAll(gestao.listarSelecoes()); }
-        catch (Exception e) { mostrarAlerta(Alert.AlertType.ERROR, "Erro", e.getMessage()); }
+        catch (Exception e) { alerta(Alert.AlertType.ERROR, "Erro", e.getMessage()); }
     }
 
     private void carregarTabelaJogadores() {
         try { listaJogadores.setAll(gestao.listarTodosJogadores()); }
-        catch (Exception e) { mostrarAlerta(Alert.AlertType.ERROR, "Erro", e.getMessage()); }
+        catch (Exception e) { alerta(Alert.AlertType.ERROR, "Erro", e.getMessage()); }
     }
 
     private void carregarComboSelecoes() {
@@ -361,14 +381,18 @@ public class TelaMenuSelecoesJogadoresController {
     }
 
     private void confirmar(String mensagem, Runnable acao) {
-        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
-        alert.setTitle("Confirmação"); alert.setHeaderText(null); alert.setContentText(mensagem);
-        alert.showAndWait().ifPresent(r -> { if (r == ButtonType.OK) acao.run(); });
+        Alert caixa = new Alert(Alert.AlertType.CONFIRMATION);
+        caixa.setTitle("Confirmação");
+        caixa.setHeaderText(null);
+        caixa.setContentText(mensagem);
+        caixa.showAndWait().ifPresent(resposta -> { if (resposta == ButtonType.OK) acao.run(); });
     }
 
-    private void mostrarAlerta(Alert.AlertType tipo, String titulo, String mensagem) {
-        Alert alert = new Alert(tipo);
-        alert.setTitle(titulo); alert.setHeaderText(null); alert.setContentText(mensagem);
-        alert.showAndWait();
+    private void alerta(Alert.AlertType tipo, String titulo, String mensagem) {
+        Alert caixa = new Alert(tipo);
+        caixa.setTitle(titulo);
+        caixa.setHeaderText(null);
+        caixa.setContentText(mensagem);
+        caixa.showAndWait();
     }
 }
