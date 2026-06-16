@@ -92,6 +92,9 @@ public class TelaConsultaPartidasController {
         btnTelaRegistroResultados.setVisible(false);
         btnTelaRegistroResultados.setManaged(false);
 
+        colunaEditar.setVisible(false);
+        colunaExcluir.setVisible(false);
+
     }
 
 
@@ -115,7 +118,7 @@ public class TelaConsultaPartidasController {
             seletorSelecao.getItems().addAll(listaSelecoes);
 
             colunaData.setCellValueFactory(
-                    new PropertyValueFactory<>("dataPatida")
+                    new PropertyValueFactory<>("dataPartida")
             );
 
             colunaEstadio.setCellValueFactory(
@@ -148,6 +151,7 @@ public class TelaConsultaPartidasController {
             colunaExcluir.setCellFactory(param -> new TableCell<>() {
 
                 private final Button btnExcluir = new Button("Excluir");
+
 
                 {
                     btnExcluir.setOnAction(event -> {

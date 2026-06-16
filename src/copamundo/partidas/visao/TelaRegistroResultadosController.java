@@ -207,22 +207,22 @@ public class TelaRegistroResultadosController {
     void salvarResultado(javafx.event.ActionEvent event) {
         try {
             Partida p = seletorPartida.getValue();
-            int amarelosSelecao1 = Integer.parseInt(textoAmarelos1.getText());
-            int amarelosSelecao2 = Integer.parseInt(textoAmarelos2.getText());
-            int escanteiosSelecao1 = Integer.parseInt(textoEscanteios1.getText());
-            int escanteiosSelecao2 = Integer.parseInt(textoEscanteios2.getText());
-            int faltasSelecao1 = Integer.parseInt(textoFaltas1.getText());
-            int faltasSelecao2 = Integer.parseInt(textoFaltas2.getText());
-            int finalizacoesSelecao1 = Integer.parseInt(textoFinalizacoes1.getText());
-            int finalizacoesSelecao2 = Integer.parseInt(textoFinalizacoes2.getText());
-            int golsSelecao1 = Integer.parseInt(textoGols1.getText());
-            int golsSelecao2 = Integer.parseInt(textoGols2.getText());
-            int impedimentosSelecao1 = Integer.parseInt(textoImpedimentos1.getText());
-            int impedimentosSelecao2 = Integer.parseInt(textoImpedimentos2.getText());
-            float posseSelecao1 = Float.parseFloat(textoPosse1.getText());
-            float posseSelecao2 = Float.parseFloat(textoPosse2.getText());
-            int vermelhosSelecao1 = Integer.parseInt(textoVermelhos1.getText());
-            int vermelhosSelecao2 = Integer.parseInt(textoVermelhos2.getText());
+            String amarelos1 = textoAmarelos1.getText();
+            String amarelos2 = textoAmarelos2.getText();
+            String escanteios1 = textoEscanteios1.getText();
+            String escanteios2 = textoEscanteios2.getText();
+            String faltas1 = textoFaltas1.getText();
+            String faltas2 = textoFaltas2.getText();
+            String finalizacoes1 = textoFinalizacoes1.getText();
+            String finalizacoes2 = textoFinalizacoes2.getText();
+            String gols1 = textoGols1.getText();
+            String gols2 = textoGols2.getText();
+            String impedimentos1 = textoImpedimentos1.getText();
+            String impedimentos2 = textoImpedimentos2.getText();
+            String posse1 = textoPosse1.getText();
+            String posse2 = textoPosse2.getText();
+            String vermelhos1 = textoVermelhos1.getText();
+            String vermelhos2 = textoVermelhos2.getText();
 
             // é obrigatório selecionar uma partida para salvar um resultado
             if (p == null) {
@@ -232,7 +232,36 @@ public class TelaRegistroResultadosController {
                 return;
             }
 
+            if (amarelos1 == null || amarelos1.trim().isEmpty() || amarelos2 == null || amarelos2.trim().isEmpty() || escanteios1 == null ||
+                    escanteios1.trim().isEmpty() || escanteios2 == null || escanteios2.trim().isEmpty() || faltas1 == null || faltas1.trim().isEmpty() ||
+                    faltas2 == null || faltas2.trim().isEmpty() || finalizacoes1 == null || finalizacoes1.trim().isEmpty() || finalizacoes2 == null ||
+                    gols1 == null || gols1.trim().isEmpty() || gols2 == null || gols2.trim().isEmpty() || impedimentos1 == null || impedimentos1.trim().isEmpty() ||
+                    impedimentos2 == null || impedimentos2.trim().isEmpty() || posse1 == null || posse1.trim().isEmpty() || posse2 == null ||
+                    vermelhos1 == null || vermelhos1.trim().isEmpty() || vermelhos2 == null || vermelhos2.trim().isEmpty()) {
+                Alert alert = new Alert(Alert.AlertType.WARNING);
+                alert.setContentText("Todos os campos devem estar preenchidos!");
+                alert.showAndWait();
+                return;
+            }
+
             List<Partida> listaPartidas = PartidaRepositorio.carregarListaPartidas();
+
+            int amarelosSelecao1 = Integer.parseInt(amarelos1.trim());
+            int amarelosSelecao2 = Integer.parseInt(amarelos2.trim());
+            int escanteiosSelecao1 = Integer.parseInt(escanteios1.trim());
+            int escanteiosSelecao2 = Integer.parseInt(escanteios2.trim());
+            int faltasSelecao1 = Integer.parseInt(faltas1.trim());
+            int faltasSelecao2 = Integer.parseInt(faltas2.trim());
+            int finalizacoesSelecao1 = Integer.parseInt(finalizacoes1.trim());
+            int finalizacoesSelecao2 = Integer.parseInt(finalizacoes2.trim());
+            int golsSelecao1 = Integer.parseInt(gols1.trim());
+            int golsSelecao2 = Integer.parseInt(gols2.trim());
+            int impedimentosSelecao1 = Integer.parseInt(impedimentos1.trim());
+            int impedimentosSelecao2 = Integer.parseInt(impedimentos2.trim());
+            float posseSelecao1 = Float.parseFloat(posse1.trim());
+            float posseSelecao2 = Float.parseFloat(posse2.trim());
+            int vermelhosSelecao1 = Integer.parseInt(vermelhos1.trim());
+            int vermelhosSelecao2 = Integer.parseInt(vermelhos2.trim());
 
             // verifica se a partida escolhida está finalizada antes de salvar
             for (int i = 0; i < listaPartidas.size(); i++) {
