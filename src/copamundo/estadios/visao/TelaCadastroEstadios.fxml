@@ -20,12 +20,12 @@
         <TextField fx:id="txtNome" promptText="Nome do estadio"
                    GridPane.rowIndex="0" GridPane.columnIndex="1"/>
 
-        <Label text="Cidade:" GridPane.rowIndex="1" GridPane.columnIndex="0"/>
-        <TextField fx:id="txtCidade" promptText="Cidade"
+        <Label text="Localização:" GridPane.rowIndex="1" GridPane.columnIndex="0"/>
+        <TextField fx:id="txtCidade" promptText="Localização"
                    GridPane.rowIndex="1" GridPane.columnIndex="1"/>
 
         <Label text="Capacidade:" GridPane.rowIndex="2" GridPane.columnIndex="0"/>
-        <TextField fx:id="txtCapacidade" promptText="Capacidade"
+        <TextField fx:id="txtCapacidade" promptText="Ex: 34.534"
                    GridPane.rowIndex="2" GridPane.columnIndex="1"/>
     </GridPane>
 
@@ -38,7 +38,7 @@
     <TableView fx:id="tabelaEstadios" prefHeight="220">
         <columns>
             <TableColumn fx:id="colunaNome" text="Nome" prefWidth="180"/>
-            <TableColumn fx:id="colunaCidade" text="Cidade" prefWidth="160"/>
+            <TableColumn fx:id="colunaCidade" text="Localização" prefWidth="160"/>
             <TableColumn fx:id="colunaCapacidade" text="Capacidade" prefWidth="120"/>
         </columns>
     </TableView>

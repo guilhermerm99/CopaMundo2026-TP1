@@ -249,7 +249,7 @@ public class TelaConsultaPartidasController {
                 }
             });
 
-        } catch (IOException | ClassNotFoundException e) {
+        } catch (IOException | ClassNotFoundException | copamundo.selecoes.excecoes.PersistenciaException e) {
             e.printStackTrace();
         }
 
@@ -323,7 +323,7 @@ public class TelaConsultaPartidasController {
     void irTelaPrincipal(ActionEvent event) {
         try {
             FXMLLoader loader = new FXMLLoader(
-                    getClass().getResource("/copamundo/principal/visao/TelaPrincipal.fxml"));
+                    getClass().getResource("/copamundo/usuarios/visao/TelaUsuarios.fxml"));
 
             Parent root = loader.load();
 

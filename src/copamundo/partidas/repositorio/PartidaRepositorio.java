@@ -35,7 +35,22 @@ public class PartidaRepositorio {
         }
 
         try (ObjectInputStream in = new ObjectInputStream(Files.newInputStream(ARQUIVO_PARTIDAS))) {
-            return (List<Partida>) in.readObject();
+            return converterListaPartidas(in.readObject());
         }
+    }
+
+    private static List<Partida> converterListaPartidas(Object objeto) throws IOException {
+        if (!(objeto instanceof List<?> itens)) {
+            throw new IOException("Arquivo de partidas possui formato invalido.");
+        }
+
+        List<Partida> partidas = new ArrayList<>();
+        for (Object item : itens) {
+            if (!(item instanceof Partida partida)) {
+                throw new IOException("Arquivo de partidas contem item invalido.");
+            }
+            partidas.add(partida);
+        }
+        return partidas;
     }
 }

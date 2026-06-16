@@ -27,6 +27,10 @@
         <Label text="Categoria:" GridPane.rowIndex="2" GridPane.columnIndex="0"/>
         <ComboBox fx:id="cbCategoria" promptText="Selecione"
                   GridPane.rowIndex="2" GridPane.columnIndex="1"/>
+
+        <Label text="Experiencia:" GridPane.rowIndex="3" GridPane.columnIndex="0"/>
+        <ComboBox fx:id="cbExperiencia" promptText="Selecione"
+                  GridPane.rowIndex="3" GridPane.columnIndex="1"/>
     </GridPane>
 
     <HBox spacing="10" alignment="CENTER">
@@ -40,6 +44,7 @@
             <TableColumn fx:id="colunaNome" text="Nome" prefWidth="180"/>
             <TableColumn fx:id="colunaFederacao" text="Federacao/Nacionalidade" prefWidth="180"/>
             <TableColumn fx:id="colunaCategoria" text="Categoria" prefWidth="120"/>
+            <TableColumn fx:id="colunaExperiencia" text="Experiencia" prefWidth="120"/>
         </columns>
     </TableView>
 

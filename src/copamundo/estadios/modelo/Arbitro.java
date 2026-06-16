@@ -10,6 +10,7 @@ public final class Arbitro implements Serializable {
     private String nome;
     private String categoria;
     private String federacao;
+    private String experiencia;
 
     // Construtor vazio
     public Arbitro() {
@@ -17,10 +18,15 @@ public final class Arbitro implements Serializable {
 
     // Construtor completo
     public Arbitro(int id, String nome, String categoria, String federacao) {
+        this(id, nome, categoria, federacao, "1 ano");
+    }
+
+    public Arbitro(int id, String nome, String categoria, String federacao, String experiencia) {
         setId(id);
         setNome(nome);
         setCategoria(categoria);
         setFederacao(federacao);
+        setExperiencia(experiencia);
     }
 
     // GETTERS
@@ -39,6 +45,10 @@ public final class Arbitro implements Serializable {
 
     public String getFederacao() {
         return federacao;
+    }
+
+    public String getExperiencia() {
+        return experiencia == null || experiencia.isBlank() ? "1 ano" : experiencia;
     }
 
     // SETTERS
@@ -69,6 +79,13 @@ public final class Arbitro implements Serializable {
             throw new IllegalArgumentException("A federacao/nacionalidade do arbitro e obrigatoria.");
         }
         this.federacao = federacao.trim();
+    }
+
+    public void setExperiencia(String experiencia) {
+        if (experiencia == null || experiencia.isBlank()) {
+            throw new IllegalArgumentException("A experiencia do arbitro e obrigatoria.");
+        }
+        this.experiencia = experiencia.trim();
     }
 
     public String getNacionalidade() {

@@ -78,7 +78,7 @@ public class TelaCadastroPartidasController {
             seletorSelecao2.getItems().addAll(listaSelecoes);
             seletorEstadio.getItems().addAll(listaEstadios);
 
-        } catch (PersistenciaException e) {
+        } catch (PersistenciaException | copamundo.selecoes.excecoes.PersistenciaException e) {
             e.printStackTrace();
             Alert alert = new Alert(Alert.AlertType.WARNING);
             alert.setContentText("Erro ao acessar uma das listas!");
@@ -232,7 +232,7 @@ public class TelaCadastroPartidasController {
     void irTelaPrincipal(javafx.event.ActionEvent event) {
         try {
             FXMLLoader loader = new FXMLLoader(
-                    getClass().getResource("/copamundo/principal/visao/TelaPrincipal.fxml"));
+                    getClass().getResource("/copamundo/usuarios/visao/TelaUsuarios.fxml"));
 
             Parent root = loader.load();
 

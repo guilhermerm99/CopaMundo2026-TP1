@@ -68,7 +68,7 @@ public class TelaModalEditarPartidaController {
             seletorSelecao2.getItems().addAll(listaSelecoes);
             seletorEstadio.getItems().addAll(listaEstadios);
 
-        } catch (PersistenciaException e) {
+        } catch (PersistenciaException | copamundo.selecoes.excecoes.PersistenciaException e) {
             e.printStackTrace();
             System.out.println("Erro ao acessar lista.");
         }

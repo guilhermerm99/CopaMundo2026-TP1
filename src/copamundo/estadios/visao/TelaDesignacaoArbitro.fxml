@@ -16,21 +16,13 @@
     <Label text="Designacao de Arbitros" styleClass="label-titulo"/>
 
     <GridPane hgap="10" vgap="10">
-        <Label text="Estadio:" GridPane.rowIndex="0" GridPane.columnIndex="0"/>
-        <ComboBox fx:id="cbEstadio" promptText="Selecione o estadio"
+        <Label text="Arbitro:" GridPane.rowIndex="0" GridPane.columnIndex="0"/>
+        <ComboBox fx:id="cbArbitro" promptText="Selecione o arbitro"
                   GridPane.rowIndex="0" GridPane.columnIndex="1"/>
 
-        <Label text="Arbitro:" GridPane.rowIndex="1" GridPane.columnIndex="0"/>
-        <ComboBox fx:id="cbArbitro" promptText="Selecione o arbitro"
-                  GridPane.rowIndex="1" GridPane.columnIndex="1"/>
-
-        <Label text="Partida:" GridPane.rowIndex="2" GridPane.columnIndex="0"/>
+        <Label text="Partida:" GridPane.rowIndex="1" GridPane.columnIndex="0"/>
         <ComboBox fx:id="cbPartida" promptText="Selecione a partida existente"
-                  GridPane.rowIndex="2" GridPane.columnIndex="1"/>
-
-        <Label text="Data:" GridPane.rowIndex="3" GridPane.columnIndex="0"/>
-        <DatePicker fx:id="dpData"
-                    GridPane.rowIndex="3" GridPane.columnIndex="1"/>
+                  GridPane.rowIndex="1" GridPane.columnIndex="1"/>
     </GridPane>
 
     <HBox spacing="10" alignment="CENTER">

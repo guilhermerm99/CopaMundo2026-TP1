@@ -59,7 +59,7 @@ public final class Estadio implements Serializable {
 
     public void setCidade(String cidade) {
         if (cidade == null || cidade.isBlank()) {
-            throw new IllegalArgumentException("A cidade do estadio e obrigatoria.");
+            throw new IllegalArgumentException("A localização do estádio é obrigatória.");
         }
         this.cidade = cidade.trim();
     }

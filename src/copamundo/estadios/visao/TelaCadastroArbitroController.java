@@ -16,10 +16,12 @@ public class TelaCadastroArbitroController {
     @FXML private TextField txtNome;
     @FXML private TextField txtFederacao;
     @FXML private ComboBox<String> cbCategoria;
+    @FXML private ComboBox<String> cbExperiencia;
     @FXML private TableView<Arbitro> tabelaArbitros;
     @FXML private TableColumn<Arbitro, String> colunaNome;
     @FXML private TableColumn<Arbitro, String> colunaFederacao;
     @FXML private TableColumn<Arbitro, String> colunaCategoria;
+    @FXML private TableColumn<Arbitro, String> colunaExperiencia;
 
     private final ArbitroController controller = new ArbitroController();
     private final ObservableList<Arbitro> arbitros = FXCollections.observableArrayList();
@@ -27,9 +29,14 @@ public class TelaCadastroArbitroController {
     @FXML
     private void initialize() {
         cbCategoria.setItems(FXCollections.observableArrayList("Principal", "Assistente", "VAR"));
+        cbExperiencia.setItems(FXCollections.observableArrayList(
+                "1 ano", "2 anos", "3 anos", "4 anos", "5 anos",
+                "6 anos", "7 anos", "8 anos", "9 anos", "10 anos", "+10 anos"
+        ));
         colunaNome.setCellValueFactory(new PropertyValueFactory<>("nome"));
         colunaFederacao.setCellValueFactory(new PropertyValueFactory<>("federacao"));
         colunaCategoria.setCellValueFactory(new PropertyValueFactory<>("categoria"));
+        colunaExperiencia.setCellValueFactory(new PropertyValueFactory<>("experiencia"));
         tabelaArbitros.setItems(arbitros);
         carregarArbitros();
     }
@@ -37,7 +44,7 @@ public class TelaCadastroArbitroController {
     @FXML
     private void salvarArbitro() {
         try {
-            controller.cadastrarArbitro(txtNome.getText(), txtFederacao.getText(), cbCategoria.getValue());
+            controller.cadastrarArbitro(txtNome.getText(), txtFederacao.getText(), cbCategoria.getValue(), cbExperiencia.getValue());
             carregarArbitros();
             limparCampos();
             mostrarAlerta(Alert.AlertType.INFORMATION, "Sucesso", "Arbitro cadastrado com sucesso.");
@@ -51,6 +58,7 @@ public class TelaCadastroArbitroController {
         txtNome.clear();
         txtFederacao.clear();
         cbCategoria.getSelectionModel().clearSelection();
+        cbExperiencia.getSelectionModel().clearSelection();
         tabelaArbitros.getSelectionModel().clearSelection();
     }
 

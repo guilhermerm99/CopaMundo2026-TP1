@@ -186,7 +186,7 @@ public class TelaRegistroResultadosController {
     void irTelaPrincipal(javafx.event.ActionEvent event) {
         try {
             FXMLLoader loader = new FXMLLoader(
-                    getClass().getResource("/copamundo/principal/visao/TelaPrincipal.fxml"));
+                    getClass().getResource("/copamundo/usuarios/visao/TelaUsuarios.fxml"));
 
             Parent root = loader.load();
 

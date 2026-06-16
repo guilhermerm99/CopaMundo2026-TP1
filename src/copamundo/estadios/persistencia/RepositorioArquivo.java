@@ -39,8 +39,7 @@ public class RepositorioArquivo<T> {
         }
 
         try (ObjectInputStream entrada = new ObjectInputStream(Files.newInputStream(arquivo))) {
-            Object objeto = entrada.readObject();
-            return new ArrayList<>(converterLista(objeto));
+            return converterLista(entrada.readObject());
         } catch (IOException | ClassNotFoundException erro) {
             throw new PersistenciaException("Nao foi possivel carregar o arquivo " + arquivo, erro);
         }
@@ -76,8 +75,25 @@ public class RepositorioArquivo<T> {
         }
     }
 
-    @SuppressWarnings("unchecked")
-    private List<T> converterLista(Object objeto) {
-        return (List<T>) objeto;
+    private List<T> converterLista(Object objeto) throws IOException {
+        if (!(objeto instanceof List<?> itens)) {
+            throw new IOException("Arquivo " + arquivo + " possui formato invalido.");
+        }
+
+        List<T> entidades = new ArrayList<>();
+        for (Object item : itens) {
+            entidades.add(converterItem(item));
+        }
+        return entidades;
+    }
+
+    private T converterItem(Object item) throws IOException {
+        try {
+            @SuppressWarnings("unchecked")
+            T entidade = (T) item;
+            return entidade;
+        } catch (ClassCastException erro) {
+            throw new IOException("Arquivo " + arquivo + " contem item invalido.", erro);
+        }
     }
 }

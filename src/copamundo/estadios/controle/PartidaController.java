@@ -9,10 +9,10 @@ import copamundo.estadios.modelo.Estadio;
 import copamundo.estadios.persistencia.RepositorioArquivo;
 
 import java.nio.file.Path;
-import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.time.LocalTime;
 import java.util.List;
+import java.util.Locale;
+import java.util.stream.Collectors;
 
 public class PartidaController {
     private final RepositorioArquivo<Partida> repositorioPartidas;
@@ -40,21 +40,67 @@ public class PartidaController {
         }
 
         arbitroController.validarNacionalidadeParaPartida(arbitro, partida);
+        validarArbitroLivre(partida, arbitro);
         partida.setArbitroPrincipal(arbitro);
         repositorioPartidas.salvar(partida);
     }
 
-    public Partida criarPartidaParaDesignacao(Estadio estadio, LocalDate data, Arbitro arbitro)
-            throws PersistenciaException, RegraNegocioException {
-        Selecao mandante = new Selecao("Selecao A", "Pais A");
-        Selecao visitante = new Selecao("Selecao B", "Pais B");
-        LocalDateTime dataHora = LocalDateTime.of(data, LocalTime.NOON);
-        Partida partida = cadastrarPartida(mandante, visitante, estadio, dataHora);
-        designarArbitroPrincipal(partida, arbitro);
-        return partida;
+    public void removerDesignacao(Partida partida) throws PersistenciaException, RegraNegocioException {
+        if (partida == null) {
+            throw new RegraNegocioException("Selecione uma partida.");
+        }
+        throw new RegraNegocioException("Cada partida deve ter pelo menos um arbitro principal. Substitua o arbitro em vez de remover.");
+    }
+
+    public void validarPartidaComArbitroPrincipal(Partida partida) throws RegraNegocioException {
+        if (partida == null) {
+            throw new RegraNegocioException("Selecione uma partida.");
+        }
+        arbitroController.validarArbitroPrincipal(partida.getArbitroPrincipal());
+    }
+
+    public List<Arbitro> listarArbitrosAptosParaPartida(Partida partida) throws PersistenciaException {
+        return arbitroController.listarArbitrosAptosParaPartida(partida);
     }
 
     public List<Partida> listarPartidas() throws PersistenciaException {
         return repositorioPartidas.listar();
+    }
+
+    public List<Partida> listarDesignacoes() throws PersistenciaException {
+        return repositorioPartidas.listar().stream()
+                .filter(partida -> partida.getArbitroPrincipal() != null)
+                .collect(Collectors.toList());
+    }
+
+    public List<Partida> buscarPartidas(String selecao, Estadio estadio, Arbitro arbitro, Boolean apenasDesignadas)
+            throws PersistenciaException {
+        String selecaoFiltro = normalizar(selecao);
+        return repositorioPartidas.listar().stream()
+                .filter(partida -> selecaoFiltro.isBlank()
+                        || normalizar(partida.nomeSelecoes()).contains(selecaoFiltro))
+                .filter(partida -> estadio == null || estadio.equals(partida.getEstadioPartida()))
+                .filter(partida -> arbitro == null || arbitro.equals(partida.getArbitroPrincipal()))
+                .filter(partida -> apenasDesignadas == null
+                        || !apenasDesignadas
+                        || partida.getArbitroPrincipal() != null)
+                .collect(Collectors.toList());
+    }
+
+    private void validarArbitroLivre(Partida partidaBase, Arbitro arbitro) throws PersistenciaException, RegraNegocioException {
+        for (Partida partida : repositorioPartidas.listar()) {
+            if (partida.getId().equals(partidaBase.getId())) {
+                continue;
+            }
+            if (arbitro.equals(partida.getArbitroPrincipal())
+                    && partida.getDataPartida().equals(partidaBase.getDataPartida())
+                    && partida.getHorarioPartida().equals(partidaBase.getHorarioPartida())) {
+                throw new RegraNegocioException("Esse arbitro ja esta designado para outra partida no mesmo horario.");
+            }
+        }
+    }
+
+    private String normalizar(String texto) {
+        return texto == null ? "" : texto.trim().toLowerCase(Locale.ROOT);
     }
 }

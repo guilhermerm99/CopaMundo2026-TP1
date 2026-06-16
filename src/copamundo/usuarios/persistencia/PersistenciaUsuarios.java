@@ -50,7 +50,7 @@ public class PersistenciaUsuarios {
         }
 
         try (ObjectInputStream entrada = new ObjectInputStream(Files.newInputStream(ARQUIVO_USUARIOS))) {
-            return (List<Usuario>) entrada.readObject();
+            return converterListaUsuarios(entrada.readObject());
         } catch (EOFException e) {
             return new ArrayList<>();
         } catch (IOException | ClassNotFoundException e) {
@@ -98,5 +98,20 @@ public class PersistenciaUsuarios {
         } catch (IOException e) {
             throw new PersistenciaException("erro ao criar pasta de dados.", e);
         }
+    }
+
+    private List<Usuario> converterListaUsuarios(Object objeto) throws PersistenciaException {
+        if (!(objeto instanceof List<?> itens)) {
+            throw new PersistenciaException("arquivo de usuarios possui formato invalido.", null);
+        }
+
+        List<Usuario> usuarios = new ArrayList<>();
+        for (Object item : itens) {
+            if (!(item instanceof Usuario usuario)) {
+                throw new PersistenciaException("arquivo de usuarios contem item invalido.", null);
+            }
+            usuarios.add(usuario);
+        }
+        return usuarios;
     }
 }

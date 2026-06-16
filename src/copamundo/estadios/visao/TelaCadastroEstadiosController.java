@@ -35,13 +35,13 @@ public class TelaCadastroEstadiosController {
     @FXML
     private void salvarEstadio() {
         try {
-            int capacidade = Integer.parseInt(txtCapacidade.getText().trim());
+            int capacidade = FormatadorCampos.lerCapacidade(txtCapacidade.getText());
             controller.cadastrarEstadio(txtNome.getText(), txtCidade.getText(), capacidade);
             carregarEstadios();
             limparCampos();
             mostrarAlerta(Alert.AlertType.INFORMATION, "Sucesso", "Estadio cadastrado com sucesso.");
         } catch (NumberFormatException erro) {
-            mostrarAlerta(Alert.AlertType.ERROR, "Erro", "Informe uma capacidade numerica valida.");
+            mostrarAlerta(Alert.AlertType.ERROR, "Erro", "Informe uma capacidade numerica valida. Exemplo: 34534 ou 34.534.");
         } catch (Exception erro) {
             mostrarAlerta(Alert.AlertType.ERROR, "Erro", erro.getMessage());
         }
