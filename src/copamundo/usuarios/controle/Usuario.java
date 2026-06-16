@@ -74,7 +74,7 @@ public class Usuario implements Serializable {
     private Usuario criadoPor;
     private boolean trocaSenhaObrigatoria;
 
-    static List<Usuario> usuarios = new ArrayList<>();
+    public static List<Usuario> usuarios = new ArrayList<>();
 
     static {
         copamundo.usuarios.persistencia.PersistenciaUsuarios persistencia = new copamundo.usuarios.persistencia.PersistenciaUsuarios();
@@ -182,6 +182,29 @@ public class Usuario implements Serializable {
     }
     public boolean isAdministrador() {
         return funcao == Funcao.ADMINISTRADOR;
+    }
+    public boolean isOrganizador() {
+        return funcao == Funcao.ORGANIZADOR;
+    }
+
+    public boolean isArbitro() {
+        return funcao == Funcao.ARBITRO;
+    }
+
+    public boolean temFuncao(Funcao funcaoEsperada) {
+        return this.funcao == funcaoEsperada;
+    }
+
+    public static List<Usuario> getUsuarios() {
+        return usuarios;
+    }
+
+    public static void setUsuarios(List<Usuario> listaUsuarios) {
+        if (listaUsuarios == null) {
+            usuarios = new ArrayList<>();
+        } else {
+            usuarios = listaUsuarios;
+        }
     }
 
     // métodos listagem e busca

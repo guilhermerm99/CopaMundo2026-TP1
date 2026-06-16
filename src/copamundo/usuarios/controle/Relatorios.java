@@ -7,6 +7,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.io.File;
+import copamundo.comum.Partida;
+import copamundo.comum.Resultado;
 
 import com.itextpdf.kernel.colors.ColorConstants;
 import com.itextpdf.kernel.colors.DeviceRgb;
@@ -459,6 +461,138 @@ public class Relatorios {
         return true;
     }
 
+    public void carregarPartidasReais(List<Partida> partidasReais) {
+        partidas.clear();
+
+        if (partidasReais == null || partidasReais.isEmpty()) {
+            carregarPartidasTeste();
+            return;
+        }
+
+        for (Partida partida : partidasReais) {
+            PartidaRelatorio partidaConvertida = converterPartidaReal(partida);
+
+            if (partidaConvertida != null) {
+                adicionarPartida(partidaConvertida);
+            }
+        }
+
+        if (partidas.isEmpty()) {
+            carregarPartidasTeste();
+        }
+    }
+
+    public void adicionarPartidaReal(Partida partidaReal) {
+        PartidaRelatorio partidaConvertida = converterPartidaReal(partidaReal);
+
+        if (partidaConvertida != null) {
+            adicionarPartida(partidaConvertida);
+        }
+    }
+
+    private PartidaRelatorio converterPartidaReal(Partida partida) {
+        if (partida == null) {
+            return null;
+        }
+
+        String selecaoA = "Seleção A";
+        String selecaoB = "Seleção B";
+        String fase = "sem fase";
+        String status = "sem status";
+        String estadio = "sem estádio";
+        int golsA = 0;
+        int golsB = 0;
+        int publico = 0;
+
+        if (partida.getSelecao1() != null && partida.getSelecao1().getPais() != null) {
+            selecaoA = partida.getSelecao1().getPais();
+        }
+
+        if (partida.getSelecao2() != null && partida.getSelecao2().getPais() != null) {
+            selecaoB = partida.getSelecao2().getPais();
+        }
+
+        if (partida.getFase() != null) {
+            fase = partida.getFase().toString().replace("_", " ").toLowerCase();
+        }
+
+        if (partida.getStatus() != null) {
+            status = partida.getStatus().toString().replace("_", " ").toLowerCase();
+        }
+
+        if (partida.getEstadioPartida() != null) {
+            estadio = partida.getEstadioPartida().toString();
+        }
+
+        Resultado resultado = partida.getResultado();
+
+        if (resultado != null && resultado.getGolsSelecao1() != -1) {
+            golsA = resultado.getGolsSelecao1();
+            golsB = resultado.getGolsSelecao2();
+            status = "finalizada";
+        }
+
+        Date data = converterDataPartida(partida.getDataPartida());
+
+        return new PartidaRelatorio(
+                selecaoA,
+                selecaoB,
+                golsA,
+                golsB,
+                status,
+                fase,
+                estadio,
+                data,
+                publico
+        );
+    }
+
+    private Date converterDataPartida(String dataTexto) {
+        if (dataTexto == null || dataTexto.trim().isEmpty()) {
+            return new Date();
+        }
+
+        String[] formatos = {"yyyy-MM-dd", "dd/MM/yyyy"};
+
+        for (String formato : formatos) {
+            try {
+                return new SimpleDateFormat(formato).parse(dataTexto);
+            } catch (Exception e) {
+                // tenta o próximo formato
+            }
+        }
+
+        return new Date();
+    }
+
+    private String descricaoPartidaDetalhada(PartidaRelatorio partida) {
+        if (partida == null) {
+            return "partida não encontrada.";
+        }
+
+        SimpleDateFormat formatoData = new SimpleDateFormat("dd/MM/yyyy");
+
+        String data = "sem data";
+        if (partida.getDataPartida() != null) {
+            data = formatoData.format(partida.getDataPartida());
+        }
+
+        String placar;
+
+        if (partida.getStatus() != null && partida.getStatus().equalsIgnoreCase("finalizada")) {
+            placar = partida.getGolsSelecaoA() + " x " + partida.getGolsSelecaoB();
+        } else {
+            placar = "não finalizada";
+        }
+
+        return "- " + partida.getSelecaoA() + " x " + partida.getSelecaoB()
+                + " | placar: " + placar
+                + " | fase: " + partida.getFase()
+                + " | status: " + partida.getStatus()
+                + " | estádio: " + partida.getEstadio()
+                + " | data: " + data;
+    }
+
     public void exibirRelatorioNaTela() {
         if (!gerado) {
             System.out.println("nenhum relatório foi gerado ainda.");
@@ -575,6 +709,54 @@ public class Relatorios {
         return quantidadePorStatus;
     }
 
+    public Map<String, Integer> contarPartidasPorStatus() {
+        return contarPartidasPorStatus(partidas);
+    }
+
+    private Map<String, Integer> contarPartidasPorStatus(List<PartidaRelatorio> listaPartidas) {
+        Map<String, Integer> quantidadePorStatus = new HashMap<>();
+
+        for (PartidaRelatorio partida : listaPartidas) {
+            String status = partida.getStatus();
+
+            if (status == null || status.trim().isEmpty()) {
+                status = "sem status";
+            }
+
+            if (!quantidadePorStatus.containsKey(status)) {
+                quantidadePorStatus.put(status, 0);
+            }
+
+            quantidadePorStatus.put(status, quantidadePorStatus.get(status) + 1);
+        }
+
+        return quantidadePorStatus;
+    }
+
+    public Map<String, Integer> contarPartidasPorFase() {
+        return contarPartidasPorFase(partidas);
+    }
+
+    private Map<String, Integer> contarPartidasPorFase(List<PartidaRelatorio> listaPartidas) {
+        Map<String, Integer> quantidadePorFase = new HashMap<>();
+
+        for (PartidaRelatorio partida : listaPartidas) {
+            String fase = partida.getFase();
+
+            if (fase == null || fase.trim().isEmpty()) {
+                fase = "sem fase";
+            }
+
+            if (!quantidadePorFase.containsKey(fase)) {
+                quantidadePorFase.put(fase, 0);
+            }
+
+            quantidadePorFase.put(fase, quantidadePorFase.get(fase) + 1);
+        }
+
+        return quantidadePorFase;
+    }
+
     public List<Usuario> listarUsuariosBloqueados() {
         List<Usuario> usuariosBloqueados = new ArrayList<>();
 
@@ -645,8 +827,8 @@ public class Relatorios {
         relatorio += "partidas não finalizadas: " + (numeroPartidas - partidasFinalizadas) + "\n";
         relatorio += "total de gols: " + totalGols + "\n";
         relatorio += "média de gols por partida finalizada: " + String.format("%.2f", mediaGols) + "\n";
-        relatorio += "partidas por status: " + contarPartidasPorStatus() + "\n";
-        relatorio += "partidas por fase: " + contarPartidasPorFase() + "\n";
+        relatorio += "partidas por status: " + contarPartidasPorStatus(partidasFiltradas) + "\n";
+        relatorio += "partidas por fase: " + contarPartidasPorFase(partidasFiltradas) + "\n";
 
         if (partidaMaisGols != null) {
             relatorio += "partida com mais gols: " + descricaoPartida(partidaMaisGols) + "\n";
@@ -656,48 +838,18 @@ public class Relatorios {
             relatorio += "maior goleada: " + descricaoPartida(maiorGoleada) + "\n";
         }
 
+        relatorio += "\npartidas detalhadas:\n";
+
+        if (partidasFiltradas.isEmpty()) {
+            relatorio += "nenhuma partida encontrada para os filtros informados.";
+        } else {
+            for (PartidaRelatorio partida : partidasFiltradas) {
+                relatorio += descricaoPartidaDetalhada(partida) + "\n";
+            }
+        }
+
         System.out.println(relatorio);
         return relatorio;
-    }
-
-    public Map<String, Integer> contarPartidasPorStatus() {
-        Map<String, Integer> quantidadePorStatus = new HashMap<>();
-
-        for (PartidaRelatorio partida : partidas) {
-            String status = partida.getStatus();
-
-            if (status == null) {
-                status = "sem status";
-            }
-
-            if (!quantidadePorStatus.containsKey(status)) {
-                quantidadePorStatus.put(status, 0);
-            }
-
-            quantidadePorStatus.put(status, quantidadePorStatus.get(status) + 1);
-        }
-
-        return quantidadePorStatus;
-    }
-
-    public Map<String, Integer> contarPartidasPorFase() {
-        Map<String, Integer> quantidadePorFase = new HashMap<>();
-
-        for (PartidaRelatorio partida : partidas) {
-            String fase = partida.getFase();
-
-            if (fase == null) {
-                fase = "sem fase";
-            }
-
-            if (!quantidadePorFase.containsKey(fase)) {
-                quantidadePorFase.put(fase, 0);
-            }
-
-            quantidadePorFase.put(fase, quantidadePorFase.get(fase) + 1);
-        }
-
-        return quantidadePorFase;
     }
 
     public List<PartidaRelatorio> filtrarPartidasPorSelecao() {
@@ -770,22 +922,7 @@ public class Relatorios {
             return mensagem;
         }
 
-        int vitorias = calcularVitorias();
-        int empates = calcularEmpates();
-        int derrotas = calcularDerrotas();
-        int golsPro = calcularGolsPro();
-        int golsContra = calcularGolsContra();
-        int saldoGols = calcularSaldoGols();
-        int pontuacao = calcularPontuacao();
-
-        String relatorio = "relatório de desempenho da seleção: " + desempenhoSelecoes + "\n";
-        relatorio += "vitórias: " + vitorias + "\n";
-        relatorio += "empates: " + empates + "\n";
-        relatorio += "derrotas: " + derrotas + "\n";
-        relatorio += "gols pró: " + golsPro + "\n";
-        relatorio += "gols contra: " + golsContra + "\n";
-        relatorio += "saldo de gols: " + saldoGols + "\n";
-        relatorio += "pontuação: " + pontuacao;
+        String relatorio = gerarDesempenhoDeUmaSelecao(desempenhoSelecoes);
 
         System.out.println(relatorio);
         return relatorio;
