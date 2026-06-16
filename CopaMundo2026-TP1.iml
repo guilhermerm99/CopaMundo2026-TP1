@@ -6,6 +6,8 @@
       <sourceFolder url="file://$MODULE_DIR$/src" isTestSource="false" />
     </content>
     <orderEntry type="jdk" jdkName="openjdk-26" jdkType="JavaSDK" />
+    <orderEntry type="library" name="lib1" level="application" />
+    <orderEntry type="library" name="lib2" level="application" />
     <orderEntry type="sourceFolder" forTests="false" />
     <orderEntry type="library" name="lib" level="project" />
   </component>

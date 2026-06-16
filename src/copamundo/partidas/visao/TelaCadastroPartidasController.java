@@ -232,7 +232,7 @@ public class TelaCadastroPartidasController {
     void irTelaPrincipal(javafx.event.ActionEvent event) {
         try {
             FXMLLoader loader = new FXMLLoader(
-                    getClass().getResource("/copamundo/usuarios/visao/TelaUsuarios.fxml"));
+                    getClass().getResource("/copamundo/principal/visao/TelaPrincipal.fxml"));
 
             Parent root = loader.load();
 

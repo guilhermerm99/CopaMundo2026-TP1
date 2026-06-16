@@ -30,7 +30,7 @@ public class TelaPrincipalController {
 
     private static final String FXML_SELECOES   = "/copamundo/selecoes/visao/TelaMenuSelecoesJogadores.fxml";
     private static final String FXML_ESTADIOS   = "/copamundo/estadios/visao/TelaMenuEstadios.fxml";
-    private static final String FXML_PARTIDAS   = "/copamundo/partidas/visao/TelaCadastroPartidas.fxml";
+    private static final String FXML_PARTIDAS   = "/copamundo/partidas/visao/TelaConsultaPartidas.fxml";
     private static final String FXML_USUARIOS   = "/copamundo/usuarios/visao/TelaUsuarios.fxml";
     private static final String FXML_RELATORIOS = "/copamundo/usuarios/visao/TelaRelatorios.fxml";
 

@@ -10,7 +10,8 @@ public class Main extends Application {
     @Override
     public void start(Stage stage) throws Exception {
         FXMLLoader fxmlLoader = new FXMLLoader(
-                getClass().getResource("/copamundo/estadios/visao/TelaMenuEstadios.fxml")
+                getClass().getResource("/copamundo/principal/visao/TelaPrincipal.fxml")
+                //getClass().getResource("/copamundo/partidas/visao/TelaConsultaPartidas.fxml")
         );
 
         Scene scene = new Scene(fxmlLoader.load());

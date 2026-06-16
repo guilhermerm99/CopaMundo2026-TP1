@@ -84,8 +84,6 @@ public class TelaConsultaPartidasController {
     @FXML
     private TextField textoData;
 
-    private final Button btnExcluir = new Button("Excluir");
-    private final Button btnEditar = new Button("Editar");
 
     private void esconderComponentesDeGerenciamento() {
         btnTelaCadastroPartidas.setVisible(false);
@@ -93,12 +91,6 @@ public class TelaConsultaPartidasController {
 
         btnTelaRegistroResultados.setVisible(false);
         btnTelaRegistroResultados.setManaged(false);
-
-        btnExcluir.setVisible(false);
-        btnExcluir.setManaged(false);
-
-        btnEditar.setVisible(false);
-        btnEditar.setManaged(false);
 
     }
 
@@ -110,6 +102,7 @@ public class TelaConsultaPartidasController {
 
         if (usuarioLogado != null && usuarioLogado.getFuncao() == Usuario.Funcao.ARBITRO) {
             esconderComponentesDeGerenciamento();
+
         }
 
         try {
@@ -154,7 +147,7 @@ public class TelaConsultaPartidasController {
             // as pŕoximas colunas são botões, então contém as ações realizadas por eles - excluir e editar
             colunaExcluir.setCellFactory(param -> new TableCell<>() {
 
-                //private final Button btnExcluir = new Button("Excluir");
+                private final Button btnExcluir = new Button("Excluir");
 
                 {
                     btnExcluir.setOnAction(event -> {
@@ -171,11 +164,12 @@ public class TelaConsultaPartidasController {
 
                         alert.showAndWait().ifPresent(resposta -> {
                             if (resposta == sim) {
+
                                 Partida partida = getTableView().getItems().get(getIndex());
 
                                 // quando identifica a partida pelo id, remove e salva a lista atualizada no repositório - precisa do id??
                                 for (int i = 0; i < listaPartidas.size(); i++) {
-                                    if (listaPartidas.get(i).getId().equals(partida.getId())) {
+                                    if (Objects.equals(listaPartidas.get(i).getId(), partida.getId())) {
                                         listaPartidas.remove(i);
                                         try {
                                             PartidaRepositorio.salvarListaPartidas(listaPartidas);
@@ -211,7 +205,7 @@ public class TelaConsultaPartidasController {
             // coluna com o botão de editar
             colunaEditar.setCellFactory(param -> new TableCell<>() {
 
-                //private final Button btnEditar = new Button("Editar");
+                private final Button btnEditar = new Button("Editar");
 
                 // carrega a partida e manda pro controller da tela de editar e carrega a tela nova
                 {
@@ -232,8 +226,10 @@ public class TelaConsultaPartidasController {
 
                         controller.setPartida(partida);
 
-                        Stage stage = (Stage) tabelaInteira.getScene().getWindow();
+                        Stage stage = new Stage();
                         stage.setScene(new Scene(root));
+                        stage.show();
+
 
                     });
                 }
@@ -323,7 +319,7 @@ public class TelaConsultaPartidasController {
     void irTelaPrincipal(ActionEvent event) {
         try {
             FXMLLoader loader = new FXMLLoader(
-                    getClass().getResource("/copamundo/usuarios/visao/TelaUsuarios.fxml"));
+                    getClass().getResource("/copamundo/principal/visao/TelaPrincipal.fxml"));
 
             Parent root = loader.load();
 

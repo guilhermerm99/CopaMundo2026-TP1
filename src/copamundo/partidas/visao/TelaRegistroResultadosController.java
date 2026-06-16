@@ -186,7 +186,7 @@ public class TelaRegistroResultadosController {
     void irTelaPrincipal(javafx.event.ActionEvent event) {
         try {
             FXMLLoader loader = new FXMLLoader(
-                    getClass().getResource("/copamundo/usuarios/visao/TelaUsuarios.fxml"));
+                    getClass().getResource("/copamundo/principal/visao/TelaPrincipal.fxml"));
 
             Parent root = loader.load();
 
@@ -274,32 +274,5 @@ public class TelaRegistroResultadosController {
         alert.showAndWait();
     }
 
-    ////////////////////////////////////////////////////////////////
-    ///
-    /*
-    public String registrarResultado(String idPartida, int golsSelecao1, int golsSelecao2, int faltasSelecao1, int faltasSelecao2, int vermelhosSelecao1,
-                                     int vermelhosSelecao2, int amarelosSelecao1, int amarelosSelecao2, float posseSelecao1, float posseSelecao2,
-                                     int finalizacoesSelecao1, int finalizacoesSelecao2, int escanteiosSelecao1, int escanteiosSelecao2, int impedimentosSelecao1,
-                                     int impedimentosSelecao2) throws IOException, ClassNotFoundException {
 
-        List<Partida> listaPartidas = PartidaRepositorio.carregarListaPartidas();
-
-        for (int i = 0; i < listaPartidas.size(); i++) {
-            if (listaPartidas.get(i).getId().equals(idPartida)) {
-                if (listaPartidas.get(i).getStatusPartida() == StatusPartida.FINALIZADA) {
-                    listaPartidas.get(i).setResultado(new Resultado(golsSelecao1, golsSelecao2, faltasSelecao1, faltasSelecao2, vermelhosSelecao1,
-                            vermelhosSelecao2, amarelosSelecao1, amarelosSelecao2, posseSelecao1, posseSelecao2, finalizacoesSelecao1, finalizacoesSelecao2,
-                            escanteiosSelecao1, escanteiosSelecao2, impedimentosSelecao1, impedimentosSelecao2));
-
-                    PartidaRepositorio.salvarListaPartidas(listaPartidas);
-                    return "Resultado registrado com sucesso!";
-                }
-                throw new PartidaNaoFinalizadaException("A partida deve estar finalizada para registrar um resultado!");
-            }
-        }
-
-        throw new PartidaNaoEncontradaException("Partida não encontrada");
-    }
-
-     */
 }

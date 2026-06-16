@@ -3,6 +3,8 @@ package copamundo.comum;
 
 
 
+import copamundo.usuarios.controle.Usuario;
+
 import java.io.EOFException;
 import java.io.IOException;
 import java.io.ObjectInputStream;
@@ -23,7 +25,7 @@ public class PersistenciaUsuarios {
             PASTA_DADOS.resolve("usuarios.dat");
 
     public void salvarUsuario(Usuario usuario) throws PersistenciaException {
-        List<Usuario> usuarios = carregarUsuarios();
+        List<copamundo.usuarios.controle.Usuario> usuarios = carregarUsuarios();
 
         boolean encontrou = false;
 
@@ -42,7 +44,7 @@ public class PersistenciaUsuarios {
         salvarListaUsuarios(usuarios);
     }
 
-    public List<Usuario> carregarUsuarios() throws PersistenciaException {
+    public List<copamundo.usuarios.controle.Usuario> carregarUsuarios() throws PersistenciaException {
         criarPastaDados();
 
         if (!Files.exists(ARQUIVO_USUARIOS)) {
@@ -59,7 +61,7 @@ public class PersistenciaUsuarios {
     }
 
     public Optional<Usuario> buscarUsuarioPorEmail(String email) throws PersistenciaException {
-        List<Usuario> usuarios = carregarUsuarios();
+        List<copamundo.usuarios.controle.Usuario> usuarios = carregarUsuarios();
 
         for (Usuario usuario : usuarios) {
             if (usuario.getEmailUsuario() != null &&

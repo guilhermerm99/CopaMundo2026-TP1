@@ -144,7 +144,7 @@ public class TelaModalEditarPartidaController {
             // verifica se há impedimentos para essa partida
             if (selecao1 != selecao2) {
                 for (Partida p : listaPartidas) {
-                    if ((p.getSelecao1() == selecao1) || (p.getSelecao1() == selecao2) || (p.getSelecao2() == selecao1) || (p.getSelecao2() == selecao2)) {
+                    if (((p.getSelecao1() == selecao1) || (p.getSelecao1() == selecao2) || (p.getSelecao2() == selecao1) || (p.getSelecao2() == selecao2)) && (!Objects.equals(p.getId(), partida.getId()))) {
                         if (p.getDataPartida().equals(data)) {
                             Alert alert = new Alert(Alert.AlertType.WARNING);
                             alert.setContentText("Uma seleção já possui partida nesta data!");
@@ -157,20 +157,29 @@ public class TelaModalEditarPartidaController {
                 // se tudo certo, altera os valores da partida e salva a lista editada no repositório
                 estadioController.validarEstadioDisponivel(partida);
 
-                partida.setStatusPartida(status);
-                partida.setFase(fase);
-                partida.setSelecao1(selecao1);
-                partida.setSelecao2(selecao2);
-                partida.setEstadioPartida(estadio);
-                partida.setDataPartida(data);
-                partida.setHorarioPartida(horario);
+                for (int i = 0; i < listaPartidas.size(); i++) {
+                    if (listaPartidas.get(i).getId().equals(partida.getId())) {
+                        Partida partidaEditada = listaPartidas.get(i);
+
+                        partidaEditada.setStatusPartida(status);
+                        partidaEditada.setFase(fase);
+                        partidaEditada.setSelecao1(selecao1);
+                        partidaEditada.setSelecao2(selecao2);
+                        partidaEditada.setEstadioPartida(estadio);
+                        partidaEditada.setDataPartida(data);
+                        partidaEditada.setHorarioPartida(horario);
+
+                        PartidaRepositorio.salvarListaPartidas(listaPartidas);
+                    }
+                }
+
 
                 Alert alert = new Alert(Alert.AlertType.INFORMATION);
                 alert.setTitle("Sucesso");
                 alert.setHeaderText(null);
                 alert.setContentText("Partida editada com sucesso!");
                 alert.showAndWait();
-                PartidaRepositorio.salvarListaPartidas(listaPartidas);
+
                 return;
 
             }
@@ -199,42 +208,5 @@ public class TelaModalEditarPartidaController {
 
     private final EstadioController estadioController = new EstadioController();
 
-    /*
-    private final ArbitroController arbitroController = new ArbitroController();
 
-    public void designarArbitroPrincipal(Partida partida, Arbitro arbitro)
-            throws PersistenciaException, RegraNegocioException {
-        if (partida == null) {
-            throw new RegraNegocioException("Selecione uma partida.");
-        }
-
-        arbitroController.validarNacionalidadeParaPartida(arbitro, partida);
-        partida.setArbitroPrincipal(arbitro);
-
-    }
-
-
-
-
-    public String editarPartida(String id, String dataPartida, String horarioPartida, copamundo.estadios.modelo.Estadio estadioPartida, Selecao selecao1, Selecao selecao2,
-                                Fase fase, StatusPartida status) throws IOException, ClassNotFoundException {
-        List<Partida> listaPartidas = PartidaRepositorio.carregarListaPartidas();
-
-        for (int i = 0; i < listaPartidas.size(); i++) {
-            if (listaPartidas.get(i).getId().equals(id)) {
-                listaPartidas.get(i).setDataPartida(dataPartida);
-                listaPartidas.get(i).setHorarioPartida(horarioPartida);
-                listaPartidas.get(i).setSelecao1(selecao1);
-                listaPartidas.get(i).setSelecao2(selecao2);
-                listaPartidas.get(i).setEstadioPartida(estadioPartida);
-                listaPartidas.get(i).setFase(fase);
-                listaPartidas.get(i).setStatusPartida(status);
-                PartidaRepositorio.salvarListaPartidas(listaPartidas);
-                return "Partida atualizada com sucesso!\n";
-            }
-
-        }
-        throw new PartidaNaoEncontradaException("Partida não encontrada");
-    }
-*/
 }

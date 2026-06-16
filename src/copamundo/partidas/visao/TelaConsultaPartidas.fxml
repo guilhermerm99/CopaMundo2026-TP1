@@ -15,7 +15,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="602.0" prefWidth="1251.0" xmlns="http://javafx.com/javafx/26" xmlns:fx="http://javafx.com/fxml/1" fx:controller="copamundo.partidas.visao.TelaConsultaPartidasController">
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="602.0" prefWidth="1260.0" xmlns="http://javafx.com/javafx/26" xmlns:fx="http://javafx.com/fxml/1" fx:controller="copamundo.partidas.visao.TelaConsultaPartidasController">
    <children>
       <GridPane layoutX="264.0" layoutY="61.0" prefHeight="94.0" prefWidth="915.0">
         <columnConstraints>
@@ -51,7 +51,7 @@
             <ComboBox fx:id="seletorSelecao" prefWidth="200.0" promptText="Selecionar" GridPane.columnIndex="1" GridPane.rowIndex="1" GridPane.valignment="BOTTOM" />
          </children>
       </GridPane>
-      <TableView fx:id="tabelaInteira" layoutX="225.0" layoutY="212.0" prefHeight="390.0" prefWidth="1026.0">
+      <TableView fx:id="tabelaInteira" layoutX="225.0" layoutY="212.0" prefHeight="390.0" prefWidth="1036.0">
         <columns>
           <TableColumn fx:id="colunaData" prefWidth="89.0" text="Data" />
           <TableColumn fx:id="colunaHorario" prefWidth="67.0" text="Horário" />
@@ -59,9 +59,9 @@
             <TableColumn fx:id="colunaFase" prefWidth="151.0" text="Fase" />
             <TableColumn fx:id="colunaSelecoes" prefWidth="190.0" text="Seleções" />
             <TableColumn fx:id="colunaPlacar" prefWidth="121.0" text="Placar" />
-            <TableColumn fx:id="colunaStatus" prefWidth="156.0" text="Status" />
-            <TableColumn fx:id="colunaEditar" prefWidth="59.0" text="Editar" />
-            <TableColumn fx:id="colunaExcluir" prefWidth="58.0" text="Excluir" />
+            <TableColumn fx:id="colunaStatus" prefWidth="142.0" text="Status" />
+            <TableColumn fx:id="colunaEditar" prefWidth="73.0" text="Editar" />
+            <TableColumn fx:id="colunaExcluir" prefWidth="67.0" text="Excluir" />
         </columns>
       </TableView>
       <GridPane layoutX="530.0" layoutY="173.0" prefHeight="30.0" prefWidth="469.0">
@@ -116,9 +116,9 @@
             </VBox>
          </children>
       </Pane>
-      <Pane prefHeight="58.0" prefWidth="1251.0" style="-fx-background-color: #2E7D32;">
+      <Pane prefHeight="58.0" prefWidth="1260.0" style="-fx-background-color: #2E7D32;">
          <children>
-            <Label layoutX="421.0" layoutY="11.0" text="Consulta de Partidas" textFill="WHITE">
+            <Label layoutX="501.0" layoutY="11.0" text="Consulta de Partidas" textFill="WHITE">
                <font>
                   <Font name="System Bold" size="25.0" />
                </font>
