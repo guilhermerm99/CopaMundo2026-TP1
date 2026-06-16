@@ -60,6 +60,10 @@ public class TelaPrincipalController {
         }
     }
 
+    public void abrirUsuariosInicial() {
+        carregar(FXML_USUARIOS, "👥  Usuários", btnUsuarios);
+    }
+
     @FXML private void abrirSelecoes()   { carregar(FXML_SELECOES,   "🏆  Seleções e Jogadores", btnSelecoes); }
     @FXML private void abrirEstadios()   { carregar(FXML_ESTADIOS,   "🏟️  Estádios e Árbitros",  btnEstadios); }
     @FXML private void abrirPartidas()   { carregar(FXML_PARTIDAS,   "⚽  Partidas",             btnPartidas); }
