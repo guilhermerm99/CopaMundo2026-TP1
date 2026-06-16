@@ -35,31 +35,6 @@ public class TelaLoginController {
 
     }
 
-    @FXML
-    private void telaCadastro(ActionEvent event) throws IOException {
-        FXMLLoader loader = new FXMLLoader(
-                getClass().getResource("/copamundo/usuarios/visao/TelaCadastro.fxml")
-        );
-
-        Parent root = loader.load();
-
-        Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-        stage.setScene(new Scene(root));
-        stage.show();
-    }
-
-    @FXML
-    private void telaUsuarios(ActionEvent event) throws IOException {
-        FXMLLoader loader = new FXMLLoader(
-                getClass().getResource("/copamundo/usuarios/visao/TelaUsuarios.fxml")
-        );
-
-        Parent root = loader.load();
-
-        Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-        stage.setScene(new Scene(root));
-        stage.show();
-    }
     private static Usuario usuarioLogado;
     private Date ultimoLogin;
 
@@ -181,10 +156,6 @@ public class TelaLoginController {
 
         System.out.println("Login realizado com sucesso.");
         abrirTelaPrincipalPorPerfil(usuario);
-
-        if (usuario.isTrocaSenhaObrigatoria()) {
-            abrirTelaTrocaSenha();
-        }
 
         return true;
     }
@@ -309,12 +280,6 @@ public class TelaLoginController {
         this.ultimoLogin = new Date();
     }
 
-    public void abrirTelaPrincipalPorPerfil() {
-        if (usuarioLogado != null) {
-            abrirTelaPrincipalPorPerfil(usuarioLogado);
-        }
-    }
-
     public void abrirTelaPrincipalPorPerfil(Usuario usuario) {
         if (usuario == null) {
             System.out.println("Nenhum usuário logado.");
@@ -323,7 +288,7 @@ public class TelaLoginController {
 
         try {
             FXMLLoader loader = new FXMLLoader(
-                    getClass().getResource("/copamundo/usuarios/visao/TelaUsuarios.fxml")
+                    getClass().getResource("/copamundo/principal/visao/TelaPrincipal.fxml")
             );
             Parent root = loader.load();
 

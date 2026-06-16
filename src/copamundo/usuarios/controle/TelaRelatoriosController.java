@@ -14,7 +14,6 @@ import javafx.scene.chart.XYChart;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.Label;
-import javafx.scene.control.TextArea;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 
@@ -66,10 +65,19 @@ public class TelaRelatoriosController {
     private PieChart graficoStatus;
 
     @FXML
-    private BarChart<String, Number> graficoFases;
+    private Label lblTituloCard1;
 
     @FXML
-    private TextArea txtRelatorio;
+    private Label lblTituloCard2;
+
+    @FXML
+    private Label lblTituloCard3;
+
+    @FXML
+    private Label lblTituloCard4;
+
+    @FXML
+    private Label lblTituloGrafico;
 
     @FXML
     private void initialize() {
@@ -109,18 +117,169 @@ public class TelaRelatoriosController {
     private void handleGerarRelatorio(ActionEvent event) {
         aplicarFiltrosNaLogica();
 
+        String tipo = comboTipoRelatorio.getValue();
+
+        if ("Usuários".equalsIgnoreCase(tipo)) {
+            atualizarRelatorioUsuarios();
+            return;
+        }
+
+        if ("Desempenho".equalsIgnoreCase(tipo)) {
+            atualizarRelatorioDesempenho();
+            return;
+        }
+
         boolean gerou = relatoriosLogic.gerarRelatorio();
 
         if (!gerou) {
-            txtRelatorio.setText("Não foi possível gerar o relatório. Verifique os filtros.");
+            System.out.println("Não foi possível gerar o relatório. Verifique os filtros.");
             return;
         }
+
+        atualizarRelatorioPartidas();
+    }
+
+    private void atualizarRelatorioPartidas() {
+        lblTituloCard1.setText("Partidas");
+        lblTituloCard2.setText("Finalizadas");
+        lblTituloCard3.setText("Gols");
+        lblTituloCard4.setText("Média");
+        lblTituloGrafico.setText("Partidas por status");
 
         atualizarCards();
         atualizarGraficos();
         atualizarDestaques();
+    }
 
-        txtRelatorio.setText(relatoriosLogic.getConteudoUltimoRelatorio());
+    private void atualizarRelatorioUsuarios() {
+        lblTituloCard1.setText("Usuários");
+        lblTituloCard2.setText("Ativos");
+        lblTituloCard3.setText("Inativos");
+        lblTituloCard4.setText("Admins");
+        lblTituloGrafico.setText("Usuários por status");
+
+        int totalUsuarios = Usuario.usuarios.size();
+        int ativos = 0;
+        int inativos = 0;
+        int administradores = 0;
+        int organizadores = 0;
+
+        for (Usuario usuario : Usuario.usuarios) {
+            if (usuario.getStatus() == Usuario.Status.ATIVO) {
+                ativos++;
+            }
+
+            if (usuario.getStatus() == Usuario.Status.INATIVO) {
+                inativos++;
+            }
+
+            if (usuario.getFuncao() == Usuario.Funcao.ADMINISTRADOR) {
+                administradores++;
+            }
+
+            if (usuario.getFuncao() == Usuario.Funcao.ORGANIZADOR) {
+                organizadores++;
+            }
+        }
+
+        lblNumeroPartidas.setText(String.valueOf(totalUsuarios));
+        lblPartidasFinalizadas.setText(String.valueOf(ativos));
+        lblTotalGols.setText(String.valueOf(inativos));
+        lblMediaGols.setText(String.valueOf(administradores));
+
+        lblPartidaMaisGols.setText("Administradores cadastrados: " + administradores);
+        lblMaiorGoleada.setText("Organizadores cadastrados: " + organizadores);
+        lblSelecaoAnalisada.setText("Relatório analisado: usuários do sistema.");
+
+        graficoStatus.getData().clear();
+        graficoStatus.getData().add(new PieChart.Data("Ativos", ativos));
+        graficoStatus.getData().add(new PieChart.Data("Inativos", inativos));
+    }
+
+    private void atualizarRelatorioDesempenho() {
+        String selecao = comboSelecao.getValue();
+
+        if (selecao == null || selecao.trim().isEmpty()) {
+            selecao = "Brasil";
+        }
+
+        lblTituloCard1.setText("Jogos");
+        lblTituloCard2.setText("Vitórias");
+        lblTituloCard3.setText("Gols pró");
+        lblTituloCard4.setText("Aproveitamento");
+        lblTituloGrafico.setText("Resultado da seleção");
+
+        List<Relatorios.PartidaRelatorio> partidas = relatoriosLogic.filtrarPartidasPorPeriodo();
+
+        int jogos = 0;
+        int vitorias = 0;
+        int empates = 0;
+        int derrotas = 0;
+        int golsPro = 0;
+        int golsContra = 0;
+
+        for (Relatorios.PartidaRelatorio partida : partidas) {
+            if (partida.getStatus() == null || !partida.getStatus().equalsIgnoreCase("finalizada")) {
+                continue;
+            }
+
+            boolean selecaoA = partida.getSelecaoA() != null &&
+                    partida.getSelecaoA().equalsIgnoreCase(selecao);
+
+            boolean selecaoB = partida.getSelecaoB() != null &&
+                    partida.getSelecaoB().equalsIgnoreCase(selecao);
+
+            if (!selecaoA && !selecaoB) {
+                continue;
+            }
+
+            jogos++;
+
+            int golsDaSelecao;
+            int golsDoAdversario;
+
+            if (selecaoA) {
+                golsDaSelecao = partida.getGolsSelecaoA();
+                golsDoAdversario = partida.getGolsSelecaoB();
+            } else {
+                golsDaSelecao = partida.getGolsSelecaoB();
+                golsDoAdversario = partida.getGolsSelecaoA();
+            }
+
+            golsPro += golsDaSelecao;
+            golsContra += golsDoAdversario;
+
+            if (golsDaSelecao > golsDoAdversario) {
+                vitorias++;
+            } else if (golsDaSelecao == golsDoAdversario) {
+                empates++;
+            } else {
+                derrotas++;
+            }
+        }
+
+        int saldo = golsPro - golsContra;
+        int pontuacao = (vitorias * 3) + empates;
+
+        double aproveitamento = 0;
+
+        if (jogos > 0) {
+            aproveitamento = ((double) pontuacao / (jogos * 3)) * 100;
+        }
+
+        lblNumeroPartidas.setText(String.valueOf(jogos));
+        lblPartidasFinalizadas.setText(String.valueOf(vitorias));
+        lblTotalGols.setText(String.valueOf(golsPro));
+        lblMediaGols.setText(String.format("%.2f%%", aproveitamento));
+
+        lblPartidaMaisGols.setText("Empates: " + empates + " | Derrotas: " + derrotas);
+        lblMaiorGoleada.setText("Gols contra: " + golsContra + " | Saldo: " + saldo);
+        lblSelecaoAnalisada.setText("Seleção analisada: " + selecao + " | Pontuação: " + pontuacao);
+
+        graficoStatus.getData().clear();
+        graficoStatus.getData().add(new PieChart.Data("Vitórias", vitorias));
+        graficoStatus.getData().add(new PieChart.Data("Empates", empates));
+        graficoStatus.getData().add(new PieChart.Data("Derrotas", derrotas));
     }
 
     @FXML
@@ -141,13 +300,15 @@ public class TelaRelatoriosController {
         lblMaiorGoleada.setText("Nenhum relatório gerado.");
         lblSelecaoAnalisada.setText("Nenhuma seleção selecionada.");
 
-        txtRelatorio.clear();
-
         graficoStatus.getData().clear();
-        graficoFases.getData().clear();
 
         relatoriosLogic.carregarPartidasTeste();
         atualizarGraficos();
+        lblTituloCard1.setText("Partidas");
+        lblTituloCard2.setText("Finalizadas");
+        lblTituloCard3.setText("Gols");
+        lblTituloCard4.setText("Média");
+        lblTituloGrafico.setText("Partidas por status");
     }
 
     @FXML
@@ -157,7 +318,7 @@ public class TelaRelatoriosController {
         boolean gerou = relatoriosLogic.gerarRelatorio();
 
         if (!gerou) {
-            txtRelatorio.setText("Não foi possível gerar o relatório para PDF.");
+            System.out.println("Não foi possível gerar o relatório para PDF.");
             return;
         }
 
@@ -176,14 +337,13 @@ public class TelaRelatoriosController {
             boolean sucesso = relatoriosLogic.gerarArquivoPDF(arquivoDestino.getAbsolutePath());
 
             if (sucesso) {
-                txtRelatorio.setText(relatoriosLogic.getConteudoUltimoRelatorio());
                 atualizarCards();
                 atualizarGraficos();
                 atualizarDestaques();
 
                 System.out.println("Operação concluída. Arquivo salvo em: " + arquivoDestino.getAbsolutePath());
             } else {
-                txtRelatorio.setText("Falha na operação de salvar o PDF.");
+                System.out.println("Falha na operação de salvar o PDF.");
             }
         }
     }
@@ -253,7 +413,6 @@ public class TelaRelatoriosController {
 
     private void atualizarGraficos() {
         atualizarGraficoStatus();
-        atualizarGraficoFases();
     }
 
     private void atualizarGraficoStatus() {
@@ -266,37 +425,6 @@ public class TelaRelatoriosController {
                     new PieChart.Data(status, porStatus.get(status))
             );
         }
-    }
-
-    private void atualizarGraficoFases() {
-        graficoFases.getData().clear();
-
-        Map<String, Integer> porFase = relatoriosLogic.contarPartidasPorFase();
-
-        XYChart.Series<String, Number> serie = new XYChart.Series<>();
-
-        int maiorValor = 0;
-
-        for (String fase : porFase.keySet()) {
-            int quantidade = porFase.get(fase);
-
-            if (quantidade > maiorValor) {
-                maiorValor = quantidade;
-            }
-
-            serie.getData().add(new XYChart.Data<>(fase, quantidade));
-        }
-
-        NumberAxis eixoY = (NumberAxis) graficoFases.getYAxis();
-        eixoY.setAutoRanging(false);
-        eixoY.setLowerBound(0);
-        eixoY.setUpperBound(maiorValor + 1);
-        eixoY.setTickUnit(1);
-
-        graficoFases.setCategoryGap(12);
-        graficoFases.setBarGap(3);
-
-        graficoFases.getData().add(serie);
     }
 
     private void atualizarDestaques() {

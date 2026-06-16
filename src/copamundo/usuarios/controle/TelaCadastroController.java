@@ -1,5 +1,6 @@
 package copamundo.usuarios.controle;
 
+import copamundo.principal.visao.TelaPrincipalController;
 import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -15,20 +16,28 @@ import javafx.stage.Stage;
 import java.io.IOException;
 
 public class TelaCadastroController {
+
     @FXML
     private TextField campoNomeUsuario;
+
     @FXML
     private TextField campoCpfUsuario;
+
     @FXML
     private TextField campoEmailUsuario;
+
     @FXML
     private PasswordField campoSenhaUsuario;
+
     @FXML
     private ComboBox<Usuario.Status> campoStatus;
+
     @FXML
     private ComboBox<Usuario.Funcao> campoFuncao;
+
     @FXML
     private ComboBox<Usuario.Pais> campoPais;
+
     @FXML
     private void initialize() {
         campoFuncao.setItems(
@@ -38,56 +47,69 @@ public class TelaCadastroController {
         campoPais.setItems(
                 FXCollections.observableArrayList(Usuario.Pais.values())
         );
+
         campoStatus.setItems(
                 FXCollections.observableArrayList(Usuario.Status.values())
         );
     }
+
     @FXML
     private void entrar(ActionEvent event) {
         String nomeUsuario = campoNomeUsuario.getText();
-        String Cpf = campoCpfUsuario.getText();
+        String cpf = campoCpfUsuario.getText();
         String emailUsuario = campoEmailUsuario.getText();
+        String senhaUsuario = campoSenhaUsuario.getText();
+
         Usuario.Status status = campoStatus.getValue();
         Usuario.Pais pais = campoPais.getValue();
         Usuario.Funcao funcao = campoFuncao.getValue();
-        String senhaUsuario = campoSenhaUsuario.getText();
 
-        Usuario novoUsuario = new Usuario(nomeUsuario, emailUsuario, senhaUsuario, status, pais, funcao, Cpf);
+        Usuario novoUsuario = new Usuario(
+                nomeUsuario,
+                emailUsuario,
+                senhaUsuario,
+                status,
+                pais,
+                funcao,
+                cpf
+        );
 
         boolean salvoComSucesso = Usuario.salvarUsuarioNoBanco(novoUsuario);
 
         if (salvoComSucesso) {
             System.out.println("Usuário salvo com sucesso! Total na lista: " + Usuario.usuarios.size());
+
             try {
-                telaUsuario(event);
+                voltarParaTelaPrincipalComUsuarios(event);
             } catch (IOException e) {
+                System.out.println("Erro ao voltar para a tela principal: " + e.getMessage());
                 e.printStackTrace();
             }
+
         } else {
             System.out.println("Falha na validação dos dados. Verifique os campos.");
         }
     }
 
     @FXML
-    private void telaUsuario(ActionEvent event) throws IOException {
-        FXMLLoader loader = new FXMLLoader(
-                getClass().getResource("/copamundo/usuarios/visao/TelaLogin.fxml")
-        );
-
-        Parent root = loader.load();
-
-        Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-        stage.setScene(new Scene(root));
-        stage.show();
+    private void voltarAnterior(ActionEvent event) {
+        try {
+            voltarParaTelaPrincipalComUsuarios(event);
+        } catch (IOException e) {
+            System.out.println("Erro ao voltar para a tela principal: " + e.getMessage());
+            e.printStackTrace();
+        }
     }
 
-    @FXML
-    private void voltarTelaUsuarios(ActionEvent event) throws IOException {
+    private void voltarParaTelaPrincipalComUsuarios(ActionEvent event) throws IOException {
         FXMLLoader loader = new FXMLLoader(
-                getClass().getResource("/copamundo/usuarios/visao/TelaUsuarios.fxml")
+                getClass().getResource("/copamundo/principal/visao/TelaPrincipal.fxml")
         );
 
         Parent root = loader.load();
+
+        TelaPrincipalController controller = loader.getController();
+        controller.abrirUsuariosInicial();
 
         Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
         stage.setScene(new Scene(root));
