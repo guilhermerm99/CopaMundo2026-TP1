@@ -1,19 +1,15 @@
 package copamundo.partidas.visao;
 
 import copamundo.comum.*;
-import copamundo.estadios.controle.ArbitroController;
 import copamundo.estadios.controle.EstadioController;
 import copamundo.estadios.excecoes.PersistenciaException;
 import copamundo.estadios.excecoes.RegraNegocioException;
-import copamundo.estadios.modelo.Arbitro;
 import copamundo.partidas.excecoes.PartidaMesmaDataException;
-import copamundo.partidas.excecoes.PartidaNaoEncontradaException;
 import copamundo.partidas.repositorio.PartidaRepositorio;
 import copamundo.selecoes.persistencia.PersistenciaSelecoesJogadores;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
 import javafx.scene.control.Alert;
-import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
@@ -28,12 +24,6 @@ public class TelaModalEditarPartidaController {
 
     @FXML
     private ComboBox<StatusPartida> seletorStatus;
-
-    @FXML
-    private Button btnCancelarEdicao;
-
-    @FXML
-    private Button btnEditarPartida;
 
     @FXML
     private ComboBox<copamundo.estadios.modelo.Estadio> seletorEstadio;
@@ -103,39 +93,27 @@ public class TelaModalEditarPartidaController {
 
             // verifica se há um campo em branco
             if (Objects.equals(data, "")) {
-                Alert alert = new Alert(Alert.AlertType.WARNING);
-                alert.setContentText("Informe uma data!");
-                alert.showAndWait();
+                mostrarMensagemErro("Informe uma data!");
                 return;
             }
             if (Objects.equals(horario, "")) {
-                Alert alert = new Alert(Alert.AlertType.WARNING);
-                alert.setContentText("Informe um horário!");
-                alert.showAndWait();
+                mostrarMensagemErro("Informe um horário!");
                 return;
             }
             if (estadio == null) {
-                Alert alert = new Alert(Alert.AlertType.WARNING);
-                alert.setContentText("Selecione um estádio!");
-                alert.showAndWait();
+                mostrarMensagemErro("Selecione um estádio!");
                 return;
             }
             if ((selecao1 == null) || (selecao2 == null)) {
-                Alert alert = new Alert(Alert.AlertType.WARNING);
-                alert.setContentText("Selecione as seleções!");
-                alert.showAndWait();
+                mostrarMensagemErro("Selecione as seleções!");
                 return;
             }
             if (fase == null) {
-                Alert alert = new Alert(Alert.AlertType.WARNING);
-                alert.setContentText("Selecione a fase!");
-                alert.showAndWait();
+                mostrarMensagemErro("Selecione a fase!");
                 return;
             }
             if (status == null) {
-                Alert alert = new Alert(Alert.AlertType.WARNING);
-                alert.setContentText("Selecione o status da partida!");
-                alert.showAndWait();
+                mostrarMensagemErro("Selecione o status da partida!");
                 return;
             }
 
@@ -146,9 +124,9 @@ public class TelaModalEditarPartidaController {
                 for (Partida p : listaPartidas) {
                     if (((p.getSelecao1() == selecao1) || (p.getSelecao1() == selecao2) || (p.getSelecao2() == selecao1) || (p.getSelecao2() == selecao2)) && (!Objects.equals(p.getId(), partida.getId()))) {
                         if (p.getDataPartida().equals(data)) {
-                            Alert alert = new Alert(Alert.AlertType.WARNING);
-                            alert.setContentText("Uma seleção já possui partida nesta data!");
-                            alert.showAndWait();
+
+                            mostrarMensagemErro("Uma seleção já possui partida nesta data!");
+
                             throw new PartidaMesmaDataException("Uma seleção já possui partida nesta data.");
                         }
                     }
@@ -180,14 +158,10 @@ public class TelaModalEditarPartidaController {
                 alert.setContentText("Partida editada com sucesso!");
                 alert.showAndWait();
 
-                return;
-
             }
             else {
-                Alert alert = new Alert(Alert.AlertType.WARNING);
-                alert.setContentText("As seleções devem ser diferentes!");
-                alert.showAndWait();
-                return;
+                mostrarMensagemErro("As seleções devem ser diferentes!");
+
             }
 
         } catch (IOException | ClassNotFoundException e) {
@@ -207,6 +181,15 @@ public class TelaModalEditarPartidaController {
     }
 
     private final EstadioController estadioController = new EstadioController();
+
+    private void mostrarMensagemErro(String mensagem) {
+        Alert alert = new Alert(Alert.AlertType.ERROR);
+        alert.setTitle("Erro");
+        alert.setHeaderText(null);
+        alert.setContentText(mensagem);
+        alert.showAndWait();
+
+    }
 
 
 }

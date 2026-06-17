@@ -2,17 +2,14 @@ package copamundo.partidas.visao;
 import copamundo.comum.*;
 import copamundo.estadios.modelo.Estadio;
 import copamundo.partidas.repositorio.PartidaRepositorio;
-import copamundo.principal.visao.TelaPrincipalController;
 import copamundo.selecoes.persistencia.PersistenciaSelecoesJogadores;
 import copamundo.usuarios.controle.TelaLoginController;
 import copamundo.usuarios.controle.Usuario;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
@@ -31,12 +28,6 @@ public class TelaConsultaPartidasController {
 
     @FXML
     private ComboBox<Fase> seletorFase;
-
-    @FXML
-    private Button btnFiltrarConsulta;
-
-    @FXML
-    private Button btnLimparFiltros;
 
     @FXML
     private TableColumn<Partida, String> colunaData;

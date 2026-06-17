@@ -11,15 +11,9 @@ import copamundo.partidas.excecoes.PartidaMesmaDataException;
 import copamundo.partidas.repositorio.PartidaRepositorio;
 import copamundo.selecoes.persistencia.PersistenciaSelecoesJogadores;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Node;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.scene.control.Alert;
-import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextField;
-import javafx.stage.Stage;
 import java.util.List;
 import java.io.IOException;
 import java.util.Objects;
@@ -28,18 +22,6 @@ import java.util.Objects;
 public class TelaCadastroPartidasController {
 
     private final EstadioController estadioController = new EstadioController();
-
-    @FXML
-    private Button btnTelaPrincipal;
-
-    @FXML
-    private Button btnSalvarCadastroPartida;
-
-    @FXML
-    private Button btnTelaConsultaPartidas;
-
-    @FXML
-    private Button btnTelaRegistroResultado;
 
     @FXML
     private ComboBox<copamundo.estadios.modelo.Estadio> seletorEstadio;
@@ -79,10 +61,7 @@ public class TelaCadastroPartidasController {
             seletorEstadio.getItems().addAll(listaEstadios);
 
         } catch (PersistenciaException | copamundo.selecoes.excecoes.PersistenciaException e) {
-            e.printStackTrace();
-            Alert alert = new Alert(Alert.AlertType.WARNING);
-            alert.setContentText("Erro ao acessar uma das listas!");
-            alert.showAndWait();
+            mostrarMensagemErro("Erro ao acessar uma das listas!");
         }
 
     }
@@ -103,39 +82,27 @@ public class TelaCadastroPartidasController {
 
             // avisos caso haja uma seção não preenchida - avisa e encerra o metodo antes de salvar
             if (Objects.equals(data, "")) {
-                Alert alert = new Alert(Alert.AlertType.WARNING);
-                alert.setContentText("Informe uma data!");
-                alert.showAndWait();
+                mostrarMensagemErro("Informe uma data!");
                 return;
             }
             if (Objects.equals(horario, "")) {
-                Alert alert = new Alert(Alert.AlertType.WARNING);
-                alert.setContentText("Informe um horário!");
-                alert.showAndWait();
+                mostrarMensagemErro("Informe um horário!");
                 return;
             }
             if (estadio == null) {
-                Alert alert = new Alert(Alert.AlertType.WARNING);
-                alert.setContentText("Selecione um estádio!");
-                alert.showAndWait();
+                mostrarMensagemErro("Selecione um estádio!");
                 return;
             }
             if ((selecao1 == null) || (selecao2 == null)) {
-                Alert alert = new Alert(Alert.AlertType.WARNING);
-                alert.setContentText("Selecione as seleções!");
-                alert.showAndWait();
+                mostrarMensagemErro("Selecione as seleções!");
                 return;
             }
             if (fase == null) {
-                Alert alert = new Alert(Alert.AlertType.WARNING);
-                alert.setContentText("Selecione a fase!");
-                alert.showAndWait();
+                mostrarMensagemErro("Selecione a fase!");
                 return;
             }
             if (status == null) {
-                Alert alert = new Alert(Alert.AlertType.WARNING);
-                alert.setContentText("Selecione o status da partida!");
-                alert.showAndWait();
+                mostrarMensagemErro("Selecione o status da partida!");
                 return;
             }
 
@@ -148,9 +115,7 @@ public class TelaCadastroPartidasController {
                 for (Partida p : listaPartidas) {
                     if ((p.getSelecao1() == selecao1) || (p.getSelecao1() == selecao2) || (p.getSelecao2() == selecao1) || (p.getSelecao2() == selecao2)) {
                         if (p.getDataPartida().equals(data)) {
-                            Alert alert = new Alert(Alert.AlertType.WARNING);
-                            alert.setContentText("Uma seleção já possui partida nesta data!");
-                            alert.showAndWait();
+                            mostrarMensagemErro("Uma seleção já possui partida nesta data!");
                             throw new PartidaMesmaDataException("Uma seleção já possui partida nesta data.");
                         }
                     }
@@ -170,13 +135,11 @@ public class TelaCadastroPartidasController {
                 alert.setHeaderText(null);
                 alert.setContentText("A partida foi salva com sucesso!");
                 alert.showAndWait();
-                return;
+
             }
             else {
-                Alert alert = new Alert(Alert.AlertType.WARNING);
-                alert.setContentText("As seleções devem ser diferentes!");
-                alert.showAndWait();
-                return;
+                mostrarMensagemErro("As seleções devem ser diferentes!");
+
             }
 
         } catch (IOException | ClassNotFoundException e) {
@@ -184,6 +147,15 @@ public class TelaCadastroPartidasController {
         } catch (RegraNegocioException | PersistenciaException e) {
             throw new RuntimeException(e);
         }
+    }
+
+    private void mostrarMensagemErro(String mensagem) {
+        Alert alert = new Alert(Alert.AlertType.ERROR);
+        alert.setTitle("Erro");
+        alert.setHeaderText(null);
+        alert.setContentText(mensagem);
+        alert.showAndWait();
+
     }
 
 

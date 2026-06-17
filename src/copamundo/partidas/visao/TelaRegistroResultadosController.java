@@ -8,30 +8,13 @@ import copamundo.partidas.excecoes.PartidaNaoEncontradaException;
 import copamundo.partidas.excecoes.PartidaNaoFinalizadaException;
 import copamundo.partidas.repositorio.PartidaRepositorio;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Node;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.scene.control.*;
-import javafx.stage.Stage;
 import javafx.util.StringConverter;
 import java.io.IOException;
 import java.util.List;
 
 
 public class TelaRegistroResultadosController {
-
-    @FXML
-    private Button btnTelaPrincipal;
-
-    @FXML
-    private Button btnSalvarResultado;
-
-    @FXML
-    private Button btnTelaCadastroPartidas;
-
-    @FXML
-    private Button btnTelaConsultaPartidas;
 
     @FXML
     private Label labelSelecao1;
@@ -95,7 +78,7 @@ public class TelaRegistroResultadosController {
 
     // preenche os seletores com as fases e partidas
     public void initialize() {
-        // determina o formato da String que irá aparecer: "seleção 1 x seleção 2" - já tinha uma toString na classe e tive que fazer assim
+        // determina o formato da String que irá aparecer: "seleção 1 x seleção 2"
         seletorPartida.setConverter(new StringConverter<Partida>() {
             @Override
             public String toString(Partida p) {
@@ -164,9 +147,7 @@ public class TelaRegistroResultadosController {
 
             // é obrigatório selecionar uma partida para salvar um resultado
             if (p == null) {
-                Alert alert = new Alert(Alert.AlertType.WARNING);
-                alert.setContentText("Selecione uma partida!");
-                alert.showAndWait();
+                mostrarMensagemErro("Selecione uma partida!");
                 return;
             }
 
@@ -179,9 +160,8 @@ public class TelaRegistroResultadosController {
                     || posse1 == null || posse1.trim().isEmpty() || posse2 == null || posse2.trim().isEmpty()
                     || vermelhos1 == null || vermelhos1.trim().isEmpty() || vermelhos2 == null || vermelhos2.trim().isEmpty()) {
 
-                Alert alert = new Alert(Alert.AlertType.WARNING);
-                alert.setContentText("Todos os campos devem estar preenchidos!");
-                alert.showAndWait();
+
+                mostrarMensagemErro("Todos os campos devem estar preenchidos!");
                 return;
             }
 

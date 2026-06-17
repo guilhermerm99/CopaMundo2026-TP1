@@ -1,6 +1,5 @@
 package copamundo.partidas.visao;
 
-import com.itextpdf.io.IOException;
 import copamundo.usuarios.controle.TelaLoginController;
 import copamundo.usuarios.controle.Usuario;
 import javafx.fxml.FXML;

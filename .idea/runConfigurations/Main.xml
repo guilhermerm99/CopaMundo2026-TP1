@@ -3,7 +3,7 @@
     <option name="ALTERNATIVE_JRE_PATH" value="openjdk-26" />
     <option name="MAIN_CLASS_NAME" value="copamundo.Main" />
     <module name="CopaMundo2026-TP1" />
-    <option name="VM_PARAMETERS" value="--module-path &quot;C:\Users\gabri\Downloads\javafx-sdk-26.0.1\lib&quot; --add-modules javafx.controls,javafx.fxml" />
+    <option name="VM_PARAMETERS" value="--module-path $USER_HOME$/Downloads/openjfx-26.0.1_linux-x64_bin-sdk(1)/javafx-sdk-26.0.1/lib --add-modules javafx.controls,javafx.fxml --enable-native-access=javafx.graphics" />
     <method v="2">
       <option name="Make" enabled="true" />
     </method>

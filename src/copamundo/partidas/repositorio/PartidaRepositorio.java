@@ -41,13 +41,13 @@ public class PartidaRepositorio {
 
     private static List<Partida> converterListaPartidas(Object objeto) throws IOException {
         if (!(objeto instanceof List<?> itens)) {
-            throw new IOException("Arquivo de partidas possui formato invalido.");
+            throw new IOException("Arquivo de partidas possui formato inválido.");
         }
 
         List<Partida> partidas = new ArrayList<>();
         for (Object item : itens) {
             if (!(item instanceof Partida partida)) {
-                throw new IOException("Arquivo de partidas contem item invalido.");
+                throw new IOException("Arquivo de partidas contem item inválido.");
             }
             partidas.add(partida);
         }
