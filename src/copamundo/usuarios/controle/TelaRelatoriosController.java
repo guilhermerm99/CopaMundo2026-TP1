@@ -24,6 +24,9 @@ import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
+import copamundo.comum.Partida;
+import copamundo.partidas.repositorio.PartidaRepositorio;
+
 public class TelaRelatoriosController {
 
     private Relatorios relatoriosLogic = new Relatorios();
@@ -81,7 +84,7 @@ public class TelaRelatoriosController {
 
     @FXML
     private void initialize() {
-        relatoriosLogic.carregarPartidasTeste();
+        carregarPartidasReaisNoRelatorio();
 
         comboTipoRelatorio.setItems(FXCollections.observableArrayList(
                 "Geral",
@@ -90,17 +93,50 @@ public class TelaRelatoriosController {
                 "Desempenho"
         ));
 
-        comboSelecao.setItems(FXCollections.observableArrayList(
-                "Brasil",
-                "Argentina",
-                "França",
-                "Alemanha"
-        ));
+        carregarSelecoesReaisNoCombo();
 
         comboTipoRelatorio.setValue("Geral");
-        comboSelecao.setValue("Brasil");
 
         atualizarGraficos();
+    }
+
+    private void carregarSelecoesReaisNoCombo() {
+        comboSelecao.getItems().clear();
+
+        List<Relatorios.PartidaRelatorio> partidas = relatoriosLogic.getPartidas();
+
+        for (Relatorios.PartidaRelatorio partida : partidas) {
+            adicionarSelecaoNoCombo(partida.getSelecaoA());
+            adicionarSelecaoNoCombo(partida.getSelecaoB());
+        }
+
+        if (!comboSelecao.getItems().isEmpty()) {
+            comboSelecao.setValue(comboSelecao.getItems().get(0));
+        }
+    }
+
+    private void adicionarSelecaoNoCombo(String selecao) {
+        if (selecao == null || selecao.trim().isEmpty()) {
+            return;
+        }
+
+        for (String item : comboSelecao.getItems()) {
+            if (item.equalsIgnoreCase(selecao)) {
+                return;
+            }
+        }
+
+        comboSelecao.getItems().add(selecao);
+    }
+
+    private void carregarPartidasReaisNoRelatorio() {
+        try {
+            List<Partida> partidasReais = PartidaRepositorio.carregarListaPartidas();
+            relatoriosLogic.carregarPartidasReais(partidasReais);
+        } catch (IOException | ClassNotFoundException e) {
+            System.out.println("Erro ao carregar partidas reais no relatório: " + e.getMessage());
+            relatoriosLogic.carregarPartidasReais(new java.util.ArrayList<>());
+        }
     }
 
     @FXML
@@ -115,6 +151,7 @@ public class TelaRelatoriosController {
 
     @FXML
     private void handleGerarRelatorio(ActionEvent event) {
+        carregarPartidasReaisNoRelatorio();
         aplicarFiltrosNaLogica();
 
         String tipo = comboTipoRelatorio.getValue();
@@ -313,6 +350,7 @@ public class TelaRelatoriosController {
 
     @FXML
     private void handleGerarPDF(ActionEvent event) {
+        carregarPartidasReaisNoRelatorio();
         aplicarFiltrosNaLogica();
 
         boolean gerou = relatoriosLogic.gerarRelatorio();

@@ -109,7 +109,7 @@ public class TelaCadastroController {
         Parent root = loader.load();
 
         TelaPrincipalController controller = loader.getController();
-        //controller.abrirUsuariosInicial();
+        controller.abrirUsuariosInicial();
 
         Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
         stage.setScene(new Scene(root));

@@ -435,7 +435,6 @@ public class Relatorios {
         }
 
         dataGeracao = new Date();
-        carregarPartidasTeste();
 
         String tipo = tipoRelatorio.trim().toLowerCase();
         StringBuilder relatorio = new StringBuilder();
@@ -465,7 +464,6 @@ public class Relatorios {
         partidas.clear();
 
         if (partidasReais == null || partidasReais.isEmpty()) {
-            carregarPartidasTeste();
             return;
         }
 
@@ -475,10 +473,6 @@ public class Relatorios {
             if (partidaConvertida != null) {
                 adicionarPartida(partidaConvertida);
             }
-        }
-
-        if (partidas.isEmpty()) {
-            carregarPartidasTeste();
         }
     }
 
