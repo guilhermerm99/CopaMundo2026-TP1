@@ -85,50 +85,8 @@ public class TelaCadastroPartidasController {
             alert.showAndWait();
         }
 
-
     }
 
-    @FXML
-    void irTelaConsultaPartidas(javafx.event.ActionEvent event) {
-        try {
-            FXMLLoader loader = new FXMLLoader(
-                    getClass().getResource("TelaConsultaPartidas.fxml"));
-
-            Parent root = loader.load();
-
-            Stage stage = (Stage) ((Node) event.getSource())
-                    .getScene()
-                    .getWindow();
-
-            Scene scene = new Scene(root);
-
-            stage.setScene(scene);
-            stage.show();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
-
-    @FXML
-    void irTelaRegistroResultado(javafx.event.ActionEvent event) throws IOException {
-        try {
-            FXMLLoader loader = new FXMLLoader(
-                    getClass().getResource("TelaRegistroResultados.fxml"));
-
-            Parent root = loader.load();
-
-            Stage stage = (Stage) ((Node) event.getSource())
-                    .getScene()
-                    .getWindow();
-
-            Scene scene = new Scene(root);
-
-            stage.setScene(scene);
-            stage.show();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
 
     @FXML
     void salvarPartida(javafx.event.ActionEvent event) {
@@ -228,11 +186,11 @@ public class TelaCadastroPartidasController {
         }
     }
 
-    @FXML
-    void irTelaPrincipal(javafx.event.ActionEvent event) {
+/*
+    void carregarTela(javafx.event.ActionEvent event, String caminhoFXML, String titulo) {
         try {
             FXMLLoader loader = new FXMLLoader(
-                    getClass().getResource("/copamundo/principal/visao/TelaPrincipal.fxml"));
+                    getClass().getResource(caminhoFXML));
 
             Parent root = loader.load();
 
@@ -242,6 +200,7 @@ public class TelaCadastroPartidasController {
 
             Scene scene = new Scene(root);
 
+            stage.setTitle(titulo);
             stage.setScene(scene);
             stage.show();
         } catch (IOException e) {
@@ -249,68 +208,25 @@ public class TelaCadastroPartidasController {
         }
     }
 
-
-
-
-
-/*
-    private final ArbitroController arbitroController = new ArbitroController();
-
-    public void designarArbitroPrincipal(Partida partida, Arbitro arbitro)
-            throws PersistenciaException, RegraNegocioException {
-        if (partida == null) {
-            throw new RegraNegocioException("Selecione uma partida.");
-        }
-
-        arbitroController.validarNacionalidadeParaPartida(arbitro, partida);
-        partida.setArbitroPrincipal(arbitro);
+    @FXML
+    void irTelaConsultaPartidas(javafx.event.ActionEvent event) {
+        carregarTela(event, "TelaConsultaPartidas.fxml", "Consulta de Partidas");
 
     }
 
-
-    public void CadastrarPartida(String dataPartida, String horarioPartida, Estadio estadioPartida, Selecao selecao1, Selecao selecao2, Fase fase,
-                                 StatusPartida status, Arbitro arbitro) throws IOException, ClassNotFoundException, PersistenciaException, RegraNegocioException {
-        List<Partida> listaPartidas = PartidaRepositorio.carregarListaPartidas();
-
-        if (selecao1 != selecao2) {
-            for (Partida p : listaPartidas) {
-                if ((p.getSelecao1() == selecao1) || (p.getSelecao1() == selecao2) || (p.getSelecao2() == selecao1) || (p.getSelecao2() == selecao2)) {
-                    if (p.getDataPartida().equals(dataPartida)) {
-                        throw new PartidaMesmaDataException("Uma seleção já possui partida nesta data.");
-                    }
-                }
-            }
-            Partida partida = new Partida(dataPartida, horarioPartida, estadioPartida, selecao1, selecao2, fase, status, arbitro);
-
-            estadioController.validarEstadioDisponivel(partida);
-            designarArbitroPrincipal(partida, arbitro);
-
-            listaPartidas.add(partida);
-        }
-
-        PartidaRepositorio.salvarListaPartidas(listaPartidas);
-    }
-
-
-    public String ExcluirPartida(String id) throws IOException {
-        try {
-            List<Partida> listaPartidas = PartidaRepositorio.carregarListaPartidas();
-
-            for (int i = 0; i < listaPartidas.size(); i++) {
-                if (listaPartidas.get(i).getId().equals(id)) {
-                    listaPartidas.remove(i);
-                    PartidaRepositorio.salvarListaPartidas(listaPartidas);
-                    return "Partida removida com sucesso!";
-                }
-            }
-            throw new PartidaNaoEncontradaException("Partida não encontrada");
-
-        } catch (IOException | ClassNotFoundException e) {
-            e.printStackTrace();
-            return "Erro ao acessar o arquivo";
-        }
+    @FXML
+    void irTelaRegistroResultado(javafx.event.ActionEvent event) throws IOException {
+        carregarTela(event, "TelaRegistroResultados.fxml", "Registro de Resultados");
 
     }
-*/
+
+    @FXML
+    void irTelaPrincipal(javafx.event.ActionEvent event) {
+        carregarTela(event, "/copamundo/principal/visao/TelaPrincipal.fxml", "Sistema de Gestão - Copa do Mundo 2026");
+
+    }
+
+ */
+
 
 }

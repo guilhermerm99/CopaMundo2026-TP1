@@ -2,6 +2,7 @@ package copamundo.partidas.visao;
 import copamundo.comum.*;
 import copamundo.estadios.modelo.Estadio;
 import copamundo.partidas.repositorio.PartidaRepositorio;
+import copamundo.principal.visao.TelaPrincipalController;
 import copamundo.selecoes.persistencia.PersistenciaSelecoesJogadores;
 import copamundo.usuarios.controle.TelaLoginController;
 import copamundo.usuarios.controle.Usuario;
@@ -21,7 +22,6 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
-import java.util.Optional;
 
 
 public class TelaConsultaPartidasController {
@@ -171,7 +171,7 @@ public class TelaConsultaPartidasController {
 
                                 Partida partida = getTableView().getItems().get(getIndex());
 
-                                // quando identifica a partida pelo id, remove e salva a lista atualizada no repositório - precisa do id??
+                                // quando identifica a partida pelo id, remove e salva a lista atualizada no repositório
                                 for (int i = 0; i < listaPartidas.size(); i++) {
                                     if (Objects.equals(listaPartidas.get(i).getId(), partida.getId())) {
                                         listaPartidas.remove(i);
@@ -231,6 +231,7 @@ public class TelaConsultaPartidasController {
                         controller.setPartida(partida);
 
                         Stage stage = new Stage();
+                        stage.setTitle("Editar partida");
                         stage.setScene(new Scene(root));
                         stage.show();
 
@@ -261,7 +262,6 @@ public class TelaConsultaPartidasController {
     // se clicar no botão de filtrar, ele chama carregarTabela
     @FXML
     void filtrarListaPartidas(javafx.event.ActionEvent event) {
-
         carregarTabela();
     }
 
@@ -319,72 +319,14 @@ public class TelaConsultaPartidasController {
         }
     }
 
-    @FXML
-    void irTelaPrincipal(ActionEvent event) {
-        try {
-            FXMLLoader loader = new FXMLLoader(
-                    getClass().getResource("/copamundo/principal/visao/TelaPrincipal.fxml"));
-
-            Parent root = loader.load();
-
-            Stage stage = (Stage) ((Node) event.getSource())
-                    .getScene()
-                    .getWindow();
-
-            Scene scene = new Scene(root);
-
-            stage.setScene(scene);
-            stage.show();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
-
-    @FXML
-    void irTelaCadastroPartidas(javafx.event.ActionEvent event) throws IOException {
-
-
-        FXMLLoader loader = new FXMLLoader(
-                getClass().getResource("TelaCadastroPartidas.fxml"));
-
-        Parent root = loader.load();
-
-        Stage stage = (Stage) ((Node) event.getSource())
-                .getScene()
-                .getWindow();
-
-        Scene scene = new Scene(root);
-
-        stage.setScene(scene);
-        stage.show();
-    }
-
-
-    @FXML
-    void irTelaRegistroResultados(javafx.event.ActionEvent event) throws IOException {
-        FXMLLoader loader = new FXMLLoader(
-                getClass().getResource("TelaRegistroResultados.fxml"));
-
-        Parent root = loader.load();
-
-        Stage stage = (Stage) ((Node) event.getSource())
-                .getScene()
-                .getWindow();
-
-        Scene scene = new Scene(root);
-
-        stage.setScene(scene);
-        stage.show();
-    }
-
 ///////////////////////////////////////////////////// Métodos das filtragens por tipo
 
     public List<Partida>  listaPorSelecao (Selecao selecao, List<Partida> lista) {
         ArrayList<Partida> listaFiltradaPartidas = new ArrayList<Partida>();
 
-        for (int i = 0; i < lista.size(); i++) {
-            if (lista.get(i).getSelecao1().equals(selecao) || lista.get(i).getSelecao2().equals(selecao)) {
-                listaFiltradaPartidas.add(lista.get(i));
+        for (Partida partida : lista) {
+            if (partida.getSelecao1().equals(selecao) || partida.getSelecao2().equals(selecao)) {
+                listaFiltradaPartidas.add(partida);
             }
         }
         return listaFiltradaPartidas;
@@ -393,9 +335,9 @@ public class TelaConsultaPartidasController {
     public List<Partida> listaPorData (String data, List<Partida> lista) {
         ArrayList<Partida> listaFiltradaPartidas = new ArrayList<Partida>();
 
-        for (int i = 0; i < lista.size(); i++) {
-            if (lista.get(i).getDataPartida().equals(data)) {
-                listaFiltradaPartidas.add(lista.get(i));
+        for (Partida partida : lista) {
+            if (partida.getDataPartida().equals(data)) {
+                listaFiltradaPartidas.add(partida);
             }
         }
         return listaFiltradaPartidas;
@@ -404,9 +346,9 @@ public class TelaConsultaPartidasController {
     public static List<Partida>  listaPorFase(Fase fase, List<Partida> lista) {
         ArrayList<Partida> listaFiltradaPartidas = new ArrayList<Partida>();
 
-        for (int i = 0; i < lista.size(); i++) {
-            if (lista.get(i).getFase().equals(fase)) {
-                listaFiltradaPartidas.add(lista.get(i));
+        for (Partida partida : lista) {
+            if (partida.getFase().equals(fase)) {
+                listaFiltradaPartidas.add(partida);
             }
 
         }
@@ -416,12 +358,56 @@ public class TelaConsultaPartidasController {
     public List<Partida> listaPorStatusPartida (StatusPartida status, List<Partida> lista) {
         ArrayList<Partida> listaFiltradaPartidas = new ArrayList<Partida>();
 
-        for (int i = 0; i < lista.size(); i++) {
-            if (lista.get(i).getStatusPartida().equals(status)) {
-                listaFiltradaPartidas.add(lista.get(i));
+        for (Partida partida : lista) {
+            if (partida.getStatusPartida().equals(status)) {
+                listaFiltradaPartidas.add(partida);
             }
 
         }
         return listaFiltradaPartidas;
     }
+
+/*
+    void carregarTela(javafx.event.ActionEvent event, String caminhoFXML, String titulo) {
+        try {
+            FXMLLoader loader = new FXMLLoader(
+                    getClass().getResource(caminhoFXML));
+
+            Parent root = loader.load();
+
+            Stage stage = (Stage) ((Node) event.getSource())
+                    .getScene()
+                    .getWindow();
+
+            Scene scene = new Scene(root);
+
+            stage.setTitle(titulo);
+            stage.setScene(scene);
+            stage.show();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    @FXML
+    void irTelaPrincipal(ActionEvent event) {
+       carregarTela(event, "/copamundo/principal/visao/TelaPrincipal.fxml", "Sistema de Gestão - Copa do Mundo 2026");
+
+    }
+
+    @FXML
+    void irTelaCadastroPartidas(javafx.event.ActionEvent event) {
+        carregarTela(event,"TelaCadastroPartidas.fxml", "Cadastro de Partidas");
+
+    }
+
+
+    @FXML
+    void irTelaRegistroResultados(javafx.event.ActionEvent event) {
+        carregarTela(event, "TelaRegistroResultados.fxml", "Registro de Resultados");
+
+    }
+
+ */
+
 }

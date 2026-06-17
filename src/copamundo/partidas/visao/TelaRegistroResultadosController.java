@@ -140,68 +140,6 @@ public class TelaRegistroResultadosController {
         }
     }
 
-    @FXML
-    void irTelaCadastroPartidas(javafx.event.ActionEvent event) {
-        try {
-            FXMLLoader loader = new FXMLLoader(
-                    getClass().getResource("TelaCadastroPartidas.fxml"));
-
-            Parent root = loader.load();
-
-            Stage stage = (Stage) ((Node) event.getSource())
-                    .getScene()
-                    .getWindow();
-
-            Scene scene = new Scene(root);
-
-            stage.setScene(scene);
-            stage.show();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
-
-    @FXML
-    void irTelaConsultaPartidas(javafx.event.ActionEvent event) {
-        try {
-            FXMLLoader loader = new FXMLLoader(
-                    getClass().getResource("TelaConsultaPartidas.fxml"));
-
-            Parent root = loader.load();
-
-            Stage stage = (Stage) ((Node) event.getSource())
-                    .getScene()
-                    .getWindow();
-
-            Scene scene = new Scene(root);
-
-            stage.setScene(scene);
-            stage.show();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
-
-    @FXML
-    void irTelaPrincipal(javafx.event.ActionEvent event) {
-        try {
-            FXMLLoader loader = new FXMLLoader(
-                    getClass().getResource("/copamundo/principal/visao/TelaPrincipal.fxml"));
-
-            Parent root = loader.load();
-
-            Stage stage = (Stage) ((Node) event.getSource())
-                    .getScene()
-                    .getWindow();
-
-            Scene scene = new Scene(root);
-
-            stage.setScene(scene);
-            stage.show();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
 
     @FXML
     void salvarResultado(javafx.event.ActionEvent event) {
@@ -232,12 +170,15 @@ public class TelaRegistroResultadosController {
                 return;
             }
 
-            if (amarelos1 == null || amarelos1.trim().isEmpty() || amarelos2 == null || amarelos2.trim().isEmpty() || escanteios1 == null ||
-                    escanteios1.trim().isEmpty() || escanteios2 == null || escanteios2.trim().isEmpty() || faltas1 == null || faltas1.trim().isEmpty() ||
-                    faltas2 == null || faltas2.trim().isEmpty() || finalizacoes1 == null || finalizacoes1.trim().isEmpty() || finalizacoes2 == null ||
-                    gols1 == null || gols1.trim().isEmpty() || gols2 == null || gols2.trim().isEmpty() || impedimentos1 == null || impedimentos1.trim().isEmpty() ||
-                    impedimentos2 == null || impedimentos2.trim().isEmpty() || posse1 == null || posse1.trim().isEmpty() || posse2 == null ||
-                    vermelhos1 == null || vermelhos1.trim().isEmpty() || vermelhos2 == null || vermelhos2.trim().isEmpty()) {
+            if (amarelos1 == null || amarelos1.trim().isEmpty() || amarelos2 == null || amarelos2.trim().isEmpty()
+                    || escanteios1 == null || escanteios1.trim().isEmpty() || escanteios2 == null || escanteios2.trim().isEmpty()
+                    || faltas1 == null || faltas1.trim().isEmpty() || faltas2 == null || faltas2.trim().isEmpty()
+                    || finalizacoes1 == null || finalizacoes1.trim().isEmpty() || finalizacoes2 == null || finalizacoes2.trim().isEmpty()
+                    || gols1 == null || gols1.trim().isEmpty() || gols2 == null || gols2.trim().isEmpty()
+                    || impedimentos1 == null || impedimentos1.trim().isEmpty() || impedimentos2 == null || impedimentos2.trim().isEmpty()
+                    || posse1 == null || posse1.trim().isEmpty() || posse2 == null || posse2.trim().isEmpty()
+                    || vermelhos1 == null || vermelhos1.trim().isEmpty() || vermelhos2 == null || vermelhos2.trim().isEmpty()) {
+
                 Alert alert = new Alert(Alert.AlertType.WARNING);
                 alert.setContentText("Todos os campos devem estar preenchidos!");
                 alert.showAndWait();
@@ -270,8 +211,8 @@ public class TelaRegistroResultadosController {
 
                         // se está finalizada, salva o resultado e salva a lista nova
                         listaPartidas.get(i).setResultado(new Resultado(golsSelecao1, golsSelecao2, faltasSelecao1, faltasSelecao2, vermelhosSelecao1,
-                                vermelhosSelecao2, amarelosSelecao1, amarelosSelecao2, posseSelecao1, posseSelecao2, finalizacoesSelecao1, finalizacoesSelecao2,
-                                escanteiosSelecao1, escanteiosSelecao2, impedimentosSelecao1, impedimentosSelecao2));
+                                vermelhosSelecao2, amarelosSelecao1, amarelosSelecao2, posseSelecao1, posseSelecao2, finalizacoesSelecao1,
+                                finalizacoesSelecao2, escanteiosSelecao1, escanteiosSelecao2, impedimentosSelecao1, impedimentosSelecao2));
 
                         PartidaRepositorio.salvarListaPartidas(listaPartidas);
                         Alert alert = new Alert(Alert.AlertType.INFORMATION);
@@ -302,6 +243,48 @@ public class TelaRegistroResultadosController {
         alert.setContentText(mensagem);
         alert.showAndWait();
     }
+
+    /*
+    void carregarTela(javafx.event.ActionEvent event, String caminhoFXML, String titulo) {
+        try {
+            FXMLLoader loader = new FXMLLoader(
+                    getClass().getResource(caminhoFXML));
+
+            Parent root = loader.load();
+
+            Stage stage = (Stage) ((Node) event.getSource())
+                    .getScene()
+                    .getWindow();
+
+            Scene scene = new Scene(root);
+
+            stage.setTitle(titulo);
+            stage.setScene(scene);
+            stage.show();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    @FXML
+    void irTelaCadastroPartidas(javafx.event.ActionEvent event) {
+        carregarTela(event, "TelaCadastroPartidas.fxml", "Cadastro de Partidas");
+
+    }
+
+    @FXML
+    void irTelaConsultaPartidas(javafx.event.ActionEvent event) {
+        carregarTela(event, "TelaConsultaPartidas.fxml", "Consulta de Partidas");
+
+    }
+
+    @FXML
+    void irTelaPrincipal(javafx.event.ActionEvent event) {
+        carregarTela(event, "/copamundo/principal/visao/TelaPrincipal.fxml", "Sistema de Gestão - Copa do Mundo 2026");
+
+    }
+
+     */
 
 
 }

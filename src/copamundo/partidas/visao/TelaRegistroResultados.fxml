@@ -3,192 +3,100 @@
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.control.Label?>
-<?import javafx.scene.control.Separator?>
 <?import javafx.scene.control.TextField?>
-<?import javafx.scene.effect.DropShadow?>
-<?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.GridPane?>
-<?import javafx.scene.layout.HBox?>
-<?import javafx.scene.layout.Pane?>
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.layout.VBox?>
-<?import javafx.scene.text.Font?>
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="602.0" prefWidth="700.0" xmlns="http://javafx.com/javafx/26" xmlns:fx="http://javafx.com/fxml/1" fx:controller="copamundo.partidas.visao.TelaRegistroResultadosController">
-   <bottom>
-      <Pane prefHeight="515.0" prefWidth="700.0" BorderPane.alignment="CENTER">
-         <children>
-            <GridPane layoutX="267.0" layoutY="23.0" prefHeight="73.0" prefWidth="393.0">
-              <columnConstraints>
-                <ColumnConstraints hgrow="SOMETIMES" maxWidth="176.0" minWidth="10.0" prefWidth="149.0" />
-                <ColumnConstraints hgrow="SOMETIMES" maxWidth="238.0" minWidth="10.0" prefWidth="222.0" />
-              </columnConstraints>
-              <rowConstraints>
-                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                  <RowConstraints maxHeight="24.0" minHeight="3.0" prefHeight="3.0" vgrow="SOMETIMES" />
-                <RowConstraints maxHeight="36.0" minHeight="6.0" prefHeight="36.0" vgrow="SOMETIMES" />
-              </rowConstraints>
-               <children>
-                  <Label alignment="CENTER_RIGHT" prefHeight="72.0" prefWidth="166.0" text="Selecione a partida:  " textAlignment="RIGHT" GridPane.rowIndex="2">
-                     <font>
-                        <Font name="System Bold" size="15.0" />
-                     </font></Label>
-                  <ComboBox fx:id="seletorPartida" prefHeight="26.0" prefWidth="246.0" promptText="Selecionar" GridPane.columnIndex="1" GridPane.rowIndex="2" />
-                  <Label alignment="TOP_RIGHT" prefHeight="21.0" prefWidth="178.0" text="Selecione a fase:  " textAlignment="RIGHT" GridPane.halignment="RIGHT">
-                     <font>
-                        <Font name="System Bold" size="15.0" />
-                     </font>
-                  </Label>
-                  <ComboBox fx:id="seletorFase" prefHeight="26.0" prefWidth="246.0" promptText="Selecionar" GridPane.columnIndex="1" />
-               </children>
-            </GridPane>
-            <GridPane alignment="CENTER" layoutX="244.0" layoutY="100.0" prefHeight="334.0" prefWidth="432.0">
-              <columnConstraints>
-                  <ColumnConstraints hgrow="SOMETIMES" maxWidth="195.0" minWidth="10.0" prefWidth="160.0" />
-                <ColumnConstraints hgrow="SOMETIMES" maxWidth="138.0" minWidth="10.0" prefWidth="111.0" />
-                <ColumnConstraints hgrow="SOMETIMES" maxWidth="110.0" minWidth="10.0" prefWidth="20.0" />
-                  <ColumnConstraints hgrow="SOMETIMES" maxWidth="130.0" minWidth="10.0" prefWidth="114.0" />
-              </columnConstraints>
-              <rowConstraints>
-                <RowConstraints maxHeight="70.0" minHeight="10.0" prefHeight="70.0" vgrow="SOMETIMES" />
-                <RowConstraints maxHeight="60.0" minHeight="10.0" prefHeight="53.0" valignment="CENTER" vgrow="SOMETIMES" />
-                <RowConstraints maxHeight="60.0" minHeight="0.0" prefHeight="53.0" vgrow="SOMETIMES" />
-                  <RowConstraints maxHeight="93.0" minHeight="10.0" prefHeight="53.0" vgrow="SOMETIMES" />
-                  <RowConstraints maxHeight="93.0" minHeight="10.0" prefHeight="53.0" vgrow="SOMETIMES" />
-                  <RowConstraints maxHeight="93.0" minHeight="10.0" prefHeight="53.0" vgrow="SOMETIMES" />
-                  <RowConstraints maxHeight="93.0" minHeight="10.0" prefHeight="53.0" vgrow="SOMETIMES" />
-                  <RowConstraints maxHeight="93.0" minHeight="10.0" prefHeight="53.0" vgrow="SOMETIMES" />
-                  <RowConstraints maxHeight="93.0" minHeight="10.0" prefHeight="53.0" vgrow="SOMETIMES" />
-              </rowConstraints>
-               <children>
-                  <Label fx:id="labelSelecao1" alignment="CENTER" prefHeight="63.0" prefWidth="135.0" text="&lt; Seleção 1 &gt;" textAlignment="CENTER" GridPane.columnIndex="1">
-                     <font>
-                        <Font size="16.0" />
-                     </font>
-                  </Label>
-                  <Label fx:id="labelSelecao2" alignment="CENTER" contentDisplay="CENTER" prefHeight="73.0" prefWidth="135.0" text="&lt; Seleção 2 &gt;" textAlignment="CENTER" GridPane.columnIndex="3">
-                     <font>
-                        <Font size="16.0" />
-                     </font>
-                  </Label>
-                  <Label alignment="CENTER" prefHeight="47.0" prefWidth="78.0" GridPane.columnIndex="2" GridPane.rowIndex="1">
-                     <font>
-                        <Font size="20.0" />
-                     </font>
-                  </Label>
-                  <Label alignment="CENTER_RIGHT" text="Gols:   " GridPane.halignment="RIGHT" GridPane.rowIndex="1">
-                     <font>
-                        <Font name="System Bold" size="15.0" />
-                     </font>
-                  </Label>
-                  <TextField fx:id="textoGols1" alignment="CENTER" maxWidth="70.0" prefWidth="70.0" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="1" />
-                  <TextField fx:id="textoGols2" alignment="CENTER" maxWidth="70.0" GridPane.columnIndex="3" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER" />
-                  <Label alignment="CENTER_RIGHT" text="Faltas:   " GridPane.halignment="RIGHT" GridPane.rowIndex="2">
-                     <font>
-                        <Font name="System Bold" size="15.0" />
-                     </font>
-                  </Label>
-                  <Label alignment="CENTER_RIGHT" text="Posse de bola:   " GridPane.halignment="RIGHT" GridPane.rowIndex="5">
-                     <font>
-                        <Font name="System Bold" size="15.0" />
-                     </font>
-                  </Label>
-                  <Label alignment="CENTER_RIGHT" text="Finalizações:   " GridPane.halignment="RIGHT" GridPane.rowIndex="6">
-                     <font>
-                        <Font name="System Bold" size="15.0" />
-                     </font>
-                  </Label>
-                  <Label alignment="CENTER_RIGHT" text="Escanteios:   " GridPane.halignment="RIGHT" GridPane.rowIndex="7">
-                     <font>
-                        <Font name="System Bold" size="15.0" />
-                     </font>
-                  </Label>
-                  <Label alignment="CENTER_RIGHT" text="Cartões vermelhos:   " GridPane.halignment="RIGHT" GridPane.rowIndex="3">
-                     <font>
-                        <Font name="System Bold" size="15.0" />
-                     </font>
-                  </Label>
-                  <Label alignment="CENTER_RIGHT" text="Cartões amarelos:   " GridPane.halignment="RIGHT" GridPane.rowIndex="4">
-                     <font>
-                        <Font name="System Bold" size="15.0" />
-                     </font>
-                  </Label>
-                  <Label alignment="CENTER_RIGHT" text="Impedimentos:   " GridPane.halignment="RIGHT" GridPane.rowIndex="8">
-                     <font>
-                        <Font name="System Bold" size="15.0" />
-                     </font>
-                  </Label>
-                  <TextField fx:id="textoFaltas1" alignment="CENTER" maxWidth="70.0" prefWidth="70.0" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="2" GridPane.valignment="CENTER" />
-                  <TextField fx:id="textoFaltas2" alignment="CENTER" maxWidth="70.0" prefWidth="70.0" GridPane.columnIndex="3" GridPane.halignment="CENTER" GridPane.rowIndex="2" GridPane.valignment="CENTER" />
-                  <TextField fx:id="textoVermelhos1" alignment="CENTER" maxWidth="70.0" prefWidth="70.0" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="3" GridPane.valignment="CENTER" />
-                  <TextField fx:id="textoVermelhos2" alignment="CENTER" maxWidth="70.0" prefWidth="70.0" GridPane.columnIndex="3" GridPane.halignment="CENTER" GridPane.rowIndex="3" GridPane.valignment="CENTER" />
-                  <TextField fx:id="textoAmarelos1" alignment="CENTER" maxWidth="70.0" prefWidth="70.0" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="4" GridPane.valignment="CENTER" />
-                  <TextField fx:id="textoAmarelos2" alignment="CENTER" maxWidth="70.0" prefWidth="70.0" GridPane.columnIndex="3" GridPane.halignment="CENTER" GridPane.rowIndex="4" GridPane.valignment="CENTER" />
-                  <TextField fx:id="textoPosse1" alignment="CENTER" maxWidth="70.0" prefWidth="70.0" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="5" GridPane.valignment="CENTER" />
-                  <TextField fx:id="textoPosse2" alignment="CENTER" maxWidth="70.0" prefWidth="70.0" GridPane.columnIndex="3" GridPane.halignment="CENTER" GridPane.rowIndex="5" GridPane.valignment="CENTER" />
-                  <TextField fx:id="textoFinalizacoes1" alignment="CENTER" maxWidth="70.0" prefWidth="70.0" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="6" GridPane.valignment="CENTER" />
-                  <TextField fx:id="textoFinalizacoes2" alignment="CENTER" maxWidth="70.0" prefWidth="70.0" GridPane.columnIndex="3" GridPane.halignment="CENTER" GridPane.rowIndex="6" GridPane.valignment="CENTER" />
-                  <TextField fx:id="textoEscanteios1" alignment="CENTER" maxWidth="70.0" prefWidth="70.0" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="7" GridPane.valignment="CENTER" />
-                  <TextField fx:id="textoEscanteios2" alignment="CENTER" maxWidth="70.0" prefWidth="70.0" GridPane.columnIndex="3" GridPane.halignment="CENTER" GridPane.rowIndex="7" GridPane.valignment="CENTER" />
-                  <TextField fx:id="textoImpedimentos1" alignment="CENTER" maxWidth="70.0" prefWidth="70.0" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="8" GridPane.valignment="CENTER" />
-                  <TextField fx:id="textoImpedimentos2" alignment="CENTER" maxWidth="70.0" prefWidth="70.0" GridPane.columnIndex="3" GridPane.halignment="CENTER" GridPane.rowIndex="8" GridPane.valignment="CENTER" />
-               </children>
-            </GridPane>
-            <HBox alignment="CENTER" layoutX="226.0" layoutY="451.0" prefHeight="50.0" prefWidth="475.0">
-               <children>
-                  <Button fx:id="btnSalvarResultado" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#salvarResultado" prefHeight="31.0" prefWidth="93.0" style="-fx-background-color: #2E7D32;" text="Salvar" textFill="WHITE">
-                     <font>
-                        <Font name="System Bold" size="15.0" />
-                     </font></Button>
-               </children>
-            </HBox>
-            <Pane layoutY="-4.0" prefHeight="520.0" prefWidth="226.0" style="-fx-background-color: #2E7D32;">
-               <children>
-                  <VBox alignment="TOP_CENTER" prefHeight="500.0" prefWidth="226.0">
-                     <children>
-                        <Separator opacity="0.0" prefHeight="50.0" prefWidth="200.0" />
-                        <Button fx:id="btnTelaPrincipal" mnemonicParsing="false" onAction="#irTelaPrincipal" prefHeight="55.0" prefWidth="206.0" style="-fx-background-color: #2E7D32;" text="Tela Principal" textFill="WHITE">
-                           <font>
-                              <Font name="System Bold" size="15.0" />
-                           </font>
-                        </Button>
-                        <Separator opacity="0.0" prefHeight="28.0" prefWidth="200.0" />
-                        <Button fx:id="btnTelaConsultaPartidas" mnemonicParsing="false" onAction="#irTelaConsultaPartidas" prefHeight="55.0" prefWidth="206.0" style="-fx-background-color: #2E7D32;" text="Consulta de Partidas" textFill="WHITE">
-                           <font>
-                              <Font name="System Bold" size="15.0" />
-                           </font>
-                        </Button>
-                        <Separator opacity="0.0" prefHeight="28.0" prefWidth="200.0" />
-                        <Button mnemonicParsing="false" prefHeight="55.0" prefWidth="206.0" style="-fx-background-color: rgba(255, 255, 255, 0.10);" text="Registro de Resultados" textFill="WHITE">
-                           <font>
-                              <Font name="System Bold" size="15.0" />
-                           </font>
-                        </Button>
-                        <Separator opacity="0.0" prefHeight="28.0" prefWidth="200.0" />
-                        <Button fx:id="btnTelaCadastroPartidas" mnemonicParsing="false" onAction="#irTelaCadastroPartidas" prefHeight="55.0" prefWidth="206.0" style="-fx-background-color: #2E7D32;" text="Cadastro de Partidas" textFill="WHITE">
-                           <font>
-                              <Font name="System Bold" size="15.0" />
-                           </font>
-                        </Button>
-                     </children>
-                  </VBox>
-               </children></Pane>
-         </children>
-      </Pane>
-   </bottom>
-   <top>
-      <Pane prefHeight="84.0" prefWidth="424.0" style="-fx-background-color: #2E7D32;" BorderPane.alignment="CENTER">
-         <children>
-            <Label alignment="CENTER" layoutX="194.0" layoutY="21.0" prefHeight="42.0" prefWidth="313.0" text="Registro de Resultados" textAlignment="CENTER" textFill="WHITE">
-               <font>
-                  <Font name="System Bold" size="25.0" />
-               </font>
-            </Label>
-         </children>
-         <effect>
-            <DropShadow />
-         </effect>
-      </Pane>
-   </top>
-</BorderPane>
+<VBox spacing="16" style="-fx-padding: 16 24 16 24;" xmlns="http://javafx.com/javafx/26" xmlns:fx="http://javafx.com/fxml/1" fx:controller="copamundo.partidas.visao.TelaRegistroResultadosController">
+
+
+    <GridPane hgap="8" vgap="12">
+        <columnConstraints>
+            <ColumnConstraints halignment="RIGHT" hgrow="NEVER" minWidth="140" prefWidth="160" />
+            <ColumnConstraints hgrow="ALWAYS" prefWidth="250" />
+        </columnConstraints>
+        <rowConstraints>
+            <RowConstraints minHeight="36" vgrow="NEVER" />
+            <RowConstraints minHeight="36" vgrow="NEVER" />
+        </rowConstraints>
+
+        <Label style="-fx-font-weight: bold; -fx-font-size: 15;" text="Selecione a fase:" GridPane.halignment="RIGHT" GridPane.valignment="CENTER" />
+        <ComboBox fx:id="seletorFase" maxWidth="1.7976931348623157E308" promptText="Selecionar" GridPane.columnIndex="1" GridPane.valignment="CENTER" />
+
+        <Label style="-fx-font-weight: bold; -fx-font-size: 15;" text="Selecione a partida:" GridPane.halignment="RIGHT" GridPane.rowIndex="1" GridPane.valignment="CENTER" />
+        <ComboBox fx:id="seletorPartida" maxWidth="1.7976931348623157E308" promptText="Selecionar" GridPane.columnIndex="1" GridPane.rowIndex="1" GridPane.valignment="CENTER" />
+    </GridPane>
+
+
+    <GridPane alignment="CENTER_LEFT" hgap="12" vgap="10" VBox.vgrow="ALWAYS">
+        <columnConstraints>
+            <ColumnConstraints halignment="LEFT" hgrow="NEVER" prefWidth="160" />
+            <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" prefWidth="100" />
+            <ColumnConstraints halignment="CENTER" hgrow="NEVER" prefWidth="30" />
+            <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" prefWidth="100" />
+        </columnConstraints>
+        <rowConstraints>
+            <RowConstraints minHeight="40" vgrow="NEVER" />
+            <RowConstraints minHeight="36" vgrow="NEVER" />
+            <RowConstraints minHeight="36" vgrow="NEVER" />
+            <RowConstraints minHeight="36" vgrow="NEVER" />
+            <RowConstraints minHeight="36" vgrow="NEVER" />
+            <RowConstraints minHeight="36" vgrow="NEVER" />
+            <RowConstraints minHeight="36" vgrow="NEVER" />
+            <RowConstraints minHeight="36" vgrow="NEVER" />
+            <RowConstraints minHeight="36" vgrow="NEVER" />
+        </rowConstraints>
+
+
+        <Label fx:id="labelSelecao1" style="-fx-font-size: 16;" text="&lt; Seleção 1 &gt;" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.valignment="CENTER" />
+        <Label style="-fx-font-size: 20;" text="x" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.valignment="CENTER" />
+        <Label fx:id="labelSelecao2" style="-fx-font-size: 16;" text="&lt; Seleção 2 &gt;" GridPane.columnIndex="3" GridPane.halignment="CENTER" GridPane.valignment="CENTER" />
+
+
+        <Label style="-fx-font-weight: bold; -fx-font-size: 15;" text="Gols:" GridPane.halignment="RIGHT" GridPane.rowIndex="1" GridPane.valignment="CENTER" />
+        <TextField fx:id="textoGols1" alignment="CENTER" maxWidth="80" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER" />
+        <TextField fx:id="textoGols2" alignment="CENTER" maxWidth="80" GridPane.columnIndex="3" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER" />
+
+
+        <Label style="-fx-font-weight: bold; -fx-font-size: 15;" text="Faltas:" GridPane.halignment="RIGHT" GridPane.rowIndex="2" GridPane.valignment="CENTER" />
+        <TextField fx:id="textoFaltas1" alignment="CENTER" maxWidth="80" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="2" GridPane.valignment="CENTER" />
+        <TextField fx:id="textoFaltas2" alignment="CENTER" maxWidth="80" GridPane.columnIndex="3" GridPane.halignment="CENTER" GridPane.rowIndex="2" GridPane.valignment="CENTER" />
+
+
+        <Label style="-fx-font-weight: bold; -fx-font-size: 15;" text="Cartões vermelhos:" GridPane.halignment="RIGHT" GridPane.rowIndex="3" GridPane.valignment="CENTER" />
+        <TextField fx:id="textoVermelhos1" alignment="CENTER" maxWidth="80" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="3" GridPane.valignment="CENTER" />
+        <TextField fx:id="textoVermelhos2" alignment="CENTER" maxWidth="80" GridPane.columnIndex="3" GridPane.halignment="CENTER" GridPane.rowIndex="3" GridPane.valignment="CENTER" />
+
+
+        <Label style="-fx-font-weight: bold; -fx-font-size: 15;" text="Cartões amarelos:" GridPane.halignment="RIGHT" GridPane.rowIndex="4" GridPane.valignment="CENTER" />
+        <TextField fx:id="textoAmarelos1" alignment="CENTER" maxWidth="80" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="4" GridPane.valignment="CENTER" />
+        <TextField fx:id="textoAmarelos2" alignment="CENTER" maxWidth="80" GridPane.columnIndex="3" GridPane.halignment="CENTER" GridPane.rowIndex="4" GridPane.valignment="CENTER" />
+
+
+        <Label style="-fx-font-weight: bold; -fx-font-size: 15;" text="Posse de bola:" GridPane.halignment="RIGHT" GridPane.rowIndex="5" GridPane.valignment="CENTER" />
+        <TextField fx:id="textoPosse1" alignment="CENTER" maxWidth="80" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="5" GridPane.valignment="CENTER" />
+        <TextField fx:id="textoPosse2" alignment="CENTER" maxWidth="80" GridPane.columnIndex="3" GridPane.halignment="CENTER" GridPane.rowIndex="5" GridPane.valignment="CENTER" />
+
+
+        <Label style="-fx-font-weight: bold; -fx-font-size: 15;" text="Finalizações:" GridPane.halignment="RIGHT" GridPane.rowIndex="6" GridPane.valignment="CENTER" />
+        <TextField fx:id="textoFinalizacoes1" alignment="CENTER" maxWidth="80" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="6" GridPane.valignment="CENTER" />
+        <TextField fx:id="textoFinalizacoes2" alignment="CENTER" maxWidth="80" GridPane.columnIndex="3" GridPane.halignment="CENTER" GridPane.rowIndex="6" GridPane.valignment="CENTER" />
+
+
+        <Label style="-fx-font-weight: bold; -fx-font-size: 15;" text="Escanteios:" GridPane.halignment="RIGHT" GridPane.rowIndex="7" GridPane.valignment="CENTER" />
+        <TextField fx:id="textoEscanteios1" alignment="CENTER" maxWidth="80" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="7" GridPane.valignment="CENTER" />
+        <TextField fx:id="textoEscanteios2" alignment="CENTER" maxWidth="80" GridPane.columnIndex="3" GridPane.halignment="CENTER" GridPane.rowIndex="7" GridPane.valignment="CENTER" />
+
+
+        <Label style="-fx-font-weight: bold; -fx-font-size: 15;" text="Impedimentos:" GridPane.halignment="RIGHT" GridPane.rowIndex="8" GridPane.valignment="CENTER" />
+        <TextField fx:id="textoImpedimentos1" alignment="CENTER" maxWidth="80" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="8" GridPane.valignment="CENTER" />
+        <TextField fx:id="textoImpedimentos2" alignment="CENTER" maxWidth="80" GridPane.columnIndex="3" GridPane.halignment="CENTER" GridPane.rowIndex="8" GridPane.valignment="CENTER" />
+    </GridPane>
+
+    <VBox alignment="CENTER">
+        <Button fx:id="btnSalvarResultado" onAction="#salvarResultado" prefWidth="100" style="-fx-background-color: #2E7D32; -fx-font-weight: bold; -fx-font-size: 15;" text="Salvar" textFill="WHITE" />
+    </VBox>
+
+</VBox>

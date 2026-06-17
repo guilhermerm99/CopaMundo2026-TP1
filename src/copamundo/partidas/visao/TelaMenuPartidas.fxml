@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Tab?>
+<?import javafx.scene.control.TabPane?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<BorderPane
+        maxHeight="1.7976931348623157E308"
+        maxWidth="1.7976931348623157E308"
+        xmlns:fx="http://javafx.com/fxml/1"
+        xmlns="http://javafx.com/javafx/26"
+        fx:controller="copamundo.partidas.visao.TelaMenuPartidasController">
+
+    <top>
+        <VBox style="-fx-background-color: #1565C0; -fx-padding: 12 20 12 20;">
+            <Label text="⚽  Gestão de Partidas — Copa do Mundo 2026"
+                   style="-fx-text-fill: white; -fx-font-size: 16px; -fx-font-weight: bold;"/>
+        </VBox>
+    </top>
+
+    <center>
+        <TabPane
+                maxHeight="1.7976931348623157E308"
+                maxWidth="1.7976931348623157E308"
+                tabClosingPolicy="UNAVAILABLE">
+
+            <tabs>
+                <Tab fx:id="tabConsultaPartidas" text="Consulta de Partidas">
+                    <content>
+                        <StackPane>
+                            <Label text="Selecione uma aba">
+                                <font>
+                                    <Font size="18.0" />
+                                </font>
+                            </Label>
+                        </StackPane>
+                    </content>
+                </Tab>
+
+                <Tab fx:id="tabCadastroPartidas" text="Cadastro de Partidas">
+                    <content>
+                        <StackPane />
+                    </content>
+                </Tab>
+
+                <Tab fx:id="tabRegistroResultados" text="Registro de Resultados">
+                    <content>
+                        <StackPane />
+                    </content>
+                </Tab>
+            </tabs>
+        </TabPane>
+    </center>
+
+</BorderPane>
