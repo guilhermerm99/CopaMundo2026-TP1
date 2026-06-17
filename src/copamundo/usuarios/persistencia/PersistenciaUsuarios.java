@@ -42,6 +42,27 @@ public class PersistenciaUsuarios {
         salvarListaUsuarios(usuarios);
     }
 
+    public void atualizarUsuario(String emailOriginal, Usuario usuarioAtualizado) throws PersistenciaException {
+        List<Usuario> usuarios = carregarUsuarios();
+
+        boolean encontrou = false;
+
+        for (int i = 0; i < usuarios.size(); i++) {
+            if (usuarios.get(i).getEmailUsuario() != null &&
+                    usuarios.get(i).getEmailUsuario().equalsIgnoreCase(emailOriginal)) {
+                usuarios.set(i, usuarioAtualizado);
+                encontrou = true;
+                break;
+            }
+        }
+
+        if (!encontrou) {
+            throw new PersistenciaException("usuário não encontrado para atualização.", null);
+        }
+
+        salvarListaUsuarios(usuarios);
+    }
+
     public List<Usuario> carregarUsuarios() throws PersistenciaException {
         criarPastaDados();
 

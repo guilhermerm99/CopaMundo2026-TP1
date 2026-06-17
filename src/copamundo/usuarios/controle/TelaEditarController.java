@@ -1,5 +1,6 @@
 package copamundo.usuarios.controle;
 
+import copamundo.principal.visao.TelaPrincipalController;
 import copamundo.usuarios.excecoes.PersistenciaException;
 import copamundo.usuarios.persistencia.PersistenciaUsuarios;
 import javafx.event.ActionEvent;
@@ -46,6 +47,7 @@ public class TelaEditarController {
     private Button btnSalvar;
 
     private Usuario usuarioSelecionado;
+    private String emailOriginal;
 
     @FXML
     public void initialize() {
@@ -68,6 +70,8 @@ public class TelaEditarController {
         this.usuarioSelecionado = usuario;
 
         if (usuario != null) {
+            this.emailOriginal = usuario.getEmailUsuario();
+
             campoNome.setText(usuario.getNomeUsuario());
             campoCpf.setText(usuario.getCpf());
             campoEmail.setText(usuario.getEmailUsuario());
@@ -82,16 +86,9 @@ public class TelaEditarController {
     }
 
     @FXML
-    private void cancelar(ActionEvent event) throws IOException {
-        FXMLLoader loader = new FXMLLoader(
-                getClass().getResource("/copamundo/principal/visao/TelaPrincipal.fxml")
-        );
-
-        Parent root = loader.load();
-
+    private void cancelar(ActionEvent event) {
         Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-        stage.setScene(new Scene(root));
-        stage.show();
+        stage.close();
     }
 
     @FXML
@@ -129,7 +126,7 @@ public class TelaEditarController {
 
         try {
             PersistenciaUsuarios persistencia = new PersistenciaUsuarios();
-            persistencia.salvarUsuario(usuarioSelecionado);
+            persistencia.atualizarUsuario(emailOriginal, usuarioSelecionado);
         } catch (PersistenciaException e) {
             System.out.println("erro ao salvar usuários no arquivo.: " + e.getMessage());
         }

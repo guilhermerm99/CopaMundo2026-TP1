@@ -159,19 +159,6 @@ public class TelaUsuariosController implements Serializable {
         stage.show();
     }
 
-    @FXML
-    private void telaRelatorios(ActionEvent event) throws IOException {
-        FXMLLoader loader = new FXMLLoader(
-                getClass().getResource("/copamundo/usuarios/visao/TelaRelatorios.fxml")
-        );
-
-        Parent root = loader.load();
-
-        Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-        stage.setScene(new Scene(root));
-        stage.show();
-    }
-
     private void carregarTabela(List<Usuario> lista) {
         ObservableList<Usuario> dadosJavaFX = FXCollections.observableArrayList(lista);
         tabelaUsuarios.setItems(dadosJavaFX);
