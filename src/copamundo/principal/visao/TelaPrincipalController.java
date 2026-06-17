@@ -81,8 +81,17 @@ public class TelaPrincipalController {
                 try {
                     Parent login = FXMLLoader.load(getClass().getResource("/copamundo/usuarios/visao/TelaLogin.fxml"));
                     Stage stage = (Stage) areaCentral.getScene().getWindow();
-                    stage.setScene(new Scene(login));
+                    stage.setFullScreen(false);
+                    stage.setMaximized(false);
+                    stage.setResizable(false);
+
+                    Scene cenaLogin = new Scene(login, 820, 520);
+                    stage.setScene(cenaLogin);
                     stage.setTitle("Login");
+
+                    stage.setWidth(820);
+                    stage.setHeight(520);
+                    stage.centerOnScreen();
                     stage.show();
                 } catch (IOException e) {
                     mostrarErro("Erro", "Não foi possível voltar ao login: " + e.getMessage());

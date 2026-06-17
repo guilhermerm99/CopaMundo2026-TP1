@@ -9,6 +9,7 @@ import java.util.Map;
 import java.io.File;
 import copamundo.comum.Partida;
 import copamundo.comum.Resultado;
+import javafx.scene.control.Alert;
 
 import com.itextpdf.kernel.colors.ColorConstants;
 import com.itextpdf.kernel.colors.DeviceRgb;

@@ -13,9 +13,15 @@ public class Main extends Application {
                 getClass().getResource("/copamundo/usuarios/visao/TelaLogin.fxml")
         );
 
-        Scene scene = new Scene(fxmlLoader.load());
+        Scene scene = new Scene(fxmlLoader.load(), 820, 520);
+
         stage.setTitle("Login");
         stage.setScene(scene);
+
+        stage.setResizable(false);
+        stage.setMaximized(false);
+        stage.setFullScreen(false);
+
         stage.show();
     }
 

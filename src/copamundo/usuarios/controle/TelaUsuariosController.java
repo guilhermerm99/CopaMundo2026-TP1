@@ -8,9 +8,8 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.ComboBox;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
+import javafx.scene.control.*;
+import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.collections.FXCollections;
@@ -22,7 +21,7 @@ import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 import java.io.Serializable;
-import javafx.scene.control.Button;
+
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 
@@ -89,7 +88,7 @@ public class TelaUsuariosController implements Serializable {
         colunaPais.setCellValueFactory(new PropertyValueFactory<>("pais"));
         colunaStatus.setCellValueFactory(new PropertyValueFactory<>("status"));
 
-        // Adicionado: Alimenta os ComboBoxes da tela com as opções do Enum
+        // adicionado: alimenta os comboBoxes da tela com as opções do enum
 
         if (campoFuncao != null) {
             campoFuncao.setItems(FXCollections.observableArrayList(Usuario.Funcao.values()));
@@ -110,35 +109,35 @@ public class TelaUsuariosController implements Serializable {
         String nomeDigitado = campoNomeUsuario.getText();
         String cpfDigitado = campoCpfUsuario.getText();
 
-        // Proteção contra NullPointerException caso os campos não estejam linkados no FXML
+        // proteção contra NullPointerException caso os campos não estejam linkados no FXML
         Usuario.Funcao funcaoSelecionada = (campoFuncao != null) ? campoFuncao.getValue() : null;
         Usuario.Pais paisSelecionado = (campoPais != null) ? campoPais.getValue() : null;
         Usuario.Status statusSelecionado = (campoStatus != null) ? campoStatus.getValue() : null;
 
-        // Filtra por nome apenas se o usuário digitou algo
+        // filtra por nome apenas se o usuário digitou algo
         if (nomeDigitado != null && !nomeDigitado.trim().isEmpty()) {
             usuariosFiltrados.removeIf(u -> u.getNomeUsuario() == null ||
                     !u.getNomeUsuario().toLowerCase().contains(nomeDigitado.toLowerCase()));
         }
 
-        // Filtra por CPF apenas se o usuário digitou algo
+        // filtra por CPF apenas se o usuário digitou algo
         if (cpfDigitado != null && !cpfDigitado.trim().isEmpty()) {
             String cpfLimpo = cpfDigitado.replace(".", "").replace("-", "").trim();
             usuariosFiltrados.removeIf(u -> u.getCpf() == null ||
                     !u.getCpf().replace(".", "").replace("-", "").equals(cpfLimpo));
         }
 
-        // Filtra por Função apenas se selecionado
+        // filtra por Função apenas se selecionado
         if (funcaoSelecionada != null && funcaoSelecionada !=  Usuario.Funcao.TODOS) {
             usuariosFiltrados.removeIf(u -> u.getFuncao() != funcaoSelecionada);
         }
 
-        // Filtra por País apenas se selecionado
+        // filtra por País apenas se selecionado
         if (paisSelecionado != null && paisSelecionado !=  Usuario.Pais.TODOS) {
             usuariosFiltrados.removeIf(u -> u.getPais() != paisSelecionado);
         }
 
-        // Filtra por Status apenas se selecionado
+        // filtra por Status apenas se selecionado
         if (statusSelecionado != null && statusSelecionado !=  Usuario.Status.TODOS) {
             usuariosFiltrados.removeIf(u -> u.getStatus() != statusSelecionado);
         }
@@ -164,12 +163,17 @@ public class TelaUsuariosController implements Serializable {
         tabelaUsuarios.setItems(dadosJavaFX);
     }
 
-    // AÇÃO DO BOTÃO EDITAR (Conecta o usuário selecionado à TelaEditarController)
+    // AÇÃO DO BOTÃO EDITAR (conecta o usuário selecionado à TelaEditarController)
     @FXML
     private void telaEditar(ActionEvent event) throws IOException {
         Usuario selecionado = tabelaUsuarios.getSelectionModel().getSelectedItem();
 
         if (selecionado == null) {
+            Mensagens.mostrarMensagem(
+                    Alert.AlertType.INFORMATION,
+                    "Nenhum usuário foi selecionado na tabela para editar.",
+                    "Nenhum usuário foi selecionado na tabela para editar."
+            );
             System.out.println("Nenhum usuário foi selecionado na tabela para editar.");
             return;
         }
@@ -181,21 +185,21 @@ public class TelaUsuariosController implements Serializable {
         );
         Parent root = loader.load();
 
-        // Obtém a instância do controller da tela de edição e envia o usuário selecionado
+        // obtém a instância do controller da tela de edição e envia o usuário selecionado
         TelaEditarController controllerEdicao = loader.getController();
         controllerEdicao.setUsuario(selecionado);
 
-        // Abre como uma janela modal separada para manter a consistência com o fechar da edição
+        // abre como uma janela modal separada para manter a consistência com o fechar da edição
         Stage stageEdicao = new Stage();
         stageEdicao.setScene(new Scene(root));
         stageEdicao.setTitle("Editar Usuário");
         stageEdicao.initModality(Modality.WINDOW_MODAL);
         stageEdicao.initOwner(((Node) event.getSource()).getScene().getWindow());
 
-        // Pausa a execução desta tela até que a tela de edição seja fechada
+        // pausa a execução desta tela até que a tela de edição seja fechada
         stageEdicao.showAndWait();
 
-        // Recarrega a tabela com as alterações que foram salvas no arquivo pela outra tela
+        // recarrega a tabela com as alterações que foram salvas no arquivo pela outra tela
         try {
             PersistenciaUsuarios persistencia = new PersistenciaUsuarios();
             Usuario.usuarios = persistencia.carregarUsuarios();
@@ -205,12 +209,17 @@ public class TelaUsuariosController implements Serializable {
         }
     }
 
-    // AÇÃO DO BOTÃO EXCLUIR (Conecta o usuário selecionado à exclusão de persistência)
+    // AÇÃO DO BOTÃO EXCLUIR (conecta o usuário selecionado à exclusão de persistência)
     @FXML
     private void telaExcluir(ActionEvent event) {
         Usuario selecionado = tabelaUsuarios.getSelectionModel().getSelectedItem();
 
         if (selecionado == null) {
+            Mensagens.mostrarMensagem(
+                    Alert.AlertType.WARNING,
+                    "Nenhum usuário selecionado",
+                    "Nenhum usuário foi selecionado na tabela para excluir."
+            );
             System.out.println("Nenhum usuário foi selecionado na tabela para excluir.");
             return;
         }
@@ -219,14 +228,14 @@ public class TelaUsuariosController implements Serializable {
 
         if (confirmarExclusaoUsuario()) {
             try {
-                // Remove da persistência (arquivo físico) utilizando o e-mail do objeto selecionado
+                // remove da persistência (arquivo físico) utilizando o e-mail do objeto selecionado
                 PersistenciaUsuarios persistencia = new PersistenciaUsuarios();
                 persistencia.excluirUsuario(selecionado.getEmailUsuario());
 
-                // Remove da lista estática local na memória RAM
+                // remove da lista estática local na memória RAM
                 Usuario.usuarios.remove(selecionado);
 
-                // Atualiza a visualização da tabela
+                // atualiza a visualização da tabela
                 carregarTabela(Usuario.usuarios);
                 this.usuarioSelecionado = null;
                 System.out.println("Usuário excluído com sucesso.");
@@ -350,6 +359,11 @@ public class TelaUsuariosController implements Serializable {
         if (this.usuarioSelecionado != null) {
             System.out.println("Redirecionando para a tela de edição do usuário: " + usuarioSelecionado.getNomeUsuario());
         } else {
+            Mensagens.mostrarMensagem(
+                    Alert.AlertType.WARNING,
+                    "Nenhum usuário selecionado",
+                    "Nenhum usuário foi selecionado na tabela para editar."
+            );
             System.out.println("Nenhum usuário foi selecionado na tabela para editar.");
         }
     }
@@ -362,9 +376,18 @@ public class TelaUsuariosController implements Serializable {
 
     public boolean confirmarExclusaoUsuario() {
         if (this.usuarioSelecionado == null) {
+            Mensagens.mostrarMensagem(
+                    Alert.AlertType.WARNING,
+                    "Nenhum usuário selecionado",
+                    "Selecione um usuário antes de excluir."
+            );
             return false;
         }
-        return this.usuarioSelecionado.verificarSePodeExcluirUsuario();
+
+        return Mensagens.confirmar(
+                "Confirmar exclusão",
+                "Deseja realmente excluir este usuário?"
+        );
     }
 
     public boolean excluirUsuario() {

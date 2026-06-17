@@ -2,6 +2,7 @@ package copamundo.usuarios.controle;
 
 import copamundo.usuarios.excecoes.PersistenciaException;
 import copamundo.usuarios.persistencia.PersistenciaUsuarios;
+import javafx.scene.control.Alert;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -380,7 +381,7 @@ public class Usuario implements Serializable {
             return true;
         }
 
-        return true;
+        return false;
     }
 
     public boolean validarEmailUnico(String email) {
@@ -738,11 +739,21 @@ public class Usuario implements Serializable {
 
     private boolean validarSenhaTexto(String senha) {
         if (senha == null) {
+            Mensagens.mostrarMensagem(
+                    Alert.AlertType.ERROR,
+                    "Senha",
+                    "Digite uma senha!"
+            );
             System.out.println("Digite uma senha!");
             return false;
         }
 
         if (senha.length() < 8 || senha.length() > 20) {
+            Mensagens.mostrarMensagem(
+                    Alert.AlertType.ERROR,
+                    "Senha",
+                    "Tamanho inválido de senha! Entre 8 a 20 caracteres!"
+            );
             System.out.println("Tamanho inválido de senha!");
             return false;
         }
@@ -759,9 +770,19 @@ public class Usuario implements Serializable {
         }
 
         if (!temNumero) {
+            Mensagens.mostrarMensagem(
+                    Alert.AlertType.ERROR,
+                    "Senha",
+                    "A senha deve ter no mínimo um número!"
+            );
             System.out.println("A senha deve ter no mínimo um número!");
             return false;
         } else if (!temLetras) {
+            Mensagens.mostrarMensagem(
+                    Alert.AlertType.ERROR,
+                    "Senha",
+                    "A senha deve ter no mínimo uma letra!"
+            );
             System.out.println("A senha deve ter no mínimo uma letra!");
             return false;
         }

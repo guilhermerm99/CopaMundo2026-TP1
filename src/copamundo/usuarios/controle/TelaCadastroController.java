@@ -8,6 +8,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
@@ -87,6 +88,11 @@ public class TelaCadastroController {
             }
 
         } else {
+            Mensagens.mostrarMensagem(
+                    Alert.AlertType.ERROR,
+                    "Falha na validação dos dados. Verifique os campos.",
+                    "Falha na validação dos dados. Verifique os campos."
+            );
             System.out.println("Falha na validação dos dados. Verifique os campos.");
         }
     }

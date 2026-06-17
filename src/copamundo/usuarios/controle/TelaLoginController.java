@@ -11,6 +11,7 @@ import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 import javafx.event.ActionEvent;
+import javafx.scene.control.Alert;
 
 import java.io.IOException;
 
@@ -82,6 +83,11 @@ public class TelaLoginController {
                 return usuarioEncontrado.get();
             }
         } catch (PersistenciaException e) {
+            Mensagens.mostrarMensagem(
+                    Alert.AlertType.ERROR,
+                    "Login inválido",
+                    "E-mail ou senha incorretos."
+            );
             System.out.println("erro ao fazer login: " + e.getMessage());
         }
 
@@ -123,6 +129,11 @@ public class TelaLoginController {
 
     public boolean autenticarUsuario(String email, String senha) {
         if (email == null || senha == null || email.trim().isEmpty() || senha.trim().isEmpty()) {
+            Mensagens.mostrarMensagem(
+                    Alert.AlertType.ERROR,
+                    "Preencha e-mail e senha.",
+                    "Preencha e-mail e senha."
+            );
             System.out.println("Preencha e-mail e senha.");
             return false;
         }
@@ -130,17 +141,32 @@ public class TelaLoginController {
         Usuario usuario = buscarUsuarioLogin(email);
 
         if (usuario == null) {
+            Mensagens.mostrarMensagem(
+                    Alert.AlertType.ERROR,
+                    "E-mail inválido!",
+                    "E-mail inválido!"
+            );
             System.out.println("E-mail inválido!");
             registrarTentativaLogin(email);
             return false;
         }
 
         if (!verificarStatusUsuario(usuario)) {
-            System.out.println("Usuário inativo ou bloqueado.");
+            Mensagens.mostrarMensagem(
+                    Alert.AlertType.ERROR,
+                    "Usuário inativo.",
+                    "Usuário inativo."
+            );
+            System.out.println("Usuário inativo.");
             return false;
         }
 
         if (!usuario.validarSenha(senha)) {
+            Mensagens.mostrarMensagem(
+                    Alert.AlertType.ERROR,
+                    "Senha inválida!",
+                    "Senha inválida!"
+            );
             System.out.println("Senha inválida!");
             registrarTentativaLogin(email);
             bloquearUsuarioPorTentativas(usuario, email);
@@ -154,6 +180,11 @@ public class TelaLoginController {
         zerarTentativasLogin(email);
         registrarUltimoLogin();
 
+        Mensagens.mostrarMensagem(
+                Alert.AlertType.INFORMATION,
+                "Login realizado com sucesso.",
+                "Login realizado com sucesso."
+        );
         System.out.println("Login realizado com sucesso.");
         abrirTelaPrincipalPorPerfil(usuario);
 
@@ -293,6 +324,7 @@ public class TelaLoginController {
             Parent root = loader.load();
 
             Stage stage = (Stage) campoEmail.getScene().getWindow();
+            stage.setResizable(true);
             stage.setScene(new Scene(root));
             stage.show();
 
