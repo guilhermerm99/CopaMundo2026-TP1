@@ -186,47 +186,5 @@ public class TelaCadastroPartidasController {
         }
     }
 
-/*
-    void carregarTela(javafx.event.ActionEvent event, String caminhoFXML, String titulo) {
-        try {
-            FXMLLoader loader = new FXMLLoader(
-                    getClass().getResource(caminhoFXML));
-
-            Parent root = loader.load();
-
-            Stage stage = (Stage) ((Node) event.getSource())
-                    .getScene()
-                    .getWindow();
-
-            Scene scene = new Scene(root);
-
-            stage.setTitle(titulo);
-            stage.setScene(scene);
-            stage.show();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
-
-    @FXML
-    void irTelaConsultaPartidas(javafx.event.ActionEvent event) {
-        carregarTela(event, "TelaConsultaPartidas.fxml", "Consulta de Partidas");
-
-    }
-
-    @FXML
-    void irTelaRegistroResultado(javafx.event.ActionEvent event) throws IOException {
-        carregarTela(event, "TelaRegistroResultados.fxml", "Registro de Resultados");
-
-    }
-
-    @FXML
-    void irTelaPrincipal(javafx.event.ActionEvent event) {
-        carregarTela(event, "/copamundo/principal/visao/TelaPrincipal.fxml", "Sistema de Gestão - Copa do Mundo 2026");
-
-    }
-
- */
-
 
 }
