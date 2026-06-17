@@ -14,40 +14,50 @@
 <?import javafx.scene.text.Font?>
 <?import org.kordamp.ikonli.javafx.FontIcon?>
 
-<AnchorPane prefHeight="400.0" prefWidth="653.0" xmlns="http://javafx.com/javafx/26" xmlns:fx="http://javafx.com/fxml/1" fx:controller="copamundo.usuarios.controle.TelaRelatoriosController">
+<AnchorPane xmlns="http://javafx.com/javafx/26" xmlns:fx="http://javafx.com/fxml/1" fx:controller="copamundo.usuarios.controle.TelaRelatoriosController">
+
     <children>
-        <BorderPane prefHeight="400.0" prefWidth="653.0" style="-fx-background-color: #DCDCDC;">
+        <BorderPane style="-fx-background-color: #DCDCDC;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+
             <center>
-                <ScrollPane fitToWidth="true" prefHeight="364.0" prefWidth="526.0" style="-fx-background-color: transparent; -fx-background: transparent;" BorderPane.alignment="CENTER">
+                <ScrollPane fitToHeight="true" fitToWidth="true" style="-fx-background-color: transparent; -fx-background: transparent;" BorderPane.alignment="CENTER">
+
                     <content>
-                        <VBox prefWidth="505.0" spacing="8.0" style="-fx-background-color: #DCDCDC;">
+                        <VBox maxWidth="Infinity" spacing="10.0" style="-fx-background-color: #DCDCDC;">
+
                             <padding>
-                                <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                                <Insets bottom="12.0" left="12.0" right="12.0" top="12.0" />
                             </padding>
-      
+
                             <children>
-      
-                                <VBox spacing="6.0" style="-fx-background-color: white; -fx-background-radius: 12; -fx-padding: 10; -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.16), 10, 0, 0, 3);">
+
+                                <VBox maxWidth="Infinity" spacing="8.0" style="-fx-background-color: white; -fx-background-radius: 12; -fx-padding: 12; -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.16), 10, 0, 0, 3);">
+
                                     <children>
                                         <Label text="Painel de relatórios" textFill="#2E7D32">
                                             <font>
-                                                <Font name="System Bold" size="14.0" />
+                                                <Font name="System Bold" size="16.0" />
                                             </font>
                                         </Label>
-      
-                                        <HBox alignment="CENTER_LEFT" spacing="6.0">
+
+                                        <HBox alignment="CENTER_LEFT" spacing="8.0">
                                             <children>
-                                                <ComboBox fx:id="comboTipoRelatorio" prefWidth="115.0" promptText="Tipo" />
-                                                <ComboBox fx:id="comboSelecao" prefWidth="115.0" promptText="Seleção" />
-                                                <DatePicker fx:id="dateInicio" prefWidth="105.0" promptText="Início" />
-                                                <DatePicker fx:id="dateFim" prefWidth="105.0" promptText="Fim" />
+                                                <ComboBox fx:id="comboTipoRelatorio" maxWidth="Infinity" promptText="Tipo" HBox.hgrow="ALWAYS" />
+
+                                                <ComboBox fx:id="comboSelecao" maxWidth="Infinity" promptText="Seleção" HBox.hgrow="ALWAYS" />
+
+                                                <DatePicker fx:id="dateInicio" maxWidth="Infinity" promptText="Início" HBox.hgrow="ALWAYS" />
+
+                                                <DatePicker fx:id="dateFim" maxWidth="Infinity" promptText="Fim" HBox.hgrow="ALWAYS" />
                                             </children>
                                         </HBox>
-      
+
                                         <HBox alignment="CENTER_RIGHT" spacing="8.0">
                                             <children>
                                                 <Button mnemonicParsing="false" onAction="#handleGerarRelatorio" style="-fx-background-color: #FFFFFF; -fx-border-color: #CFCFCF;" text="Visualizar" />
-                                                <Button mnemonicParsing="false" onAction="#handleGerarPDF" style="-fx-background-color: #008000; -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.2), 10, 0, 0, 3);" text="Gerar PDF" textFill="WHITE">
+
+                                                <Button mnemonicParsing="false" onAction="#handleGerarPDF" style="-fx-background-color: #2E7D32; -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.2), 10, 0, 0, 3);" text="Gerar PDF" textFill="WHITE">
+
                                                     <graphic>
                                                         <FontIcon iconColor="WHITE" iconLiteral="fas-file-pdf" />
                                                     </graphic>
@@ -56,90 +66,96 @@
                                         </HBox>
                                     </children>
                                 </VBox>
-      
-                                <HBox spacing="7.0">
+
+                                <HBox spacing="10.0">
                                     <children>
-                                        <VBox prefWidth="153.0" spacing="2.0" style="-fx-background-color: white; -fx-background-radius: 10; -fx-padding: 9; -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.14), 8, 0, 0, 2);">
+                                        <VBox maxWidth="Infinity" spacing="3.0" style="-fx-background-color: white; -fx-background-radius: 10; -fx-padding: 10; -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.14), 8, 0, 0, 2);" HBox.hgrow="ALWAYS">
+
                                             <children>
                                                 <Label fx:id="lblTituloCard1" text="Partidas" textFill="#606060" />
                                                 <Label fx:id="lblNumeroPartidas" text="0" textFill="#2E7D32">
                                                     <font>
-                                                        <Font name="System Bold" size="22.0" />
+                                                        <Font name="System Bold" size="24.0" />
                                                     </font>
                                                 </Label>
                                             </children>
                                         </VBox>
-      
-                                        <VBox prefWidth="153.0" spacing="2.0" style="-fx-background-color: white; -fx-background-radius: 10; -fx-padding: 9; -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.14), 8, 0, 0, 2);">
+
+                                        <VBox maxWidth="Infinity" spacing="3.0" style="-fx-background-color: white; -fx-background-radius: 10; -fx-padding: 10; -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.14), 8, 0, 0, 2);" HBox.hgrow="ALWAYS">
+
                                             <children>
                                                 <Label fx:id="lblTituloCard2" text="Finalizadas" textFill="#606060" />
                                                 <Label fx:id="lblPartidasFinalizadas" text="0" textFill="#2E7D32">
                                                     <font>
-                                                        <Font name="System Bold" size="22.0" />
+                                                        <Font name="System Bold" size="24.0" />
                                                     </font>
                                                 </Label>
                                             </children>
                                         </VBox>
-      
-                                        <VBox prefWidth="153.0" spacing="2.0" style="-fx-background-color: white; -fx-background-radius: 10; -fx-padding: 9; -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.14), 8, 0, 0, 2);">
+
+                                        <VBox maxWidth="Infinity" spacing="3.0" style="-fx-background-color: white; -fx-background-radius: 10; -fx-padding: 10; -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.14), 8, 0, 0, 2);" HBox.hgrow="ALWAYS">
+
                                             <children>
                                                 <Label fx:id="lblTituloCard3" text="Gols" textFill="#606060" />
                                                 <Label fx:id="lblTotalGols" text="0" textFill="#2E7D32">
                                                     <font>
-                                                        <Font name="System Bold" size="22.0" />
+                                                        <Font name="System Bold" size="24.0" />
                                                     </font>
                                                 </Label>
                                             </children>
                                         </VBox>
-      
-                                        <VBox prefWidth="153.0" spacing="2.0" style="-fx-background-color: white; -fx-background-radius: 10; -fx-padding: 9; -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.14), 8, 0, 0, 2);">
+
+                                        <VBox maxWidth="Infinity" spacing="3.0" style="-fx-background-color: white; -fx-background-radius: 10; -fx-padding: 10; -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.14), 8, 0, 0, 2);" HBox.hgrow="ALWAYS">
+
                                             <children>
                                                 <Label fx:id="lblTituloCard4" text="Média" textFill="#606060" />
                                                 <Label fx:id="lblMediaGols" text="0.00" textFill="#2E7D32">
                                                     <font>
-                                                        <Font name="System Bold" size="22.0" />
+                                                        <Font name="System Bold" size="24.0" />
                                                     </font>
                                                 </Label>
                                             </children>
                                         </VBox>
                                     </children>
                                 </HBox>
-      
-                                <HBox spacing="8.0">
+
+                                <HBox spacing="10.0" VBox.vgrow="ALWAYS">
                                     <children>
-            
-                                                  <HBox spacing="8.0">
-                                          <children>
-                                              <VBox prefHeight="190.0" prefWidth="308.0" spacing="5.0" style="-fx-background-color: white; -fx-background-radius: 12; -fx-padding: 9; -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.14), 8, 0, 0, 2);">
-                                                  <children>
-                                                      <Label text="Destaques" textFill="#2E7D32">
-                                                          <font>
-                                                              <Font name="System Bold" size="12.0" />
-                                                          </font>
-                                                      </Label>
-            
-                                                                  <Label fx:id="lblPartidaMaisGols" text="Partida com mais gols: nenhum relatório gerado." textFill="#303030" wrapText="true" />
-            
-                                                                  <Label fx:id="lblMaiorGoleada" text="Maior goleada: nenhum relatório gerado." textFill="#303030" wrapText="true" />
-            
-                                                                  <Label fx:id="lblSelecaoAnalisada" text="Seleção analisada: nenhuma seleção selecionada." textFill="#303030" wrapText="true" />
-                                                  </children>
-                                              </VBox>
-                                          </children>
-                                      </HBox>
-                                        <VBox prefHeight="190.0" prefWidth="303.0" spacing="5.0" style="-fx-background-color: white; -fx-background-radius: 12; -fx-padding: 9; -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.14), 8, 0, 0, 2);">
+
+                                        <VBox maxWidth="Infinity" prefHeight="210.0" spacing="6.0" style="-fx-background-color: white; -fx-background-radius: 12; -fx-padding: 10; -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.14), 8, 0, 0, 2);" HBox.hgrow="ALWAYS">
+
+                                            <children>
+                                                <Label text="Destaques" textFill="#2E7D32">
+                                                    <font>
+                                                        <Font name="System Bold" size="13.0" />
+                                                    </font>
+                                                </Label>
+
+                                                <Label fx:id="lblPartidaMaisGols" text="Partida com mais gols: nenhum relatório gerado." textFill="#303030" wrapText="true" />
+
+                                                <Label fx:id="lblMaiorGoleada" text="Maior goleada: nenhum relatório gerado." textFill="#303030" wrapText="true" />
+
+                                                <Label fx:id="lblSelecaoAnalisada" text="Seleção analisada: nenhuma seleção selecionada." textFill="#303030" wrapText="true" />
+                                            </children>
+                                        </VBox>
+
+                                        <VBox maxWidth="Infinity" prefHeight="210.0" spacing="6.0" style="-fx-background-color: white; -fx-background-radius: 12; -fx-padding: 10; -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.14), 8, 0, 0, 2);" HBox.hgrow="ALWAYS">
+
                                             <children>
                                                 <Label fx:id="lblTituloGrafico" text="Partidas por status" textFill="#2E7D32">
+
                                                     <font>
-                                                        <Font name="System Bold" size="12.0" />
+                                                        <Font name="System Bold" size="13.0" />
                                                     </font>
                                                 </Label>
-                                                <PieChart fx:id="graficoStatus" labelsVisible="false" legendVisible="true" prefHeight="150.0" prefWidth="277.0" />
+
+                                                <PieChart fx:id="graficoStatus" labelsVisible="false" legendVisible="true" maxWidth="Infinity" prefHeight="165.0" VBox.vgrow="ALWAYS" />
                                             </children>
                                         </VBox>
+
                                     </children>
                                 </HBox>
-      
+
                             </children>
                         </VBox>
                     </content>
