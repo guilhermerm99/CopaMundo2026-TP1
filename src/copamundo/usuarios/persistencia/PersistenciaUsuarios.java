@@ -135,4 +135,44 @@ public class PersistenciaUsuarios {
         }
         return usuarios;
     }
+
+    public boolean existeCpfOuEmailEmOutroUsuario(String emailOriginal, String cpfNovo, String emailNovo)
+            throws PersistenciaException {
+
+        List<Usuario> usuarios = carregarUsuarios();
+
+        String emailOriginalNormalizado = normalizarEmail(emailOriginal);
+        String emailNovoNormalizado = normalizarEmail(emailNovo);
+        String cpfNovoNormalizado = normalizarCpf(cpfNovo);
+
+        for (Usuario usuario : usuarios) {
+
+            String emailUsuario = normalizarEmail(usuario.getEmailUsuario());
+            String cpfUsuario = normalizarCpf(usuario.getCpf());
+
+            boolean ehUsuarioSelecionado = emailUsuario.equals(emailOriginalNormalizado);
+
+            if (ehUsuarioSelecionado) {
+                continue;
+            }
+
+            if (!emailNovoNormalizado.isBlank() && emailUsuario.equals(emailNovoNormalizado)) {
+                return true;
+            }
+
+            if (!cpfNovoNormalizado.isBlank() && cpfUsuario.equals(cpfNovoNormalizado)) {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    private String normalizarEmail(String email) {
+        return email == null ? "" : email.trim().toLowerCase();
+    }
+
+    private String normalizarCpf(String cpf) {
+        return cpf == null ? "" : cpf.replaceAll("\\D", "");
+    }
 }

@@ -80,12 +80,8 @@ public class TelaCadastroController {
         if (salvoComSucesso) {
             System.out.println("Usuário salvo com sucesso! Total na lista: " + Usuario.usuarios.size());
 
-            try {
-                voltarParaTelaPrincipalComUsuarios(event);
-            } catch (IOException e) {
-                System.out.println("Erro ao voltar para a tela principal: " + e.getMessage());
-                e.printStackTrace();
-            }
+            Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+            stage.close();
 
         } else {
             Mensagens.mostrarMensagem(
@@ -99,26 +95,7 @@ public class TelaCadastroController {
 
     @FXML
     private void voltarAnterior(ActionEvent event) {
-        try {
-            voltarParaTelaPrincipalComUsuarios(event);
-        } catch (IOException e) {
-            System.out.println("Erro ao voltar para a tela principal: " + e.getMessage());
-            e.printStackTrace();
-        }
-    }
-
-    private void voltarParaTelaPrincipalComUsuarios(ActionEvent event) throws IOException {
-        FXMLLoader loader = new FXMLLoader(
-                getClass().getResource("/copamundo/principal/visao/TelaPrincipal.fxml")
-        );
-
-        Parent root = loader.load();
-
-        TelaPrincipalController controller = loader.getController();
-        controller.abrirUsuariosInicial();
-
         Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-        stage.setScene(new Scene(root));
-        stage.show();
+        stage.close();
     }
 }

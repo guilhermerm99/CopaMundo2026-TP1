@@ -6,6 +6,7 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
+import javafx.stage.Modality;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
@@ -153,9 +154,22 @@ public class TelaUsuariosController implements Serializable {
 
         Parent root = loader.load();
 
-        Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-        stage.setScene(new Scene(root));
-        stage.show();
+        Stage stageCadastro = new Stage();
+        stageCadastro.setScene(new Scene(root));
+        stageCadastro.setTitle("Cadastrar Usuário");
+
+        stageCadastro.initModality(Modality.WINDOW_MODAL);
+        stageCadastro.initOwner(((Node) event.getSource()).getScene().getWindow());
+
+        stageCadastro.showAndWait();
+
+        try {
+            PersistenciaUsuarios persistencia = new PersistenciaUsuarios();
+            Usuario.usuarios = persistencia.carregarUsuarios();
+            carregarTabela(Usuario.usuarios);
+        } catch (PersistenciaException e) {
+            System.out.println("Erro ao recarregar a tabela após cadastro: " + e.getMessage());
+        }
     }
 
     private void carregarTabela(List<Usuario> lista) {

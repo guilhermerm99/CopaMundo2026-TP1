@@ -9,6 +9,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextField;
@@ -97,9 +98,32 @@ public class TelaEditarController {
             return;
         }
 
+        String novoCpf = campoCpf.getText();
+        String novoEmail = campoEmail.getText();
+
+        PersistenciaUsuarios persistencia = new PersistenciaUsuarios();
+
+        try {
+            if (persistencia.existeCpfOuEmailEmOutroUsuario(emailOriginal, novoCpf, novoEmail)) {
+                Alert alerta = new Alert(Alert.AlertType.ERROR);
+                alerta.setTitle("Erro ao editar usuário");
+                alerta.setHeaderText(null);
+                alerta.setContentText("CPF ou e-mail já cadastrado para outro usuário.");
+                alerta.showAndWait();
+                return;
+            }
+        } catch (PersistenciaException e) {
+            Alert alerta = new Alert(Alert.AlertType.ERROR);
+            alerta.setTitle("Erro");
+            alerta.setHeaderText(null);
+            alerta.setContentText("Erro ao verificar usuários cadastrados.");
+            alerta.showAndWait();
+            return;
+        }
+
         usuarioSelecionado.setNomeUsuario(campoNome.getText());
-        usuarioSelecionado.setCpf(campoCpf.getText());
-        usuarioSelecionado.setEmailUsuario(campoEmail.getText());
+        usuarioSelecionado.setCpf(novoCpf);
+        usuarioSelecionado.setEmailUsuario(novoEmail);
 
         String status = comboStatus.getValue();
         if ("ATIVO".equalsIgnoreCase(status)) {
@@ -125,10 +149,14 @@ public class TelaEditarController {
         }
 
         try {
-            PersistenciaUsuarios persistencia = new PersistenciaUsuarios();
             persistencia.atualizarUsuario(emailOriginal, usuarioSelecionado);
         } catch (PersistenciaException e) {
-            System.out.println("erro ao salvar usuários no arquivo.: " + e.getMessage());
+            Alert alerta = new Alert(Alert.AlertType.ERROR);
+            alerta.setTitle("Erro ao salvar");
+            alerta.setHeaderText(null);
+            alerta.setContentText("Erro ao salvar usuário no arquivo.");
+            alerta.showAndWait();
+            return;
         }
 
         Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
