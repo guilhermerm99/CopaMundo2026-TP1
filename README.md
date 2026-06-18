@@ -5,10 +5,10 @@ Projeto da disciplina **Técnicas de Programação 1 (CIC0197)** – UnB, 2026-1
 ## 👥 Equipe
 | Nome | Módulo | GitHub |
 |------|--------|--------|
-| Aluno 1 | Administração e Gestão | @user1 |
+| Aluno 1 | Administração e Gestão | @gabriellybf |
 | Aluno 2 | Seleções e Jogadores | @guilhermerm99 |
-| Aluno 3 | Estádios e Arbitragem | @user3 |
-| Aluno 4 | Partidas | @user4 |
+| Aluno 3 | Estádios e Arbitragem | @skyehie |
+| Aluno 4 | Partidas | @adriacmd |
 
 **Profª:** Roberta Barbosa Oliveira
 
