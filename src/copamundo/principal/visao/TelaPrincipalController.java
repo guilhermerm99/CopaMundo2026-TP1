@@ -49,7 +49,7 @@ public class TelaPrincipalController {
         }
 
         // Usuários e Relatórios ficam visíveis apenas para o administrador
-        boolean isAdmin = ControleAcesso.ehAdministrador();
+        /*boolean isAdmin = ControleAcesso.ehAdministrador();
         btnUsuarios.setVisible(isAdmin);
         btnUsuarios.setManaged(isAdmin);
         btnRelatorios.setVisible(isAdmin);
@@ -57,7 +57,7 @@ public class TelaPrincipalController {
         if (cardUsuarios != null) {
             cardUsuarios.setVisible(isAdmin);
             cardUsuarios.setManaged(isAdmin);
-        }
+        }*/
     }
 
     public void abrirUsuariosInicial() {
