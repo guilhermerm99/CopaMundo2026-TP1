@@ -15,6 +15,10 @@ out/
 # Logs
 *.log
 
+# Local persistence generated while running the app
+dados/*.dat
+!dados/usuarios.dat
+
 # BlueJ files
 *.ctxt
 
@@ -38,6 +42,11 @@ replay_pid*
 *.dll
 *.so
 *.dylib
+
+# Project runtime libraries used by IntelliJ run configuration
+!lib/*.jar
+!lib/native/
+!lib/native/*.dll
 
 # OS generated files
 .DS_Store

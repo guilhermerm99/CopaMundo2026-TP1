@@ -1,19 +1,189 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.geometry.Insets?>
-<?import javafx.scene.control.Button?>
-<?import javafx.scene.control.Label?>
-<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
 
-<VBox alignment="CENTER" spacing="15" stylesheets="@estilo.css" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1"
-      fx:controller="copamundo.selecoes.visao.TelaMenuSelecoesJogadoresController">
-    <padding>
-        <Insets bottom="20" left="20" right="20" top="20"/>
-    </padding>
+<BorderPane stylesheets="@estilo.css" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="copamundo.selecoes.visao.TelaMenuSelecoesJogadoresController">
 
-    <Label styleClass="label-titulo" text="⚽ Gestão de Seleções e Jogadores"/>
+    <top>
+        <VBox style="-fx-background-color: #1565C0; -fx-padding: 12 20 12 20;">
+            <Label text="⚽  Gestão de Seleções e Jogadores — Copa do Mundo 2026"
+                   style="-fx-text-fill: white; -fx-font-size: 16px; -fx-font-weight: bold;"/>
+        </VBox>
+    </top>
 
-    <Button fx:id="btnSelecoes" mnemonicParsing="false" onAction="#abrirCadastroSelecoes" text="🏆  Seleções"/>
-    <Button fx:id="btnJogadores" mnemonicParsing="false" onAction="#abrirCadastroJogadores" text="👤  Jogadores"/>
-    <Button fx:id="btnConsulta" mnemonicParsing="false" onAction="#abrirConsulta" text="🔍  Consultas"/>
-</VBox>
+    <center>
+        <TabPane fx:id="tabPane" tabClosingPolicy="UNAVAILABLE">
+
+            <!-- ABA SELEÇÕES -->
+            <Tab text="🏆  Seleções">
+                <BorderPane>
+                    <top>
+                        <VBox spacing="10" style="-fx-background-color: white; -fx-border-color: #BDBDBD; -fx-border-radius: 5;">
+                            <padding><Insets bottom="15" left="15" right="15" top="15"/></padding>
+                            <GridPane hgap="10" vgap="10">
+                                <Label text="País:" GridPane.rowIndex="0" GridPane.columnIndex="0"/>
+                                <TextField fx:id="campoPais" promptText="Digite o nome do país" GridPane.rowIndex="0" GridPane.columnIndex="1"/>
+                                <Label text="Grupo:" GridPane.rowIndex="1" GridPane.columnIndex="0"/>
+                                <ComboBox fx:id="comboGrupo" promptText="Selecione" GridPane.rowIndex="1" GridPane.columnIndex="1"/>
+                                <Label text="Técnico:" GridPane.rowIndex="2" GridPane.columnIndex="0"/>
+                                <TextField fx:id="campoTecnico" promptText="Nome do técnico" GridPane.rowIndex="2" GridPane.columnIndex="1"/>
+                                <columnConstraints>
+                                    <ColumnConstraints/><ColumnConstraints hgrow="ALWAYS"/>
+                                </columnConstraints>
+                            </GridPane>
+                            <!-- Melhoria 10: contador de jogadores -->
+                            <Label fx:id="labelContadorJogadores"
+                                   style="-fx-font-style: italic; -fx-text-fill: #555;"/>
+                            <HBox fx:id="botoesSelecao" alignment="CENTER" spacing="10">
+                                <Button onAction="#novoSelecao" text="➕  Novo"/>
+                                <Button onAction="#editarSelecao" text="✏️  Editar"/>
+                                <Button onAction="#excluirSelecao" text="🗑️  Excluir" styleClass="button-cancelar"/>
+                                <Button onAction="#salvarSelecao" text="💾  Salvar"/>
+                            </HBox>
+                        </VBox>
+                    </top>
+                    <center>
+                        <!-- Melhoria 8: clique na linha preenche formulário (via listener no controller) -->
+                        <TableView fx:id="tabelaSelecoes">
+                            <columns>
+                                <TableColumn fx:id="colunaPais" text="País"/>
+                                <TableColumn fx:id="colunaGrupo" text="Grupo"/>
+                                <TableColumn fx:id="colunaTecnico" text="Técnico"/>
+                            </columns>
+                            <placeholder><Label text="Nenhuma seleção cadastrada."/></placeholder>
+                        </TableView>
+                    </center>
+                </BorderPane>
+            </Tab>
+
+            <!-- ABA JOGADORES -->
+            <Tab text="👤  Jogadores">
+                <BorderPane>
+                    <top>
+                        <VBox spacing="10" style="-fx-background-color: white; -fx-border-color: #BDBDBD; -fx-border-radius: 5;">
+                            <padding><Insets bottom="15" left="15" right="15" top="15"/></padding>
+                            <GridPane hgap="10" vgap="10">
+                                <Label text="Nome:" GridPane.rowIndex="0" GridPane.columnIndex="0"/>
+                                <TextField fx:id="campoNome" promptText="Nome completo do jogador" GridPane.rowIndex="0" GridPane.columnIndex="1"/>
+                                <Label text="Posição:" GridPane.rowIndex="1" GridPane.columnIndex="0"/>
+                                <ComboBox fx:id="comboPosicao" promptText="Selecione" GridPane.rowIndex="1" GridPane.columnIndex="1"/>
+                                <Label text="Número:" GridPane.rowIndex="2" GridPane.columnIndex="0"/>
+                                <TextField fx:id="campoNumero" promptText="Ex: 10" GridPane.rowIndex="2" GridPane.columnIndex="1"/>
+                                <Label text="Idade:" GridPane.rowIndex="3" GridPane.columnIndex="0"/>
+                                <TextField fx:id="campoIdade" promptText="Idade do jogador" GridPane.rowIndex="3" GridPane.columnIndex="1"/>
+                                <Label text="Status:" GridPane.rowIndex="4" GridPane.columnIndex="0"/>
+                                <ComboBox fx:id="comboStatus" promptText="Selecione" GridPane.rowIndex="4" GridPane.columnIndex="1"/>
+                                <Label text="Seleção:" GridPane.rowIndex="5" GridPane.columnIndex="0"/>
+                                <ComboBox fx:id="comboSelecao" promptText="Selecione" GridPane.rowIndex="5" GridPane.columnIndex="1"/>
+                                <columnConstraints>
+                                    <ColumnConstraints/><ColumnConstraints hgrow="ALWAYS"/>
+                                </columnConstraints>
+                            </GridPane>
+                            <HBox fx:id="botoesJogador" alignment="CENTER" spacing="10">
+                                <Button onAction="#novoJogador" text="➕  Novo"/>
+                                <Button onAction="#editarJogador" text="✏️  Editar"/>
+                                <Button onAction="#excluirJogador" text="🗑️  Excluir" styleClass="button-cancelar"/>
+                                <Button onAction="#salvarJogador" text="💾  Salvar"/>
+                            </HBox>
+                        </VBox>
+                    </top>
+                    <center>
+                        <TableView fx:id="tabelaJogadores">
+                            <columns>
+                                <TableColumn fx:id="colunaNome" text="Nome"/>
+                                <TableColumn fx:id="colunaPosicao" text="Posição"/>
+                                <TableColumn fx:id="colunaNumero" text="Nº"/>
+                                <TableColumn fx:id="colunaIdade" text="Idade"/>
+                                <!-- Melhoria 9: coluna usa statusFormatado -->
+                                <TableColumn fx:id="colunaStatusFormatado" text="Status"/>
+                                <TableColumn fx:id="colunaSelecao" text="Seleção"/>
+                            </columns>
+                            <placeholder><Label text="Nenhum jogador cadastrado."/></placeholder>
+                        </TableView>
+                    </center>
+                </BorderPane>
+            </Tab>
+
+            <!-- ABA CONSULTA -->
+            <Tab text="🔍  Consulta">
+                <TabPane tabClosingPolicy="UNAVAILABLE">
+
+                    <Tab text="🏆 Seleções" closable="false">
+                        <BorderPane>
+                            <top>
+                                <VBox spacing="8" style="-fx-background-color: #F5F5F5;">
+                                    <padding><Insets bottom="8" left="8" right="8" top="8"/></padding>
+                                    <!-- Melhoria 7: todos os filtros aplicados juntos -->
+                                    <HBox alignment="CENTER_LEFT" spacing="10">
+                                        <Label text="País:"/>
+                                        <TextField fx:id="campoBuscaPais" promptText="Nome do país"/>
+                                        <Label text="Grupo:"/>
+                                        <ComboBox fx:id="comboGrupoFiltro"/>
+                                        <Button onAction="#filtrarSelecoes" text="🔍  Filtrar"/>
+                                        <Button onAction="#limparFiltrosSelecoes" text="🗑️  Limpar"/>
+                                    </HBox>
+                                    <HBox alignment="CENTER_LEFT" spacing="10">
+                                        <Label text="Técnico:"/>
+                                        <TextField fx:id="campoBuscaTecnico" promptText="Nome do técnico"/>
+                                    </HBox>
+                                </VBox>
+                            </top>
+                            <center>
+                                <TableView fx:id="tabelaConsultaSelecoes">
+                                    <columns>
+                                        <TableColumn fx:id="colunaPaisConsulta" text="País"/>
+                                        <TableColumn fx:id="colunaGrupoConsulta" text="Grupo"/>
+                                        <TableColumn fx:id="colunaTecnicoConsulta" text="Técnico"/>
+                                    </columns>
+                                    <placeholder><Label text="Nenhum resultado encontrado."/></placeholder>
+                                </TableView>
+                            </center>
+                        </BorderPane>
+                    </Tab>
+
+                    <Tab text="👤 Jogadores" closable="false">
+                        <BorderPane>
+                            <top>
+                                <VBox spacing="8" style="-fx-background-color: #F5F5F5;">
+                                    <padding><Insets bottom="8" left="8" right="8" top="8"/></padding>
+                                    <HBox alignment="CENTER_LEFT" spacing="10">
+                                        <Label text="Nome:"/>
+                                        <TextField fx:id="campoBuscaNomeJogador" promptText="Nome do jogador"/>
+                                        <Label text="Posição:"/>
+                                        <ComboBox fx:id="comboPosicaoFiltro"/>
+                                        <Label text="Status:"/>
+                                        <ComboBox fx:id="comboStatusFiltro"/>
+                                        <Button onAction="#filtrarJogadores" text="🔍  Filtrar"/>
+                                        <Button onAction="#limparFiltrosJogadores" text="🗑️  Limpar"/>
+                                    </HBox>
+                                    <HBox alignment="CENTER_LEFT" spacing="10">
+                                        <Label text="Seleção:"/>
+                                        <ComboBox fx:id="comboSelecaoFiltro" promptText="Todas"/>
+                                    </HBox>
+                                </VBox>
+                            </top>
+                            <center>
+                                <TableView fx:id="tabelaConsultaJogadores">
+                                    <columns>
+                                        <TableColumn fx:id="colunaNomeJogador" text="Nome"/>
+                                        <TableColumn fx:id="colunaPosicaoJogador" text="Posição"/>
+                                        <TableColumn fx:id="colunaNumeroJogador" text="Nº"/>
+                                        <TableColumn fx:id="colunaIdadeJogador" text="Idade"/>
+                                        <TableColumn fx:id="colunaStatusJogador" text="Status"/>
+                                        <TableColumn fx:id="colunaSelecaoJogador" text="Seleção"/>
+                                    </columns>
+                                    <placeholder><Label text="Nenhum resultado encontrado."/></placeholder>
+                                </TableView>
+                            </center>
+                        </BorderPane>
+                    </Tab>
+
+                </TabPane>
+            </Tab>
+
+        </TabPane>
+    </center>
+</BorderPane>

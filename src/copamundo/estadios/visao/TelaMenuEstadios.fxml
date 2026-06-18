@@ -1,0 +1,229 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<BorderPane stylesheets="@estilo.css"
+            xmlns="http://javafx.com/javafx/17"
+            xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="copamundo.estadios.visao.TelaMenuEstadiosController">
+
+    <top>
+        <VBox style="-fx-background-color: #1565C0; -fx-padding: 12 20 12 20;">
+            <Label text="Gestao de Estadios e Arbitragem - Copa do Mundo 2026"
+                   style="-fx-text-fill: white; -fx-font-size: 16px; -fx-font-weight: bold;"/>
+        </VBox>
+    </top>
+
+    <center>
+        <TabPane fx:id="tabPane" tabClosingPolicy="UNAVAILABLE">
+            <Tab fx:id="tabEstadios" text="Estadios">
+                <BorderPane>
+                    <top>
+                        <VBox spacing="10" styleClass="form-panel">
+                            <padding><Insets bottom="15" left="15" right="15" top="15"/></padding>
+                            <GridPane hgap="12" vgap="10">
+                                <columnConstraints>
+                                    <ColumnConstraints minWidth="95"/>
+                                    <ColumnConstraints hgrow="ALWAYS"/>
+                                    <ColumnConstraints minWidth="95"/>
+                                    <ColumnConstraints hgrow="ALWAYS"/>
+                                </columnConstraints>
+
+                                <Label text="Nome:" GridPane.columnIndex="0" GridPane.rowIndex="0"/>
+                                <TextField fx:id="txtNomeEstadio" promptText="Nome do estadio" GridPane.columnIndex="1" GridPane.rowIndex="0"/>
+                                <Label text="Localização:" GridPane.columnIndex="2" GridPane.rowIndex="0"/>
+                                <TextField fx:id="txtCidadeEstadio" promptText="Localização do estádio" GridPane.columnIndex="3" GridPane.rowIndex="0"/>
+                                <Label text="Capacidade:" GridPane.columnIndex="0" GridPane.rowIndex="1"/>
+                                <TextField fx:id="txtCapacidadeEstadio" promptText="Ex: 34.534" GridPane.columnIndex="1" GridPane.rowIndex="1"/>
+                                <Label text="Busca:" GridPane.columnIndex="2" GridPane.rowIndex="1"/>
+                                <TextField fx:id="txtBuscaEstadio" promptText="Nome ou localização" GridPane.columnIndex="3" GridPane.rowIndex="1"/>
+                            </GridPane>
+
+                            <HBox alignment="CENTER_LEFT" spacing="10">
+                                <Button onAction="#novoEstadio" text="Novo"/>
+                                <Button onAction="#salvarEstadio" text="Salvar"/>
+                                <Button onAction="#excluirEstadio" styleClass="button-cancelar" text="Excluir"/>
+                                <Button onAction="#filtrarEstadios" text="Filtrar"/>
+                                <Button onAction="#limparFiltroEstadios" text="Limpar filtro"/>
+                            </HBox>
+                        </VBox>
+                    </top>
+
+                    <center>
+                        <TableView fx:id="tabelaEstadios">
+                            <columns>
+                                <TableColumn fx:id="colunaEstadioId" text="ID" prefWidth="60"/>
+                                <TableColumn fx:id="colunaEstadioNome" text="Nome" prefWidth="240"/>
+                                <TableColumn fx:id="colunaEstadioCidade" text="Localização" prefWidth="180"/>
+                                <TableColumn fx:id="colunaEstadioCapacidade" text="Capacidade" prefWidth="120"/>
+                            </columns>
+                            <placeholder>
+                                <Label text="Nenhum estadio cadastrado."/>
+                            </placeholder>
+                        </TableView>
+                    </center>
+                </BorderPane>
+            </Tab>
+
+            <Tab fx:id="tabArbitros" text="Arbitros">
+                <BorderPane>
+                    <top>
+                        <VBox spacing="10" styleClass="form-panel">
+                            <padding><Insets bottom="15" left="15" right="15" top="15"/></padding>
+                            <GridPane hgap="12" vgap="10">
+                                <columnConstraints>
+                                    <ColumnConstraints minWidth="95"/>
+                                    <ColumnConstraints hgrow="ALWAYS"/>
+                                    <ColumnConstraints minWidth="95"/>
+                                    <ColumnConstraints hgrow="ALWAYS"/>
+                                </columnConstraints>
+
+                                <Label text="Nome:" GridPane.columnIndex="0" GridPane.rowIndex="0"/>
+                                <TextField fx:id="txtNomeArbitro" promptText="Nome completo" GridPane.columnIndex="1" GridPane.rowIndex="0"/>
+                                <Label text="Federacao:" GridPane.columnIndex="2" GridPane.rowIndex="0"/>
+                                <TextField fx:id="txtFederacaoArbitro" promptText="Pais ou federacao" GridPane.columnIndex="3" GridPane.rowIndex="0"/>
+                                <Label text="Categoria:" GridPane.columnIndex="0" GridPane.rowIndex="1"/>
+                                <ComboBox fx:id="cbCategoriaArbitro" promptText="Selecione" GridPane.columnIndex="1" GridPane.rowIndex="1"/>
+                                <Label text="Experiencia:" GridPane.columnIndex="2" GridPane.rowIndex="1"/>
+                                <ComboBox fx:id="cbExperienciaArbitro" promptText="Selecione" GridPane.columnIndex="3" GridPane.rowIndex="1"/>
+                                <Label text="Busca:" GridPane.columnIndex="0" GridPane.rowIndex="2"/>
+                                <TextField fx:id="txtBuscaArbitro" promptText="Nome ou federacao" GridPane.columnIndex="1" GridPane.columnSpan="3" GridPane.rowIndex="2"/>
+                            </GridPane>
+
+                            <HBox alignment="CENTER_LEFT" spacing="10">
+                                <Button onAction="#novoArbitro" text="Novo"/>
+                                <Button onAction="#salvarArbitro" text="Salvar"/>
+                                <Button onAction="#excluirArbitro" styleClass="button-cancelar" text="Excluir"/>
+                                <Button onAction="#filtrarArbitros" text="Filtrar"/>
+                                <Button onAction="#limparFiltroArbitros" text="Limpar filtro"/>
+                            </HBox>
+                        </VBox>
+                    </top>
+
+                    <center>
+                        <TableView fx:id="tabelaArbitros">
+                            <columns>
+                                <TableColumn fx:id="colunaArbitroId" text="ID" prefWidth="60"/>
+                                <TableColumn fx:id="colunaArbitroNome" text="Nome" prefWidth="240"/>
+                                <TableColumn fx:id="colunaArbitroFederacao" text="Federacao" prefWidth="180"/>
+                                <TableColumn fx:id="colunaArbitroCategoria" text="Categoria" prefWidth="140"/>
+                                <TableColumn fx:id="colunaArbitroExperiencia" text="Experiencia" prefWidth="120"/>
+                            </columns>
+                            <placeholder>
+                                <Label text="Nenhum arbitro cadastrado."/>
+                            </placeholder>
+                        </TableView>
+                    </center>
+                </BorderPane>
+            </Tab>
+
+            <Tab fx:id="tabDesignacoes" text="Designacoes">
+                <BorderPane>
+                    <top>
+                        <VBox spacing="10" styleClass="form-panel">
+                            <padding><Insets bottom="15" left="15" right="15" top="15"/></padding>
+                            <GridPane hgap="12" vgap="10">
+                                <columnConstraints>
+                                    <ColumnConstraints minWidth="95"/>
+                                    <ColumnConstraints hgrow="ALWAYS"/>
+                                    <ColumnConstraints minWidth="95"/>
+                                    <ColumnConstraints hgrow="ALWAYS"/>
+                                </columnConstraints>
+
+                                <Label text="Partida:" GridPane.columnIndex="0" GridPane.rowIndex="0"/>
+                                <ComboBox fx:id="cbPartidaDesignacao" promptText="Selecione a partida" GridPane.columnIndex="1" GridPane.rowIndex="0"/>
+                                <Label text="Arbitro:" GridPane.columnIndex="2" GridPane.rowIndex="0"/>
+                                <ComboBox fx:id="cbArbitroDesignacao" promptText="Selecione o arbitro" GridPane.columnIndex="3" GridPane.rowIndex="0"/>
+                                <Label text="Estadio:" GridPane.columnIndex="0" GridPane.rowIndex="1"/>
+                                <Label fx:id="lblEstadioDesignacao" text="Selecione uma partida" styleClass="readonly-value" GridPane.columnIndex="1" GridPane.rowIndex="1"/>
+                                <Label text="Selecao:" GridPane.columnIndex="2" GridPane.rowIndex="1"/>
+                                <TextField fx:id="txtFiltroSelecaoDesignacao" promptText="Filtro por selecao" GridPane.columnIndex="3" GridPane.rowIndex="1"/>
+                            </GridPane>
+
+                            <Label fx:id="lblResumoArbitros"
+                                   text="Selecione uma partida para ver os arbitros aptos."
+                                   styleClass="hint-label"/>
+
+                            <HBox alignment="CENTER_LEFT" spacing="10">
+                                <Button onAction="#designarArbitro" text="Designar"/>
+                                <Button onAction="#validarPartidaSelecionada" text="Validar partida"/>
+                                <Button onAction="#limparArbitroSelecionado" styleClass="button-cancelar" text="Limpar selecao"/>
+                                <Button onAction="#filtrarDesignacoes" text="Filtrar"/>
+                                <Button onAction="#limparDesignacao" text="Limpar"/>
+                                <Button onAction="#recarregarTudo" text="Recarregar"/>
+                            </HBox>
+                        </VBox>
+                    </top>
+
+                    <center>
+                        <TableView fx:id="tabelaDesignacoes">
+                            <columns>
+                                <TableColumn fx:id="colunaDesignacaoPartida" text="Partida" prefWidth="220"/>
+                                <TableColumn fx:id="colunaDesignacaoData" text="Data/Hora" prefWidth="140"/>
+                                <TableColumn fx:id="colunaDesignacaoEstadio" text="Estadio" prefWidth="190"/>
+                                <TableColumn fx:id="colunaDesignacaoArbitro" text="Arbitro principal" prefWidth="200"/>
+                                <TableColumn fx:id="colunaDesignacaoStatus" text="Status" prefWidth="110"/>
+                            </columns>
+                            <placeholder>
+                                <Label text="Nenhuma partida encontrada."/>
+                            </placeholder>
+                        </TableView>
+                    </center>
+                </BorderPane>
+            </Tab>
+
+            <Tab fx:id="tabConsulta" text="Consulta">
+                <BorderPane>
+                    <top>
+                        <VBox spacing="10" styleClass="form-panel">
+                            <padding><Insets bottom="15" left="15" right="15" top="15"/></padding>
+                            <HBox alignment="CENTER_LEFT" spacing="10">
+                                <Label text="Texto:"/>
+                                <TextField fx:id="txtConsultaGeral" promptText="Estádio, localização, árbitro, federação ou seleção" HBox.hgrow="ALWAYS"/>
+                                <Button onAction="#consultarTudo" text="Consultar"/>
+                                <Button onAction="#limparConsulta" text="Limpar"/>
+                            </HBox>
+                        </VBox>
+                    </top>
+                    <center>
+                        <SplitPane dividerPositions="0.35, 0.68">
+                            <VBox spacing="8">
+                                <Label text="Estadios" styleClass="section-title"/>
+                                <TableView fx:id="tabelaConsultaEstadios">
+                                    <columns>
+                                        <TableColumn fx:id="colunaConsultaEstadioNome" text="Nome" prefWidth="150"/>
+                                        <TableColumn fx:id="colunaConsultaEstadioCidade" text="Localização" prefWidth="110"/>
+                                        <TableColumn fx:id="colunaConsultaEstadioCapacidade" text="Capacidade" prefWidth="100"/>
+                                    </columns>
+                                </TableView>
+                            </VBox>
+                            <VBox spacing="8">
+                                <Label text="Arbitros" styleClass="section-title"/>
+                                <TableView fx:id="tabelaConsultaArbitros">
+                                    <columns>
+                                        <TableColumn fx:id="colunaConsultaArbitroNome" text="Nome" prefWidth="150"/>
+                                        <TableColumn fx:id="colunaConsultaArbitroFederacao" text="Federacao" prefWidth="110"/>
+                                        <TableColumn fx:id="colunaConsultaArbitroCategoria" text="Categoria" prefWidth="100"/>
+                                        <TableColumn fx:id="colunaConsultaArbitroExperiencia" text="Experiencia" prefWidth="100"/>
+                                    </columns>
+                                </TableView>
+                            </VBox>
+                            <VBox spacing="8">
+                                <Label text="Designacoes" styleClass="section-title"/>
+                                <TableView fx:id="tabelaConsultaDesignacoes">
+                                    <columns>
+                                        <TableColumn fx:id="colunaConsultaDesignacaoPartida" text="Partida" prefWidth="160"/>
+                                        <TableColumn fx:id="colunaConsultaDesignacaoArbitro" text="Arbitro" prefWidth="130"/>
+                                        <TableColumn fx:id="colunaConsultaDesignacaoEstadio" text="Estadio" prefWidth="130"/>
+                                    </columns>
+                                </TableView>
+                            </VBox>
+                        </SplitPane>
+                    </center>
+                </BorderPane>
+            </Tab>
+        </TabPane>
+    </center>
+</BorderPane>

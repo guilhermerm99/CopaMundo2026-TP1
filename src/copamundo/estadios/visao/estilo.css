@@ -1,0 +1,146 @@
+/* Paleta */
+.root {
+    -fx-background-color: #F5F5F5;
+}
+
+.app-header {
+    -fx-background-color: #1565C0;
+    -fx-padding: 14 22 14 22;
+    -fx-spacing: 3;
+}
+
+.app-title {
+    -fx-text-fill: white;
+    -fx-font-size: 17px;
+    -fx-font-weight: bold;
+}
+
+.app-subtitle {
+    -fx-text-fill: #E3F2FD;
+    -fx-font-size: 12px;
+}
+
+.side-nav {
+    -fx-background-color: #ECEFF1;
+    -fx-padding: 14;
+    -fx-pref-width: 150;
+    -fx-border-color: transparent #CFD8DC transparent transparent;
+}
+
+.form-panel {
+    -fx-background-color: white;
+    -fx-border-color: #BDBDBD;
+    -fx-border-radius: 5;
+    -fx-background-radius: 5;
+}
+
+.section-title {
+    -fx-font-size: 14px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #1565C0;
+    -fx-padding: 8 8 0 8;
+}
+
+.hint-label {
+    -fx-text-fill: #455A64;
+    -fx-font-style: italic;
+}
+
+.readonly-value {
+    -fx-font-size: 14px;
+    -fx-padding: 7 9 7 9;
+    -fx-background-color: #F5F5F5;
+    -fx-background-radius: 3;
+    -fx-border-color: #BDBDBD;
+    -fx-border-radius: 3;
+    -fx-text-fill: #455A64;
+}
+
+.button {
+    -fx-background-color: #1565C0;
+    -fx-text-fill: white;
+    -fx-font-weight: bold;
+    -fx-font-size: 13px;
+    -fx-padding: 8 15 8 15;
+    -fx-background-radius: 5;
+    -fx-cursor: hand;
+}
+
+.button:hover {
+    -fx-background-color: #0D47A1;
+}
+
+.label-titulo {
+    -fx-font-size: 18px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #1565C0;
+}
+
+.text-field, .combo-box {
+    -fx-font-size: 14px;
+    -fx-padding: 5 8 5 8;
+    -fx-background-radius: 3;
+    -fx-border-color: #BDBDBD;
+    -fx-border-radius: 3;
+}
+
+.table-view {
+    -fx-border-color: #BDBDBD;
+    -fx-border-radius: 3;
+}
+
+.table-view .column-header-background {
+    -fx-background-color: #1565C0;
+}
+
+.table-view .column-header, .table-view .filler {
+    -fx-background-color: transparent;
+}
+
+.table-view .column-header .label {
+    -fx-text-fill: white;
+    -fx-font-weight: bold;
+}
+
+.table-row-cell:odd {
+    -fx-background-color: #F3F6FA;
+}
+
+.table-row-cell:even {
+    -fx-background-color: white;
+}
+
+.table-row-cell:hover {
+    -fx-background-color: #E3F2FD;
+}
+
+.table-row-cell:selected {
+    -fx-background-color: #1565C0;
+}
+
+.table-row-cell:selected .text {
+    -fx-fill: white;
+}
+
+.table-row-cell:selected:hover {
+    -fx-background-color: #0D47A1;
+}
+
+.text-field:focused, .combo-box:focused {
+    -fx-border-color: #1565C0;
+    -fx-border-width: 2px;
+}
+
+.button-cancelar {
+    -fx-background-color: #D32F2F; /* Vermelho padrão de alerta */
+    -fx-text-fill: white;
+    -fx-font-weight: bold;
+    -fx-font-size: 13px;
+    -fx-padding: 8 15 8 15;
+    -fx-background-radius: 5;
+    -fx-cursor: hand;
+}
+
+.button-cancelar:hover {
+    -fx-background-color: #B71C1C; /* Vermelho mais escuro no hover */
+}
